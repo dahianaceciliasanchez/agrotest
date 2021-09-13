@@ -1,5 +1,6 @@
 package agro;
 
+import controlador.productoCTR;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,6 +14,7 @@ public class Productos extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();
     javax.swing.table.DefaultTableModel m;
+    productoCTR pro = new productoCTR();
     int ban = 0;
 
     public Productos() {
@@ -100,6 +102,7 @@ public class Productos extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtIVA = new javax.swing.JTextField();
         cboMarca = new javax.swing.JComboBox<>();
+        txtid = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -176,27 +179,31 @@ public class Productos extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCodigoP, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCodigoP, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(1, 1, 1))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(19, 19, 19)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)
+                                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel11)
                                 .addGap(38, 38, 38)
-                                .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1))))
+                                .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addGap(2, 2, 2)
@@ -227,7 +234,8 @@ public class Productos extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11)
-                            .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
@@ -448,20 +456,11 @@ public class Productos extends javax.swing.JFrame {
           }
       }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        ban = 2;
-        txtDescripcion.requestFocus();
-        desabilitar();
-        habilitar();
+       ban=2;
+       txtDescripcion.requestFocus();
         
     }//GEN-LAST:event_btnModificarActionPerformed
-      private void ModificaDato() {
-          String sql = "udpate into productos set Descripcion = " + "'" + txtCodigoP.getText() + "', CodigoP ='"
-                  + txtSiglas.getText() + "', Siglas ='"+ txtCantidad.getText() + "', Cantidad ='"
-                  + txtIVA.getText() + "', IVA ='"
-                  + "where id = " + txtDescripcion.getText();
-          System.out.println(sql);
-          conn.actualizaTabla(sql);
-      }
+      
     private void tablaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaKeyPressed
         BuscarRegistro();
     }//GEN-LAST:event_tablaKeyPressed
@@ -487,21 +486,12 @@ public class Productos extends javax.swing.JFrame {
     }//GEN-LAST:event_cboFiltroActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-          int descripcion = traeCod("Select id from Marca where descripcion = '" + cboMarca.getSelectedItem() + "'");
-          int Nombre = traeCod("Select id from Proveedores where Nombre = '" + cboProveedor.getSelectedItem() + "'");
-          ban = 1;
-          
-
-      }
-
-      private void InsertaDato(int Marca, int Proveedor) {
-          String sql = "Insert into productos (id, Deisccripcion, CodigoP, Siglas, Cantidad, IVA, Marcaid, Proveedorid)"
-                  + " values('" + txtDescripcion.getText()+"', '" + txtCodigoP.getText()
-                  + "', '" + txtSiglas.getText()+ "', '" + txtCantidad.getText() + "', '" + txtIVA.getText()
-                  + "," + Marca  + "," + Proveedor + "') ";
-          System.out.println(sql);
-          conn.actualizaTabla(sql);
-          cargaTabla();
+        if (ban == 1) {
+            pro.InsertaDato();
+        } else if (ban == 2) {
+            pro.ModificaDato();
+        }
+        cargaTabla();
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -538,6 +528,7 @@ public class Productos extends javax.swing.JFrame {
           txtSiglas.setText("");
           txtCodigoP.setText("");
           txtIVA.setText("");
+          txtid.setText("");
 
       }
 
@@ -623,11 +614,12 @@ public class Productos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JTable tabla;
-    private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtCodigoP;
-    private javax.swing.JTextField txtDescripcion;
-    private javax.swing.JTextField txtIVA;
-    private javax.swing.JTextField txtSiglas;
+    public static javax.swing.JTextField txtCantidad;
+    public static javax.swing.JTextField txtCodigoP;
+    public static javax.swing.JTextField txtDescripcion;
+    public static javax.swing.JTextField txtIVA;
+    public static javax.swing.JTextField txtSiglas;
+    public static javax.swing.JTextField txtid;
     // End of variables declaration//GEN-END:variables
 
 }

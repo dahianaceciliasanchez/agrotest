@@ -2,7 +2,6 @@ package controlador;
 
 import Modelo.PersonalDAO;
 import agro.Conexion;
-import agro.Personales;
 import static agro.Personales.txtCI;
 import static agro.Personales.txtDireccion;
 import static agro.Personales.txtGmail;
@@ -47,7 +46,7 @@ public class PersonalCTR {
     public void ModificaDato() {
 
         String sql = "update empleados set Nombre=?, Apellido=?, telefono=?, direccion=?, gmail=?"
-                + "where CI= ?";
+                + "where id= ?";
         try {
             PreparedStatement ps = conn.conexion.prepareStatement(sql);
             ps.setString(1, txtnombre.getText());
@@ -55,6 +54,7 @@ public class PersonalCTR {
             ps.setString(3, txttelefono.getText());
             ps.setString(4, txtDireccion.getText());
             ps.setString(5, txtGmail.getText());
+            ps.setString(6, txtCI.getText());
             ps.setString(6, txtCI.getText());
 
             ps.execute();
