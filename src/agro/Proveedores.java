@@ -116,7 +116,7 @@ public class Proveedores extends javax.swing.JFrame {
         txtCorreo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        cboCiudad = new javax.swing.JComboBox();
+        cboCiudad = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -523,12 +523,13 @@ public class Proveedores extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        // int Ciudad = traeCod("Select id from ciudad where descripcion = '" + cboCiudad.getSelectedItem() + "'");
-        //  int TipoP = traeCod("Select id from tipoproveedor where descripcion = '" + cboTipoP.getSelectedItem() + "'");
+       
+        String descripcion = txtDescripcion.getText();
+        String siglas = txtSiglas.getText();
         if (ban == 1) {
-            InsertaDato();
+            ciudad.InsertaDato(descripcion, siglas);
         } else if (ban == 2) {
-            ModificaDato();
+            razas.ModificaDato();
         }
         cargaGrilla();
 
@@ -556,14 +557,11 @@ public class Proveedores extends javax.swing.JFrame {
 
     }
 
-    private void InsertaDato() {
-//        String ciudad;
-//        ciudad = cboCiudad.getItemAt(cboCiudad.getSelectedIndex(();
-//       Intege. Ciudad = traeCod("Select id from ciudad where descripcion = '" + cboCiudad.getSelectedItem() + "'");
-//        string TipoP = traeCod("Select id from tipoproveedor where descripcion = '" + cboTipoP.getSelectedItem() + "'");
-
-        String sql = "Insert into Proveedores ( Nombre, RUC, Direccion, Telefono, CorreoE)"
-                + " VALUES (?, ?, ?, ?, ?)";
+    public void InsertaDato() {
+         String ciudades;
+        ciudades = cboCiudad.getItemAt(cboCiudad.getSelectedIndex()).getId();
+        String sql = "Insert into Proveedores ( Nombre, RUC, Direccion, Telefono, CorreoE, ciudadid)"
+                + " VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = conn.conexion.prepareStatement(sql);
             ps.setString(1, txtNombre.getText());
@@ -571,6 +569,7 @@ public class Proveedores extends javax.swing.JFrame {
             ps.setString(3, txtDireccion.getText());
             ps.setString(4, txtTelefono.getText());
             ps.setString(5, txtCorreo.getText());
+            ps.setString(6, ciudad);
             ps.executeUpdate();
         } catch (SQLException e) {
             Logger.getLogger(Proveedores.class.getName()).log(Level.SEVERE, null, e);
@@ -762,7 +761,7 @@ public class Proveedores extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cboCiudad;
+    private javax.swing.JComboBox<combociudad> cboCiudad;
     private javax.swing.JComboBox cboCol;
     private javax.swing.JComboBox<String> cboTipoP;
     private javax.swing.JTable fichas;
