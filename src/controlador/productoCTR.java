@@ -19,8 +19,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
-
 
 /**
  *
@@ -32,7 +30,6 @@ public class productoCTR {
     String cn;
     Statement st;
     ResultSet rs;
-    
     public void InsertaDato() {
         String sql = "Insert into productos (descripcion, codigoP, siglas, cantidad, iva)"
                 + " VALUES (?, ?, ?, ?, ?)";
