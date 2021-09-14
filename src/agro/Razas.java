@@ -404,8 +404,6 @@ public class Razas extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        String categoria;
-        categoria = cbocategoria.getItemAt(cbocategoria.getSelectedIndex()).getId();
         String descripcion = txtDescripcion.getText();
         String siglas = txtSiglas.getText();
         if (ban == 1) {

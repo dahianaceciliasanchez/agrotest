@@ -5,28 +5,33 @@
  */
 package agro;
 
+import static agro.VentaAnimal.fecha;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
-
 
 /**
  *
  * @author Dahiana Sanchez G
  */
 public class Menu extends javax.swing.JFrame {
-Conexion conn = new Conexion();
-Calendar fechaactual= new GregorianCalendar();
-Acceso mod;
+
+    Conexion conn = new Conexion();
+    Calendar fechaactual = new GregorianCalendar();
+    Acceso mod;
+
     /**
      * Creates new form Menu
      */
     public Menu() {
-        initComponents();   
-        datefechahora.setCalendar(fechaactual);
-   
+        initComponents();
+        fecha.setText(fecha());
+
+        //datefechahora.setCalendar(fechaactual);
     }
 
     /**
@@ -48,7 +53,7 @@ Acceso mod;
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        datefechahora = new com.toedter.calendar.JDateChooser();
+        fecha = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         ProveedorVacunas = new javax.swing.JMenu();
         Comprador = new javax.swing.JMenu();
@@ -125,8 +130,8 @@ Acceso mod;
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("RANCHO SG");
 
-        datefechahora.setToolTipText("");
-        datefechahora.setDateFormatString("dd/MM/yyyy HH.mm.ss\n\n");
+        fecha.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        fecha.setText("dd/MM/yyyy");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -137,15 +142,17 @@ Acceso mod;
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(jLabel1)
-                        .addGap(64, 64, 64)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(136, 136, 136)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(datefechahora, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -174,15 +181,13 @@ Acceso mod;
                         .addGap(211, 211, 211)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(160, 160, 160)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(datefechahora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(160, 160, 160)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(81, 81, 81)
+                        .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19))
         );
 
@@ -503,7 +508,7 @@ Acceso mod;
     }// </editor-fold>//GEN-END:initComponents
 
     private void ProveedorVacunasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedorVacunasMousePressed
-        
+
     }//GEN-LAST:event_ProveedorVacunasMousePressed
 
     private void jMenu8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu8ActionPerformed
@@ -511,39 +516,39 @@ Acceso mod;
     }//GEN-LAST:event_jMenu8ActionPerformed
 
     private void CompradorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CompradorMousePressed
-      new Proveedores().setVisible(true);
+        new Proveedores().setVisible(true);
     }//GEN-LAST:event_CompradorMousePressed
 
     private void jMenu8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jMenu8KeyPressed
-      dispose();
+        dispose();
     }//GEN-LAST:event_jMenu8KeyPressed
 
     private void jMenu8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu8MousePressed
-      dispose();
+        dispose();
     }//GEN-LAST:event_jMenu8MousePressed
 
     private void PersonalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PersonalMousePressed
-           new Personales().setVisible(true);
+        new Personales().setVisible(true);
     }//GEN-LAST:event_PersonalMousePressed
 
     private void CargoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CargoMousePressed
-          new Cargo().setVisible(true);
+        new Cargo().setVisible(true);
     }//GEN-LAST:event_CargoMousePressed
 
     private void IAMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IAMousePressed
-           new RegistroIA().setVisible(true);
+        new RegistroIA().setVisible(true);
     }//GEN-LAST:event_IAMousePressed
 
     private void NacimientoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NacimientoMousePressed
-          new Preñes().setVisible(true);
+        new Preñes().setVisible(true);
     }//GEN-LAST:event_NacimientoMousePressed
 
     private void jMenu11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu11MousePressed
-    
+
     }//GEN-LAST:event_jMenu11MousePressed
 
     private void VitaminasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VitaminasMousePressed
-       new Vitaminas().setVisible(true);
+        new Vitaminas().setVisible(true);
     }//GEN-LAST:event_VitaminasMousePressed
 
     private void RazasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RazasMousePressed
@@ -563,31 +568,31 @@ Acceso mod;
     }//GEN-LAST:event_VeterinarioMousePressed
 
     private void AnimalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AnimalMousePressed
-       new RegistroAnimal().setVisible(true);
+        new RegistroAnimal().setVisible(true);
     }//GEN-LAST:event_AnimalMousePressed
 
     private void VacunasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VacunasMousePressed
-       
+
     }//GEN-LAST:event_VacunasMousePressed
 
     private void jMenu2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MousePressed
-           new StockPajuelas().setVisible(true);
+        new StockPajuelas().setVisible(true);
     }//GEN-LAST:event_jMenu2MousePressed
 
     private void LecheMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LecheMousePressed
-       new ControlLechero().setVisible(true);
+        new ControlLechero().setVisible(true);
     }//GEN-LAST:event_LecheMousePressed
 
     private void CarneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CarneMousePressed
-       new ProduccionCarne().setVisible(true);
+        new ProduccionCarne().setVisible(true);
     }//GEN-LAST:event_CarneMousePressed
 
     private void SaludVeterinarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaludVeterinarioMousePressed
-       new PlanVacunacion().setVisible(true);
+        new PlanVacunacion().setVisible(true);
     }//GEN-LAST:event_SaludVeterinarioMousePressed
 
     private void VentaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentaMousePressed
-      new VentaAnimal() .setVisible(true);
+        new VentaAnimal().setVisible(true);
     }//GEN-LAST:event_VentaMousePressed
 
     private void MovizarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MovizarMousePressed
@@ -595,50 +600,54 @@ Acceso mod;
     }//GEN-LAST:event_MovizarMousePressed
 
     private void ControlDistanciaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ControlDistanciaMousePressed
-       
+
     }//GEN-LAST:event_ControlDistanciaMousePressed
 
     private void CiudadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CiudadMousePressed
-       new Ciudades().setVisible(true);
+        new Ciudades().setVisible(true);
     }//GEN-LAST:event_CiudadMousePressed
 
     private void jMenu12KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jMenu12KeyPressed
- 
-  
-   
+
     }//GEN-LAST:event_jMenu12KeyPressed
 
     private void jMenu12MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu12MousePressed
-  abrirarchivo("C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\src\\usuario.pdf");        
+        abrirarchivo("C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\src\\usuario.pdf");
     }//GEN-LAST:event_jMenu12MousePressed
-    public void abrirarchivo(String archivo){
+    public void abrirarchivo(String archivo) {
 
-     try {
+        try {
 
-            File objetofile = new File (archivo);
+            File objetofile = new File(archivo);
             Desktop.getDesktop().open(objetofile);
 
-     }catch (IOException ex) {
+        } catch (IOException ex) {
 
             System.out.println(ex);
-       }
-       }   
+        }
+    }
 //private void reporte()  { 
-        
-     //   try {
-         //   String fileName="C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\src\\Reportes\\IA.jasper";
 
-        //     JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, null ,conn.conexion);
+    //   try {
+    //   String fileName="C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\src\\Reportes\\IA.jasper";
+    //     JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, null ,conn.conexion);
 //JasperViewer ventana = new JasperViewer(jasperPrint, false);//
 //ventana.setTitle("Empleados Registrados");
 //ventana.setVisible(true);
-     //   } catch (JRException ex) {
-     //       Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-      //  }
+    //   } catch (JRException ex) {
+    //       Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+    //  }
     // 
     /**
      * @param args the command line arguments
+     * @return 
      */
+    public static String fecha() {
+        Date fecha = new Date();
+        SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        return formatofecha.format(fecha);
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -695,7 +704,7 @@ Acceso mod;
     private javax.swing.JMenu Veterina;
     private javax.swing.JMenu Veterinario;
     private javax.swing.JMenu Vitaminas;
-    private com.toedter.calendar.JDateChooser datefechahora;
+    private javax.swing.JLabel fecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

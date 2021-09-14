@@ -3,6 +3,7 @@ package controlador;
 import Modelo.razasDAO;
 import agro.Conexion;
 import agro.Razas;
+import static agro.Razas.cbocategoria;
 import static agro.Razas.txtDescripcion;
 import static agro.Razas.txtSiglas;
 import static agro.Razas.txtid;
@@ -23,12 +24,16 @@ public class razasCTR {
     ResultSet rs;
 
     public void InsertaDato(String Descripcion, String Siglas) {
-        String sql = "Insert into razas (Descripcion, Siglas)"
-                + " VALUES (?, ?)";
+        String categoria;
+        categoria = cbocategoria.getItemAt(cbocategoria.getSelectedIndex()).getId();
+        String sql = "Insert into razas (Descripcion, Siglas, categoriaid)"
+                + " VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = conn.conexion.prepareStatement(sql);
             ps.setString(1, txtDescripcion.getText());
             ps.setString(2, txtSiglas.getText());
+            ps.setString(3, categoria);
+            
             ps.executeUpdate();
         } catch (SQLException e) {
             Logger.getLogger(Razas.class.getName()).log(Level.SEVERE, null, e);

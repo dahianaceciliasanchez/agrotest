@@ -79,7 +79,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel2" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jPanel4" pref="0" max="32767" attributes="0"/>
+                      <Component id="jPanel4" pref="275" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
@@ -134,7 +134,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="id" alignment="0" pref="82" max="32767" attributes="0"/>
+                          <Component id="txtidanimal" alignment="0" pref="82" max="32767" attributes="0"/>
                           <Component id="txtNombre" alignment="0" max="32767" attributes="0"/>
                           <Component id="txtRP" max="32767" attributes="0"/>
                           <Component id="peso" max="32767" attributes="0"/>
@@ -171,7 +171,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="id" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtidanimal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtHBP" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -216,10 +216,10 @@
                 <Property name="text" type="java.lang.String" value="RP"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="id">
+            <Component class="javax.swing.JTextField" name="txtidanimal">
               <Events>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="idMousePressed"/>
-                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="idKeyPressed"/>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtidanimalMousePressed"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtidanimalKeyPressed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -305,8 +305,6 @@
                               <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="txtCantidad" min="-2" pref="68" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="carga" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="20" max="32767" attributes="0"/>
@@ -355,9 +353,8 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtCantidad" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="carga" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="13" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -411,14 +408,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtCantidad">
-            </Component>
-            <Component class="javax.swing.JButton" name="carga">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Cargar"/>
-              </Properties>
-              <Events>
-                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="cargaKeyPressed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtid">
             </Component>

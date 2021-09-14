@@ -9,10 +9,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
+
 public class PlanificacionIA extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();
-    javax.swing.table.DefaultTableModel m;
     int nuid = 0;
 
     public PlanificacionIA() {
@@ -31,7 +31,7 @@ public class PlanificacionIA extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        id = new javax.swing.JTextField();
+        txtidanimal = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtRP = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -55,7 +55,6 @@ public class PlanificacionIA extends javax.swing.JFrame {
         txtFechavencimiento = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
-        carga = new javax.swing.JButton();
         txtid = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -87,14 +86,14 @@ public class PlanificacionIA extends javax.swing.JFrame {
 
         jLabel6.setText("RP");
 
-        id.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtidanimal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                idMousePressed(evt);
+                txtidanimalMousePressed(evt);
             }
         });
-        id.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtidanimal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                idKeyPressed(evt);
+                txtidanimalKeyPressed(evt);
             }
         });
 
@@ -130,7 +129,7 @@ public class PlanificacionIA extends javax.swing.JFrame {
                             .addComponent(jLabel15))))
                 .addGap(23, 23, 23)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(id, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                    .addComponent(txtidanimal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtRP)
                     .addComponent(peso))
@@ -158,7 +157,7 @@ public class PlanificacionIA extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtidanimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(txtHBP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -200,13 +199,6 @@ public class PlanificacionIA extends javax.swing.JFrame {
 
         jLabel16.setText("Cantidad Dosis");
 
-        carga.setText("Cargar");
-        carga.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cargaKeyPressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -226,9 +218,7 @@ public class PlanificacionIA extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addComponent(jLabel16)
                         .addGap(18, 18, 18)
-                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(carga)))
+                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
@@ -267,9 +257,8 @@ public class PlanificacionIA extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(carga))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 255));
@@ -393,7 +382,7 @@ public class PlanificacionIA extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -430,20 +419,21 @@ public class PlanificacionIA extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//           String sql= "INSERT INTO planificacionia (id, FechaAplicacion, MetodoIA, Animalid) VALUES (" 
-//                      +nuid  + ", DATE(NOW()) ,'"+ +"','"+ id.getText() +"')" ;
-//                       JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente " );
-//             conn.actualizaTabla(sql);
-//             GuardaMovi();
+             String  sql= "INSERT INTO planificacionia (id,FechaAplicacion, metodoIA, Animalid) VALUES ("
+                +nuid  + ", DATE(NOW()) ,"+h + ", " + txtidanimal.getText()
+                        + ")";
+                GuardaMovi();
+                  conn.actualizaTabla(sql); 
+                JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente " );
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void idKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyPressed
+    private void txtidanimalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtidanimalKeyPressed
         String sql = "SELECT id, Nombre, RP, HBP, fechanacimiento, pelaje, peso FROM animal WHERE id = '"
-                + id.getText() + "'";
+                + txtidanimal.getText() + "'";
         try {
             conn.traeDatos(sql);
             if (conn.resultado.next()) {
-                id.setText(conn.resultado.getString("id"));
+                txtidanimal.setText(conn.resultado.getString("id"));
                 txtNombre.setText(conn.resultado.getString("Nombre"));
                 txtRP.setText(conn.resultado.getString("RP"));
                 txtHBP.setText(conn.resultado.getString("HBP"));
@@ -457,24 +447,19 @@ public class PlanificacionIA extends javax.swing.JFrame {
         }
 
 
-    }//GEN-LAST:event_idKeyPressed
+    }//GEN-LAST:event_txtidanimalKeyPressed
 
-    private void idMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_idMousePressed
+    private void txtidanimalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtidanimalMousePressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_idMousePressed
+    }//GEN-LAST:event_txtidanimalMousePressed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         new RegistroAnimal().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
-    private void cargaFila() {
-        m.addRow(new Object[]{txtid.getText(),
-            txtid.getText(),
-           
-            txtCantidad.getText(),});
-    }
+
 
     private void GuardaMovi() {
-        String sql = "INSERT INTO detalleplanificacionia( planificacionia, vacunasid, CantidadDosis) VALUES ("
+        String sql = "INSERT INTO detalleplanificacionia(planificacionia, vacunasid, CantidadDosis) VALUES ("
                 + nuid + "," + txtid + "," + txtCantidad+")";
         conn.actualizaTabla(sql); //detallevacunas
         sql = "update vacunas Set Stock = Stock + " + txtCantidad.getText()
@@ -499,14 +484,8 @@ public class PlanificacionIA extends javax.swing.JFrame {
             Logger.getLogger(PedidosCompra.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_txtNombreVacunaActionPerformed
-
-    private void cargaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cargaKeyPressed
-
-        if(txtCantidad.getText().trim().equals(""))txtCantidad.setText("1");cargaFila();
-       
-    }//GEN-LAST:event_cargaKeyPressed
     private void LimpiarIA() {
-        id.setText("");
+        txtidanimal.setText("");
         txtNombreVacuna.setText("");
         txtCantidad.setText("");
         
@@ -552,9 +531,7 @@ public class PlanificacionIA extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton carga;
     private javax.swing.JLabel fecha;
-    public static javax.swing.JTextField id;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -593,5 +570,6 @@ public class PlanificacionIA extends javax.swing.JFrame {
     public static javax.swing.JTextField txtRP;
     private javax.swing.JTextField txtStock;
     private javax.swing.JTextField txtid;
+    public static javax.swing.JTextField txtidanimal;
     // End of variables declaration//GEN-END:variables
 }
