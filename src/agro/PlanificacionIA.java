@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.xml.transform.Result;
+
 
 public class PlanificacionIA extends javax.swing.JFrame {
 
@@ -457,8 +457,8 @@ public class PlanificacionIA extends javax.swing.JFrame {
         String metodo;
         metodo = cbometodo.getItemAt(cbometodo.getSelectedIndex()).getId();
         String sql = "INSERT INTO planificacionia (id, FechaAplicacion, metodoIA, Animalid) VALUES ("
-                + nuid + ",DATE(NOW()) ," + metodo + ", " + txtidanimal.getText()+ ")";
-            GuardaMovi();
+                + nuid + ",DATE(NOW()) ," + metodo + ", " + txtidanimal.getText()+ ", " + txtidvacunas.getText()
+                + ", " + txtCantidad.getText()+ ")";
            sql = "update vacunas set Stock = Stock - " + txtCantidad.getText()
                 + " where id =" + txtidvacunas.getText();
            System.out.print(sql);
@@ -495,27 +495,6 @@ public class PlanificacionIA extends javax.swing.JFrame {
         new RegistroAnimal().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    public void GuardaMovi() {
-        String sql = "INSERT INTO detalleplanificacionia (vacunasid, CantidadDosis)Values (?,?)";
-        try {
-              PreparedStatement ps = conn.conexion.prepareStatement(sql);
-                                ps.setString(1, txtidvacunas.getText());
-                                ps.setString(2, txtCantidad.getText());
-               ResultSet rs = ps.executeQuery();
-            
-        } catch (SQLException e) {
-        }
-      
-           
-                           
-        
-        
-        
-        sql = "update vacunas set Stock = Stock - " + txtCantidad.getText()
-                + " where id =" + txtidvacunas.getText();
-        conn.actualizaTabla(sql);
-        System.out.print(sql);
-    }
 
     private void txtNombreVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreVacunaActionPerformed
         String sql = "SELECT id, Nombre, FechaV, Stock FROM vacunas WHERE Nombre = '"
