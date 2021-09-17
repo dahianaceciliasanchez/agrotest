@@ -456,7 +456,8 @@ public class PlanificacionIA extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String metodo;
         metodo = cbometodo.getItemAt(cbometodo.getSelectedIndex()).getId();
-        String sql = "INSERT INTO planificacionia (id, FechaAplicacion, metodoIA, Animalid) VALUES ("
+        //holaaaaa dahianaaa
+        String sql = "INSERT INTO planificacionia (id, FechaAplicacion, metodoIA, Animalid, vacunasid, cantidad) VALUES ("
                 + nuid + ",DATE(NOW()) ," + metodo + ", " + txtidanimal.getText()+ ", " + txtidvacunas.getText()
                 + ", " + txtCantidad.getText()+ ")";
            sql = "update vacunas set Stock = Stock - " + txtCantidad.getText()
@@ -480,7 +481,7 @@ public class PlanificacionIA extends javax.swing.JFrame {
                 txtFechaN.setText(conn.resultado.getString("fechanacimiento"));
                 txtPelaje.setText(conn.resultado.getString("pelaje"));
                 peso.setText(conn.resultado.getString("Peso"));
-
+            
             }
         } catch (SQLException ex) {
             Logger.getLogger(PedidosCompra.class.getName()).log(Level.SEVERE, null, ex);
