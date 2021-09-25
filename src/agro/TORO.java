@@ -5,19 +5,16 @@
  */
 package agro;
 
-
-
-
-import static agro.StockPajuelas.txtToro;
+import static agro.RegistroIA.txtHBPtoro;
+import static agro.RegistroIA.txtRPtoro;
+import static agro.RegistroIA.txtStock;
+import static agro.RegistroIA.txtToro;
+import static agro.RegistroIA.txtidtoro;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-/**
- *
- * @author HP
- */
 public class TORO extends javax.swing.JFrame {
 Conexion conn = new Conexion ();
     javax.swing.table.DefaultTableModel  m;
@@ -32,7 +29,7 @@ Conexion conn = new Conexion ();
     }
           private void cargaTabla() {
            m.setRowCount(0);
-        String sql =    "Select id,  Nombre, HBP FROM Toro";
+        String sql =    "Select id, Nombre, RP, HBP, Stock FROM semental";
         String columna = "RP";
             
         try {
@@ -44,7 +41,8 @@ Conexion conn = new Conexion ();
             conn.resultado = conn.sentencia.executeQuery(sql);
             while(conn.resultado.next()){
                 m.addRow(new Object[] {conn.resultado.getInt("id"),
-                    conn.resultado.getString("Nombre") ,  conn.resultado.getString("HBP")});
+                    conn.resultado.getString("Nombre") , conn.resultado.getString("RP"), conn.resultado.getString("HBP"),
+                 conn.resultado.getString("Stock")});
             }
         } catch (SQLException ex) {
             Logger.getLogger(TORO.class.getName()).log(Level.SEVERE, null, ex);
@@ -69,7 +67,7 @@ Conexion conn = new Conexion ();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 102));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hembra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.Color.gray)); // NOI18N
 
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
@@ -81,7 +79,7 @@ Conexion conn = new Conexion ();
                 {null, null, null, null, null}
             },
             new String [] {
-                "id", "Nombre", "RP", "HBP", "Raza"
+                "id", "Nombre", "RP", "HBP", "Stock"
             }
         ));
         Lista.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -157,34 +155,20 @@ Conexion conn = new Conexion ();
     private void cbobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbobuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbobuscarActionPerformed
-    
-    private void AceptarSemental() {
-//        txtid = Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
-        
-//        String sql = "select  *from maestro where id = " +  Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
-//            System.out.println(sql);
-//            conn.traeDatos(sql);
-//        try {
-//            if(conn.resultado.next()){
-//                Tabla1.getValuAt.(conn.resultado.getString("id"));
-//                txtHBP.setText(conn.resultado.getString("Nombre"));
-//            }} catch (SQLException ex) {
-//            Logger.getLogger(Sementales.class.getName()).log(Level.SEVERE, null, ex);
-//        
-//    
-//    }
-//    
-    }
+   
 
     private void BuscarSementales() {
-        String sql = "select * from toro where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        String sql = "select * from semental where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
             System.out.println(sql);
             conn.traeDatos(sql);
         try {
             if(conn.resultado.next()){
-                txtToro.setText(conn.resultado.getString("id"));
-              
-                
+                txtidtoro.setText(conn.resultado.getString("id"));
+                txtToro.setText(conn.resultado.getString("Nombre"));
+                txtRPtoro.setText(conn.resultado.getString("RP"));
+                txtHBPtoro.setText(conn.resultado.getString("HBP"));
+                txtStock.setText(conn.resultado.getString("Stock"));
+         
                 
             }} catch (SQLException ex) {
             Logger.getLogger(TORO.class.getName()).log(Level.SEVERE, null, ex);

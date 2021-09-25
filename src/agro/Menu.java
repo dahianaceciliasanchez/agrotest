@@ -5,7 +5,6 @@
  */
 package agro;
 
-import static agro.VentaAnimal.fecha;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -13,13 +12,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
  * @author Dahiana Sanchez G
  */
 public class Menu extends javax.swing.JFrame {
-
+    
     Conexion conn = new Conexion();
     Calendar fechaactual = new GregorianCalendar();
     Acceso mod;
@@ -71,20 +76,18 @@ public class Menu extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         IA = new javax.swing.JMenu();
-        Estanc = new javax.swing.JMenu();
         Nacimiento = new javax.swing.JMenu();
         jMenu24 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jMenu10 = new javax.swing.JMenu();
         jMenu21 = new javax.swing.JMenu();
         jMenu23 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         Venta = new javax.swing.JMenu();
         Movizar = new javax.swing.JMenu();
-        ControlDistancia = new javax.swing.JMenu();
-        jMenu25 = new javax.swing.JMenu();
-        jMenu26 = new javax.swing.JMenu();
-        jMenu27 = new javax.swing.JMenu();
+        planengorde = new javax.swing.JMenu();
+        planvacunacion = new javax.swing.JMenu();
+        fiscalizacion = new javax.swing.JMenu();
+        tarjetavacunacion = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
         jMenu11 = new javax.swing.JMenu();
         jMenu15 = new javax.swing.JMenu();
@@ -118,7 +121,6 @@ public class Menu extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\Portada.jpg")); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -304,10 +306,6 @@ public class Menu extends javax.swing.JFrame {
                 IAMousePressed(evt);
             }
         });
-
-        Estanc.setText("Estancia");
-        IA.add(Estanc);
-
         jMenu4.add(IA);
 
         Nacimiento.setText("PROTOCOLOS IA");
@@ -319,6 +317,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu4.add(Nacimiento);
 
         jMenu24.setText("SOLICITUD DE IA");
+        jMenu24.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu24MousePressed(evt);
+            }
+        });
         jMenu4.add(jMenu24);
 
         jMenu2.setText("REGISTRO IA");
@@ -327,16 +330,22 @@ public class Menu extends javax.swing.JFrame {
                 jMenu2MousePressed(evt);
             }
         });
-
-        jMenu10.setText("Proveedor Semen ");
-        jMenu2.add(jMenu10);
-
         jMenu4.add(jMenu2);
 
         jMenu21.setText("AJUSTE DE STOCK");
+        jMenu21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu21MousePressed(evt);
+            }
+        });
         jMenu4.add(jMenu21);
 
         jMenu23.setText("PREÑES");
+        jMenu23.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu23MousePressed(evt);
+            }
+        });
         jMenu4.add(jMenu23);
 
         jMenuBar1.add(jMenu4);
@@ -359,22 +368,37 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu6.add(Movizar);
 
-        ControlDistancia.setText("PLAN DE ENGORDE");
-        ControlDistancia.addMouseListener(new java.awt.event.MouseAdapter() {
+        planengorde.setText("PLAN DE ENGORDE");
+        planengorde.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                ControlDistanciaMousePressed(evt);
+                planengordeMousePressed(evt);
             }
         });
-        jMenu6.add(ControlDistancia);
+        jMenu6.add(planengorde);
 
-        jMenu25.setText("PLAN Y ETAPAS DE VACUNACION");
-        jMenu6.add(jMenu25);
+        planvacunacion.setText("PLAN Y ETAPAS DE VACUNACION");
+        planvacunacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                planvacunacionMousePressed(evt);
+            }
+        });
+        jMenu6.add(planvacunacion);
 
-        jMenu26.setText("FISCALIZACION");
-        jMenu6.add(jMenu26);
+        fiscalizacion.setText("FISCALIZACION");
+        fiscalizacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                fiscalizacionMousePressed(evt);
+            }
+        });
+        jMenu6.add(fiscalizacion);
 
-        jMenu27.setText("TARJETA VACUNACION");
-        jMenu6.add(jMenu27);
+        tarjetavacunacion.setText("TARJETA VACUNACION");
+        tarjetavacunacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tarjetavacunacionMousePressed(evt);
+            }
+        });
+        jMenu6.add(tarjetavacunacion);
 
         jMenuBar1.add(jMenu6);
 
@@ -536,11 +560,11 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_CargoMousePressed
 
     private void IAMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IAMousePressed
-        new RegistroIA().setVisible(true);
+        new PlanificacionIA().setVisible(true);
     }//GEN-LAST:event_IAMousePressed
 
     private void NacimientoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NacimientoMousePressed
-        new Preñes().setVisible(true);
+        new ProtocolosIA().setVisible(true);
     }//GEN-LAST:event_NacimientoMousePressed
 
     private void jMenu11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu11MousePressed
@@ -576,11 +600,11 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_VacunasMousePressed
 
     private void jMenu2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MousePressed
-        new StockPajuelas().setVisible(true);
+        new RegistroIA().setVisible(true);
     }//GEN-LAST:event_jMenu2MousePressed
 
     private void LecheMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LecheMousePressed
-        new ControlLechero().setVisible(true);
+        new RegistroIA().setVisible(true);
     }//GEN-LAST:event_LecheMousePressed
 
     private void CarneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CarneMousePressed
@@ -592,16 +616,16 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_SaludVeterinarioMousePressed
 
     private void VentaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentaMousePressed
-        new VentaAnimal().setVisible(true);
+        new RegistroAnimal().setVisible(true);
     }//GEN-LAST:event_VentaMousePressed
 
     private void MovizarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MovizarMousePressed
-        new Movi().setVisible(true);
+        new Suplementos().setVisible(true);
     }//GEN-LAST:event_MovizarMousePressed
 
-    private void ControlDistanciaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ControlDistanciaMousePressed
-
-    }//GEN-LAST:event_ControlDistanciaMousePressed
+    private void planengordeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_planengordeMousePressed
+        new PLandeEngorde().setVisible(true);
+    }//GEN-LAST:event_planengordeMousePressed
 
     private void CiudadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CiudadMousePressed
         new Ciudades().setVisible(true);
@@ -614,40 +638,64 @@ public class Menu extends javax.swing.JFrame {
     private void jMenu12MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu12MousePressed
         abrirarchivo("C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\src\\usuario.pdf");
     }//GEN-LAST:event_jMenu12MousePressed
+
+    private void planvacunacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_planvacunacionMousePressed
+        new PlanVacunacion().setVisible(true);
+    }//GEN-LAST:event_planvacunacionMousePressed
+
+    private void fiscalizacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fiscalizacionMousePressed
+        new RegistroFiscalizacion().setVisible(true);
+    }//GEN-LAST:event_fiscalizacionMousePressed
+
+    private void tarjetavacunacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tarjetavacunacionMousePressed
+        new TarjetadeVacunacion().setVisible(true);
+    }//GEN-LAST:event_tarjetavacunacionMousePressed
+
+    private void jMenu24MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu24MousePressed
+        new SolictudIA().setVisible(true);
+    }//GEN-LAST:event_jMenu24MousePressed
+
+    private void jMenu21MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu21MousePressed
+        new AjustedeStockdeSemen().setVisible(true);
+    }//GEN-LAST:event_jMenu21MousePressed
+
+    private void jMenu23MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu23MousePressed
+        new Preñes().setVisible(true);
+    }//GEN-LAST:event_jMenu23MousePressed
     public void abrirarchivo(String archivo) {
-
+        
         try {
-
+            
             File objetofile = new File(archivo);
             Desktop.getDesktop().open(objetofile);
-
+            
         } catch (IOException ex) {
-
+            
             System.out.println(ex);
         }
     }
-//private void reporte()  { 
+    
+    private void reportes() {
+        try {
+            String fileName = "C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\src\\Reportes\\IA.jasper";
+            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, null, conn.conexion);
+            JasperViewer ventana = new JasperViewer(jasperPrint, false);//
+            ventana.setTitle("Empleados Registrados");
+            ventana.setVisible(true);
+        } catch (JRException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-    //   try {
-    //   String fileName="C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\src\\Reportes\\IA.jasper";
-    //     JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, null ,conn.conexion);
-//JasperViewer ventana = new JasperViewer(jasperPrint, false);//
-//ventana.setTitle("Empleados Registrados");
-//ventana.setVisible(true);
-    //   } catch (JRException ex) {
-    //       Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-    //  }
-    // 
     /**
-     * @param args the command line arguments
-     * @return 
+     * @return
      */
     public static String fecha() {
         Date fecha = new Date();
         SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         return formatofecha.format(fecha);
     }
-
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -688,8 +736,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu Carne;
     private javax.swing.JMenu Ciudad;
     private javax.swing.JMenu Comprador;
-    private javax.swing.JMenu ControlDistancia;
-    private javax.swing.JMenu Estanc;
     private javax.swing.JMenu Frigorifico;
     private javax.swing.JMenu IA;
     private javax.swing.JMenu Leche;
@@ -705,6 +751,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu Veterinario;
     private javax.swing.JMenu Vitaminas;
     private javax.swing.JLabel fecha;
+    private javax.swing.JMenu fiscalizacion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -712,7 +759,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu12;
     private javax.swing.JMenu jMenu13;
@@ -728,9 +774,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu22;
     private javax.swing.JMenu jMenu23;
     private javax.swing.JMenu jMenu24;
-    private javax.swing.JMenu jMenu25;
-    private javax.swing.JMenu jMenu26;
-    private javax.swing.JMenu jMenu27;
     private javax.swing.JMenu jMenu29;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -743,5 +786,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenu planengorde;
+    private javax.swing.JMenu planvacunacion;
+    private javax.swing.JMenu tarjetavacunacion;
     // End of variables declaration//GEN-END:variables
 }

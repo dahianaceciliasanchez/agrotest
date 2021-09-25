@@ -43,7 +43,6 @@ public class RecibodePago extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtNro = new javax.swing.JTextField();
-        jCalendar1 = new com.toedter.calendar.JCalendar();
         jLabel5 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -71,6 +70,7 @@ public class RecibodePago extends javax.swing.JFrame {
         jTextField6 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("Pago de Recibo"); // NOI18N
@@ -117,9 +117,7 @@ public class RecibodePago extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jLabel2)
-                        .addGap(26, 26, 26)
-                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(76, 76, 76)
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addComponent(txtNro, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -132,7 +130,7 @@ public class RecibodePago extends javax.swing.JFrame {
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +138,6 @@ public class RecibodePago extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(txtNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -189,7 +186,7 @@ public class RecibodePago extends javax.swing.JFrame {
             Ficha.getColumnModel().getColumn(1).setPreferredWidth(2);
         }
 
-        btnNuevo.setText("Agregar");
+        btnNuevo.setText("AGREGAR");
         btnNuevo.setToolTipText("Agrege Datos");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,7 +194,7 @@ public class RecibodePago extends javax.swing.JFrame {
             }
         });
 
-        btnGrabar.setText("Guardar");
+        btnGrabar.setText("GUARDAR");
         btnGrabar.setToolTipText("Grabe los Datos Ingresados");
         btnGrabar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +202,7 @@ public class RecibodePago extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Salir");
+        jButton2.setText("SALIR");
         jButton2.setToolTipText("Cierre el Programa");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,6 +272,8 @@ public class RecibodePago extends javax.swing.JFrame {
 
         jLabel10.setText("RUC");
 
+        jButton1.setText("IMPRIMIR");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -318,6 +317,8 @@ public class RecibodePago extends javax.swing.JFrame {
                         .addComponent(btnNuevo)
                         .addGap(18, 18, 18)
                         .addComponent(btnGrabar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2)))
                 .addContainerGap(86, Short.MAX_VALUE))
@@ -348,7 +349,8 @@ public class RecibodePago extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(btnGrabar)
-                    .addComponent(btnNuevo))
+                    .addComponent(btnNuevo)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -498,8 +500,8 @@ public class RecibodePago extends javax.swing.JFrame {
     public static javax.swing.JTable Ficha;
     private javax.swing.JButton btnGrabar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;

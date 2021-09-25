@@ -5,56 +5,64 @@
  */
 package agro;
 
-
-
-
-import static agro.PlanVacunacion.txtHBP;
-import static agro.PlanVacunacion.txtNombre;
-import static agro.PlanVacunacion.txtPelaje;
-import static agro.PlanVacunacion.txtRP;
-import static agro.PlanVacunacion.txtid;
+import static agro.RegistroFiscalizacion.txtEtapas;
+import static agro.RegistroFiscalizacion.txtidanimal;
+import static agro.RegistroFiscalizacion.txtidplanificacio;
+import static agro.RegistroFiscalizacion.txtidvacunas;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 /**
  *
  * @author Dahiana Sanchez G
  */
-public class BuscarASa extends javax.swing.JFrame {
-Conexion conn = new Conexion ();
-    javax.swing.table.DefaultTableModel  m;
+public class BuscarPlanificacion extends javax.swing.JFrame {
 
-    public BuscarASa() {
+    Conexion conn = new Conexion();
+    javax.swing.table.DefaultTableModel m;
+
+    public BuscarPlanificacion() {
         initComponents();
-         m = (javax.swing.table.DefaultTableModel) Lista.getModel();
-         cargaTabla();
+        m = (javax.swing.table.DefaultTableModel) Lista.getModel();
+        cargaTabla();
     }
 
-   
-   
-          private void cargaTabla() {
-           m.setRowCount(0);
-        String sql = "SELECT  id, Nombre, RP, HBP, Pelaje FROM Animal";
-        String columna = "RP";
-            
+    private void cargaTabla() {
+        m.setRowCount(0);
+        String sql = "SELECT p.id, p.etapasid, e.Descripcion, p.vacunasid, v.Nombre, p.animalid, a.Nombre nom_Animal\n"
+                + "FROM planificacionvacunacion AS p\n"
+                + "INNER JOIN etapasvacunacion AS e\n"
+                + "ON p.etapasid = e.id\n"
+                + "INNER JOIN vacunas AS v\n"
+                + "ON p.vacunasid = v.id\n"
+                + "INNER JOIN animal AS a\n"
+                + "ON p.animalid = a.id";
+        String columna = "id";
+
         try {
-             if (!txtfiltro.getText().trim().isEmpty()){
-                    if(cbobuscar.getSelectedIndex() == 1) columna = "RP";
-                    sql = sql + " where " + columna + " like '%"+ txtfiltro.getText().trim() +"%' " ;
+            if (!txtfiltro.getText().trim().isEmpty()) {
+                if (cbobuscar.getSelectedIndex() == 1) {
+                    columna = "id";
                 }
+                sql = sql + " where " + columna + " like '%" + txtfiltro.getText().trim() + "%' ";
+            }
             conn.sentencia = conn.conexion.createStatement();
             conn.resultado = conn.sentencia.executeQuery(sql);
-            while(conn.resultado.next()){
-                m.addRow(new Object[] { conn.resultado.getString("id"), conn.resultado.getString("Nombre"),
-                    conn.resultado.getString("RP"),
-                    conn.resultado.getString("HBP"), conn.resultado.getString("Pelaje")});
+            while (conn.resultado.next()) {
+                m.addRow(new Object[]{conn.resultado.getInt("id"),
+                    conn.resultado.getString("Etapasid"),
+                    conn.resultado.getString("Descripcion"),
+                    conn.resultado.getString("vacunasid"),
+                    conn.resultado.getString("Nombre"),
+                    conn.resultado.getString("animalid"),
+                    conn.resultado.getString("nom_Animal")
+                });
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarASa.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscarPlanificacion.class.getName()).log(Level.SEVERE, null, ex);
         }
- }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,24 +82,26 @@ Conexion conn = new Conexion ();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 153));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hembra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.Color.gray)); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
         Lista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "RP", "HBP", "Pelaje", "FechaNacimiento"
+                "id", "Cod_Etapas", "Descripcion", "Cod_Vacuna", "Nombre", "Cod_Animal", "Nombre_Animal"
             }
-        ));
-        Lista.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ListaMousePressed(evt);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, true, false, true, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         Lista.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -100,10 +110,18 @@ Conexion conn = new Conexion ();
             }
         });
         jScrollPane1.setViewportView(Lista);
+        if (Lista.getColumnModel().getColumnCount() > 0) {
+            Lista.getColumnModel().getColumn(0).setMinWidth(2);
+            Lista.getColumnModel().getColumn(0).setPreferredWidth(1);
+            Lista.getColumnModel().getColumn(0).setMaxWidth(1);
+            Lista.getColumnModel().getColumn(1).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(3).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(5).setPreferredWidth(3);
+        }
 
         jLabel6.setText("Buscar");
 
-        cbobuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "RP", "HBP" }));
+        cbobuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "id" }));
         cbobuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbobuscarActionPerformed(evt);
@@ -114,26 +132,27 @@ Conexion conn = new Conexion ();
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(39, 39, 39)
                 .addComponent(jLabel6)
-                .addGap(27, 27, 27)
-                .addComponent(txtfiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(txtfiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 231, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtfiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
+                    .addComponent(txtfiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -146,7 +165,7 @@ Conexion conn = new Conexion ();
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -155,37 +174,31 @@ Conexion conn = new Conexion ();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ListaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ListaKeyPressed
-      BuscarSementales();
- 
-     dispose();
+        BuscarSementales();
+        dispose();
     }//GEN-LAST:event_ListaKeyPressed
 
     private void cbobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbobuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbobuscarActionPerformed
 
-    private void ListaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaMousePressed
-      BuscarSementales();
-      dispose();
-    }//GEN-LAST:event_ListaMousePressed
-  
-
     private void BuscarSementales() {
-        String sql = "select * from Animal where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
-            System.out.println(sql);
-            conn.traeDatos(sql);
+        String sql = "select * from planificacionvacunacion where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        System.out.println(sql);
+        conn.traeDatos(sql);
         try {
-            if(conn.resultado.next()){
-                txtid.setText(conn.resultado.getString("id"));
-                txtNombre.setText(conn.resultado.getString("Nombre"));
-                txtRP.setText(conn.resultado.getString("RP"));
-                txtHBP.setText(conn.resultado.getString("HBP"));
-                txtPelaje.setText(conn.resultado.getString("Pelaje"));
-        
-            }} catch (SQLException ex) {
-            Logger.getLogger(BuscarASa.class.getName()).log(Level.SEVERE, null, ex);
+            if (conn.resultado.next()) {
+                txtidplanificacio.setText(conn.resultado.getString("id"));
+                txtEtapas.setText(conn.resultado.getString("etapasid"));
+                txtidvacunas.setText(conn.resultado.getString("vacunasid"));
+                txtidanimal.setText(conn.resultado.getString("animalid"));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscarPlanificacion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -203,46 +216,14 @@ Conexion conn = new Conexion ();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarASa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarPlanificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarASa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarPlanificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarASa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarPlanificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarASa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarPlanificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -279,7 +260,7 @@ Conexion conn = new Conexion ();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BuscarASa().setVisible(true);
+                new BuscarPlanificacion().setVisible(true);
             }
         });
     }
@@ -292,4 +273,5 @@ Conexion conn = new Conexion ();
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtfiltro;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="solicitudia" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1c3f5b12-6256-4953-bffb-01e726d08315">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_nrosolicitud" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     solicitudia.`FechaTrabajo` AS solicitudia_FechaTrabajo,
+     solicitudia.`NroSolicitud` AS solicitudia_NroSolicitud,
+     solicitudia.`Empleadoid` AS solicitudia_Empleadoid,
+     empleados.`id` AS empleados_id,
+     empleados.`Nombre` AS empleados_Nombre,
+     empleados.`CI` AS empleados_CI,
+     empleados.`Apellido` AS empleados_Apellido
+FROM
+     `empleados` empleados INNER JOIN `solicitudia` solicitudia ON empleados.`id` = solicitudia.`Empleadoid`
+
+WHERE solicitudia.NroSolicitud =$P!{p_nrosolicitud}]]>
+	</queryString>
+	<field name="solicitudia_FechaTrabajo" class="java.sql.Date"/>
+	<field name="solicitudia_NroSolicitud" class="java.lang.Integer"/>
+	<field name="solicitudia_Empleadoid" class="java.lang.Integer"/>
+	<field name="empleados_id" class="java.lang.Integer"/>
+	<field name="empleados_Nombre" class="java.lang.String"/>
+	<field name="empleados_CI" class="java.lang.String"/>
+	<field name="empleados_Apellido" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="201" y="23" width="124" height="28" forecolor="#006600" backcolor="#CCCCCC" uuid="9af13fb3-4b53-40c1-a06c-b6027cd16a0f"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOLICITUD IA]]></text>
+			</staticText>
+			<image>
+				<reportElement x="13" y="10" width="100" height="53" uuid="87865ae8-4906-47e7-96a8-5209c336f207"/>
+				<imageExpression><![CDATA["C:\\Users\\dahia\\OneDrive\\Documents\\Agro\\Imagenes\\image.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="451" y="3" width="100" height="20" uuid="2d4c3a98-8312-4e5d-b629-4a7bc719ab22"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="2" width="100" height="20" uuid="e3eba9c2-3dcb-45bb-9f77-56d298c71379"/>
+				<textElement>
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FECHA SOLICITUD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="126" y="2" width="100" height="20" uuid="576112be-c54c-401c-9c09-992292b3bf48"/>
+				<textElement>
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NRO SOLICITUD IA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="2" width="100" height="20" uuid="eff0046e-b000-48d4-8563-98b4bc440986"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE_EMPLEADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="2" width="100" height="20" uuid="befecc65-b99b-4de2-a92e-d612da19d02b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[APELLIDO_EMPLEADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="2" width="100" height="20" uuid="dcc1321e-96ed-4f87-88d0-1aeef8f71ed6"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CI_EMPLEADO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="57" splitType="Stretch">
+			<textField>
+				<reportElement x="13" y="0" width="100" height="20" uuid="de74bad2-11ee-4a0b-8017-8df097a47862"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{solicitudia_FechaTrabajo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="126" y="0" width="100" height="20" uuid="979c2de5-f953-477e-a757-b17f53c3781a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{solicitudia_NroSolicitud}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="239" y="0" width="100" height="20" uuid="d565db28-4c41-4279-9bec-67fff8fcac95"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{empleados_Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="351" y="0" width="100" height="20" uuid="ba799062-a820-4420-93ae-2ec8463a47fa"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{empleados_Apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="451" y="0" width="100" height="20" uuid="9105b08e-176d-4593-becc-84a4dbccf4c4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{empleados_CI}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="10" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="126" y="11" width="213" height="20" uuid="f7082371-fb3d-4b2a-9fee-61522d2d2a9c"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[FIRMA DEL RESPONSANBLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="16" width="100" height="20" uuid="97dde15f-43e0-4e94-ae93-5d2c67572b0b"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[----------------------------------------]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="13" splitType="Stretch"/>
+	</summary>
+</jasperReport>

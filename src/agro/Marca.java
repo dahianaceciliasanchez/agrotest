@@ -73,8 +73,6 @@ public class Marca extends javax.swing.JFrame {
         cbobuscar = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
-        jLabel6 = new javax.swing.JLabel();
-        txtGentilicio = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,21 +110,21 @@ public class Marca extends javax.swing.JFrame {
             }
         });
 
-        btnAgregar.setText("Agregar");
+        btnAgregar.setText("AGREGAR");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
 
-        btnGuardar.setText("Guardar");
+        btnGuardar.setText("GUARDAR");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
 
-        salir.setText("Salir");
+        salir.setText("SALIR");
         salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salirActionPerformed(evt);
@@ -155,14 +153,6 @@ public class Marca extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabla);
 
-        jLabel6.setText("Gentilicio");
-
-        txtGentilicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtGentilicioActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,13 +173,11 @@ public class Marca extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(23, 23, 23)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtGentilicio, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtSiglas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-                                    .addComponent(txtDescripcion, javax.swing.GroupLayout.Alignment.LEADING))))))
+                            .addGap(77, 77, 77)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtSiglas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                                .addComponent(txtDescripcion, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGap(5, 5, 5))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,7 +187,7 @@ public class Marca extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtBsucar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,11 +205,7 @@ public class Marca extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(txtSiglas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtGentilicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAgregar)
                             .addComponent(btnGuardar)
@@ -241,7 +225,7 @@ public class Marca extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void limpiar() {
-        txtGentilicio.setText("");
+       
         txtSiglas.setText("");
         txtDescripcion.setText("");
 
@@ -255,18 +239,18 @@ public class Marca extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnGuardarActionPerformed
     private void InsertaDato() {
-        if ("".equals(txtDescripcion.getText())) {
-            JOptionPane.showMessageDialog(null, "Completar campo vacio");
-
-        } else {
-
-            String sql = "Insert into ciudad (Descripcion, Sigla, Gentilicio)"
-                    + " values('" + txtDescripcion.getText() + "', '" + txtSiglas.getText()
-                    + "', '" + txtGentilicio.getText() + "') ";
-            System.out.println(sql);
-            conn.actualizaTabla(sql);
-            cargaTabla();
-        }
+//        if ("".equals(txtDescripcion.getText())) {
+//            JOptionPane.showMessageDialog(null, "Completar campo vacio");
+//
+//        } else {
+//
+//            String sql = "Insert into ciudad (Descripcion, Sigla, Gentilicio)"
+//                    + " values('" + txtDescripcion.getText() + "', '" + txtSiglas.getText()
+//                    + "', '" + txtGentilicio.getText() + "') ";
+//            System.out.println(sql);
+//            conn.actualizaTabla(sql);
+//            cargaTabla();
+//        }
     }
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         ban = 1;
@@ -305,10 +289,6 @@ public class Marca extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtSiglasActionPerformed
 
-    private void txtGentilicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGentilicioActionPerformed
-
-    }//GEN-LAST:event_txtGentilicioActionPerformed
-
     private void txtDescripcionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDescripcionMousePressed
 
     }//GEN-LAST:event_txtDescripcionMousePressed
@@ -318,20 +298,20 @@ public class Marca extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDescripcionKeyPressed
 
     private void Buscar() {
-        String sql = "select * from ciudad where id = " + tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
-        System.out.println(sql);
-        conn.traeDatos(sql);
-        try {
-            if (conn.resultado.next()) {
-
-                txtDescripcion.setText(conn.resultado.getString("Descripcion"));
-                txtSiglas.setText(conn.resultado.getString("Sigla"));
-                txtGentilicio.setText(conn.resultado.getString("Gentilicio"));
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Marca.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        String sql = "select * from ciudad where id = " + tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
+//        System.out.println(sql);
+//        conn.traeDatos(sql);
+//        try {
+//            if (conn.resultado.next()) {
+//
+//                txtDescripcion.setText(conn.resultado.getString("Descripcion"));
+//                txtSiglas.setText(conn.resultado.getString("Sigla"));
+//                txtGentilicio.setText(conn.resultado.getString("Gentilicio"));
+//
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Marca.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     /**
@@ -392,13 +372,11 @@ public class Marca extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton salir;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtBsucar;
     private javax.swing.JTextField txtDescripcion;
-    private javax.swing.JTextField txtGentilicio;
     private javax.swing.JTextField txtSiglas;
     // End of variables declaration//GEN-END:variables
 }

@@ -219,7 +219,7 @@ Conexion conn = new Conexion ();
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Agregar");
+        jButton1.setText("AGREGAR");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jButton1MousePressed(evt);
@@ -231,14 +231,14 @@ Conexion conn = new Conexion ();
             }
         });
 
-        jButton4.setText("Guardar");
+        jButton4.setText("GUARDAR");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Salir");
+        jButton3.setText("SALIR");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);

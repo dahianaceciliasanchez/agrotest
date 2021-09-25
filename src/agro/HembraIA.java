@@ -6,14 +6,14 @@
 package agro;
 
 
-import static agro.RegistroIA.txtid;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static agro.RegistroIA.txtrpHembra;
 import static agro.RegistroIA.txtHBPHembra;
-import static agro.RegistroIA.txtNombreHmebra;
+import static agro.RegistroIA.txtidhembra;
+import static agro.RegistroIA.txtNombreH;
 
 /**
  *
@@ -184,10 +184,10 @@ Conexion conn = new Conexion ();
             conn.traeDatos(sql);
         try {
             if(conn.resultado.next()){
-                txtid.setText(conn.resultado.getString("id"));
+                txtidhembra.setText(conn.resultado.getString("id"));
                 txtrpHembra.setText(conn.resultado.getString("RP"));
                 txtHBPHembra.setText(conn.resultado.getString("HBP"));
-                txtNombreHmebra.setText(conn.resultado.getString("Nombre"));
+                txtNombreH.setText(conn.resultado.getString("Nombre"));
                 
                 
             }} catch (SQLException ex) {

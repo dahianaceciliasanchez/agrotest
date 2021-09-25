@@ -151,13 +151,6 @@
               <Events>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="IAMousePressed"/>
               </Events>
-              <SubComponents>
-                <Menu class="javax.swing.JMenu" name="Estanc">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Estancia"/>
-                  </Properties>
-                </Menu>
-              </SubComponents>
             </Menu>
             <Menu class="javax.swing.JMenu" name="Nacimiento">
               <Properties>
@@ -171,6 +164,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="SOLICITUD DE IA"/>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu24MousePressed"/>
+              </Events>
             </Menu>
             <Menu class="javax.swing.JMenu" name="jMenu2">
               <Properties>
@@ -179,23 +175,22 @@
               <Events>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu2MousePressed"/>
               </Events>
-              <SubComponents>
-                <Menu class="javax.swing.JMenu" name="jMenu10">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Proveedor Semen "/>
-                  </Properties>
-                </Menu>
-              </SubComponents>
             </Menu>
             <Menu class="javax.swing.JMenu" name="jMenu21">
               <Properties>
                 <Property name="text" type="java.lang.String" value="AJUSTE DE STOCK"/>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu21MousePressed"/>
+              </Events>
             </Menu>
             <Menu class="javax.swing.JMenu" name="jMenu23">
               <Properties>
                 <Property name="text" type="java.lang.String" value="PRE&#xd1;ES"/>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu23MousePressed"/>
+              </Events>
             </Menu>
           </SubComponents>
         </Menu>
@@ -220,28 +215,37 @@
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MovizarMousePressed"/>
               </Events>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="ControlDistancia">
+            <Menu class="javax.swing.JMenu" name="planengorde">
               <Properties>
                 <Property name="text" type="java.lang.String" value="PLAN DE ENGORDE"/>
               </Properties>
               <Events>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ControlDistanciaMousePressed"/>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="planengordeMousePressed"/>
               </Events>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="jMenu25">
+            <Menu class="javax.swing.JMenu" name="planvacunacion">
               <Properties>
                 <Property name="text" type="java.lang.String" value="PLAN Y ETAPAS DE VACUNACION"/>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="planvacunacionMousePressed"/>
+              </Events>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="jMenu26">
+            <Menu class="javax.swing.JMenu" name="fiscalizacion">
               <Properties>
                 <Property name="text" type="java.lang.String" value="FISCALIZACION"/>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="fiscalizacionMousePressed"/>
+              </Events>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="jMenu27">
+            <Menu class="javax.swing.JMenu" name="tarjetavacunacion">
               <Properties>
                 <Property name="text" type="java.lang.String" value="TARJETA VACUNACION"/>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tarjetavacunacionMousePressed"/>
+              </Events>
             </Menu>
           </SubComponents>
         </Menu>
@@ -512,9 +516,6 @@
               <Font name="Arial" size="18" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\dahia\OneDrive\Documents\NetBeansProjects\Agro\Imagenes\Portada.jpg"/>
-            </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">

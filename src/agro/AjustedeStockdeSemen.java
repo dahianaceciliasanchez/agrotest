@@ -1,19 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package agro;
 
+import Modelo.combomotivoajuste;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-/**
- *
- * @author Dahiana Sanchez
- */
 public class AjustedeStockdeSemen extends javax.swing.JFrame {
 Conexion conn = new Conexion ();
  javax.swing.table.DefaultTableModel m; 
@@ -22,25 +15,28 @@ Conexion conn = new Conexion ();
     public AjustedeStockdeSemen() {
         initComponents();
         m= (javax.swing.table.DefaultTableModel) tabla.getModel();
+        combomotivoajuste resultado = new combomotivoajuste();
+        resultado.llenar_combo(cbomotivo);
         cargaTabla();
     
     
     }
              private void cargaTabla() {
            m.setRowCount(0);
-        String sql =    "Select id, Nombre, Siglas FROM Cargo order by Descripcion";
-        String columna = "Descripcion";
+        String sql =    "Select id, Nombre, RP, HBP, Stock FROM semental order by Nombre";
+        String columna = "Nombre";
             
         try {
              if (!txtBsucar.getText().trim().isEmpty()){
-                    if(cbobuscar.getSelectedIndex() == 1) columna = "Descripcion";
+                    if(cbobuscar.getSelectedIndex() == 1) columna = "Nombre";
                     sql = sql + " where " + columna + " like '%"+ txtBsucar.getText().trim() +"%' " ;
                 }
             conn.sentencia = conn.conexion.createStatement();
             conn.resultado = conn.sentencia.executeQuery(sql);
             while(conn.resultado.next()){
                 m.addRow(new Object[] {conn.resultado.getInt("id"),
-                    conn.resultado.getString("Descripcion") ,  conn.resultado.getString("Siglas")});
+                    conn.resultado.getString("Nombre") ,  conn.resultado.getString("HBP"),
+                conn.resultado.getString("Stock")});
             }
         } catch (SQLException ex) {
             Logger.getLogger(AjustedeStockdeSemen.class.getName()).log(Level.SEVERE, null, ex);
@@ -57,8 +53,8 @@ Conexion conn = new Conexion ();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtidtoro = new javax.swing.JTextField();
@@ -74,11 +70,16 @@ Conexion conn = new Conexion ();
         jLabel6 = new javax.swing.JLabel();
         txtHBP = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtRazas = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtcantidad = new javax.swing.JTextField();
+        txtCaCantidad = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtmotivo = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        cborazas = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        txtStock = new javax.swing.JTextField();
+        cbomotivo = new javax.swing.JComboBox<>();
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,8 +87,6 @@ Conexion conn = new Conexion ();
         jLabel1.setForeground(new java.awt.Color(0, 51, 51));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("AJUSTE DE STOCK DE SEMEN");
-
-        jLabel2.setText("ID");
 
         jLabel3.setText("Nombre");
 
@@ -99,21 +98,21 @@ Conexion conn = new Conexion ();
             }
         });
 
-        btnAgregar.setText("Agregar");
+        btnAgregar.setText("AGREGAR");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
 
-        btnGuardar.setText("Guardar");
+        btnGuardar.setText("GUARDAR");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
 
-        salir.setText("Salir");
+        salir.setText("SALIR");
         salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salirActionPerformed(evt);
@@ -127,13 +126,13 @@ Conexion conn = new Conexion ();
         tabla.setBackground(new java.awt.Color(204, 204, 255));
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre ", "Cantidad"
+                "ID", "Nombre ", "HBP", "Stock"
             }
         ));
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -150,70 +149,83 @@ Conexion conn = new Conexion ();
 
         jLabel6.setText("HBP");
 
+        txtHBP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHBPActionPerformed(evt);
+            }
+        });
+
         jLabel7.setText("Raza");
 
-        jLabel8.setText("Cantidad de Semen");
+        jLabel8.setText("Cantidad Ajuste");
 
         jLabel9.setText("Motivo Ajuste");
+
+        jLabel10.setText("dd/MM/yyyy");
+
+        jLabel11.setText("Stock");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtidtoro, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNombre)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6)
+                        .addGap(23, 23, 23)
+                        .addComponent(txtHBP, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel2))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel3))
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtBsucar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel9)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtmotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtidtoro, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel7)
-                                                    .addComponent(jLabel6))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(txtHBP, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                                                    .addComponent(txtRazas)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel8)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(txtBsucar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(19, 19, 19)
-                                        .addComponent(jLabel1))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addComponent(btnAgregar)
-                        .addGap(41, 41, 41)
-                        .addComponent(btnGuardar)
-                        .addGap(43, 43, 43)
-                        .addComponent(salir)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                                        .addComponent(jLabel1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cborazas, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCaCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9)
+                                .addGap(35, 35, 35)
+                                .addComponent(cbomotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(39, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addComponent(btnAgregar)
+                .addGap(39, 39, 39)
+                .addComponent(btnGuardar)
+                .addGap(18, 18, 18)
+                .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,44 +233,39 @@ Conexion conn = new Conexion ();
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtidtoro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtHBP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtidtoro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHBP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(txtRazas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel7)
+                    .addComponent(cborazas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtCaCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(cbomotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBsucar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtmotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBsucar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
                     .addComponent(btnGuardar)
                     .addComponent(salir))
-                .addContainerGap())
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -289,11 +296,13 @@ Conexion conn = new Conexion ();
         // TODO add your handling code here:
     }//GEN-LAST:event_txtidtoroActionPerformed
        private void InsertaDato(){
-       String sql ="Insert into ajustedestock (animalid, motivoajuste, motivoajuste)"+
-                " values('"+ txtidtoro.getText() + "', '"+ txtmotivo.getText()
-               + "', '"+ txtcantidad.getText()+ "')";
+        String motivo;
+        motivo = cbomotivo.getItemAt(cbomotivo.getSelectedIndex()).getId();
+       String sql ="Insert into ajustedestock (idToro, cantidadajuste, motivoid)"+
+                " values('"+ txtidtoro.getText() + "', '"+ txtCaCantidad.getText()
+               + "', '"+ motivo+ "')";
        
-            sql = "update stockdesemen set Stock = Stock - " + txtcantidad.getText()
+            sql = "update semental set Stock = Stock + " + txtCaCantidad.getText()
                 + " where id =" + txtidtoro.getText();
        System.out.println(sql);
        conn.actualizaTabla(sql);
@@ -317,15 +326,20 @@ Conexion conn = new Conexion ();
     private void tablaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMousePressed
        Buscar();
     }//GEN-LAST:event_tablaMousePressed
+
+    private void txtHBPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHBPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHBPActionPerformed
          private void Buscar(){
-         String sql = "select * from cargo where id = " + tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
+         String sql = "select * from semental where id = " + tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
             System.out.println(sql);
             conn.traeDatos(sql);
         try {
             if(conn.resultado.next()){
                 txtidtoro.setText(conn.resultado.getString("id"));
-                txtNombre.setText(conn.resultado.getString("Descripcion"));
-                txtHBP.setText(conn.resultado.getString("Siglas"));
+                txtNombre.setText(conn.resultado.getString("Nombre"));
+                txtHBP.setText(conn.resultado.getString("HBP"));
+                txtStock.setText(conn.resultado.getString("Stock"));
                 
             }} catch (SQLException ex) {
             Logger.getLogger(AjustedeStockdeSemen.class.getName()).log(Level.SEVERE, null, ex);
@@ -377,8 +391,12 @@ Conexion conn = new Conexion ();
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox cbobuscar;
+    private javax.swing.JComboBox<combomotivoajuste> cbomotivo;
+    private javax.swing.JComboBox<String> cborazas;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -390,11 +408,10 @@ Conexion conn = new Conexion ();
     private javax.swing.JButton salir;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtBsucar;
+    private javax.swing.JTextField txtCaCantidad;
     private javax.swing.JTextField txtHBP;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtRazas;
-    private javax.swing.JTextField txtcantidad;
+    private javax.swing.JTextField txtStock;
     private javax.swing.JTextField txtidtoro;
-    private javax.swing.JTextField txtmotivo;
     // End of variables declaration//GEN-END:variables
 }

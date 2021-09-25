@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static agro.RegistroIA.txtToro;
 import static agro.RegistroIA.txtStock;
-import static agro.RegistroIA.id;
+import static agro.RegistroIA.txtidtoro;
 
 /**
  *
@@ -177,7 +177,7 @@ Conexion conn = new Conexion ();
             conn.traeDatos(sql);
         try {
             if(conn.resultado.next()){
-               RegistroIA.txtid.setText(conn.resultado.getString("id"));
+               RegistroIA.txtidhembra.setText(conn.resultado.getString("id"));
                 RegistroIA.txtToro.setText(conn.resultado.getString("idToro"));
                 RegistroIA.txtStock.setText(conn.resultado.getString("Stock"));             
                
@@ -198,7 +198,7 @@ Conexion conn = new Conexion ();
             conn.traeDatos(sql);
         try {
             if(conn.resultado.next()){
-                id.setText(conn.resultado.getString("id"));   
+                txtidtoro.setText(conn.resultado.getString("id"));   
                 txtToro.setText(conn.resultado.getString("idToro"));
                 txtStock.setText(conn.resultado.getString("stock"));
             

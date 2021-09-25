@@ -5,56 +5,49 @@
  */
 package agro;
 
-
-
-
-import static agro.ControlLechero.txtHBP;
-import static agro.ControlLechero.txtNombre;
-import static agro.ControlLechero.txtPelaje;
-import static agro.ControlLechero.txtRP;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 /**
  *
  * @author Dahiana Sanchez G
  */
-public class BuscarProveedorV extends javax.swing.JFrame {
-Conexion conn = new Conexion ();
-    javax.swing.table.DefaultTableModel  m;
+public class BuscarEm extends javax.swing.JFrame {
 
-    public BuscarProveedorV() {
+    Conexion conn = new Conexion();
+    javax.swing.table.DefaultTableModel m;
+
+    public BuscarEm() {
         initComponents();
-         m = (javax.swing.table.DefaultTableModel) Lista.getModel();
-         cargaTabla();
+        m = (javax.swing.table.DefaultTableModel) Lista.getModel();
+        cargaTabla();
     }
 
-   
-   
-          private void cargaTabla() {
-           m.setRowCount(0);
-        String sql = "SELECT id, Nombre, RepresentanteLegal, RUC, Direccion FROM Proveedorvacunas";
+    private void cargaTabla() {
+        m.setRowCount(0);
+        String sql = "SELECT id, Nombre, apellido, CI, Direccion FROM empleados";
         String columna = "Nombre";
-            
+
         try {
-             if (!txtfiltro.getText().trim().isEmpty()){
-                    if(cbobuscar.getSelectedIndex() == 1) columna = "Nombre";
-                    sql = sql + " where " + columna + " like '%"+ txtfiltro.getText().trim() +"%' " ;
+            if (!txtfiltro.getText().trim().isEmpty()) {
+                if (cbobuscar.getSelectedIndex() == 1) {
+                    columna = "Nombre";
                 }
+                sql = sql + " where " + columna + " like '%" + txtfiltro.getText().trim() + "%' ";
+            }
             conn.sentencia = conn.conexion.createStatement();
             conn.resultado = conn.sentencia.executeQuery(sql);
-            while(conn.resultado.next()){
-                m.addRow(new Object[] {conn.resultado.getInt("id"),
-                    conn.resultado.getString("Nombre") ,  conn.resultado.getString("representanteLegal"),
-                    conn.resultado.getString("RUC"),
+            while (conn.resultado.next()) {
+                m.addRow(new Object[]{conn.resultado.getInt("id"),
+                    conn.resultado.getString("Nombre"), conn.resultado.getString("Apellido"),
+                    conn.resultado.getString("CI"),
                     conn.resultado.getString("Direccion")});
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarProveedorV.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscarEm.class.getName()).log(Level.SEVERE, null, ex);
         }
- }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,6 +81,11 @@ Conexion conn = new Conexion ();
                 "id", "Nombre", "Representate", "RUC", "Direccion"
             }
         ));
+        Lista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ListaMousePressed(evt);
+            }
+        });
         Lista.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 ListaKeyPressed(evt);
@@ -154,17 +152,22 @@ Conexion conn = new Conexion ();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ListaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ListaKeyPressed
-     BuscarSementales();
-     dispose();
+        Buscar();
+        dispose();
     }//GEN-LAST:event_ListaKeyPressed
 
     private void cbobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbobuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbobuscarActionPerformed
-    
+
+    private void ListaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaMousePressed
+       Buscar();
+        dispose();
+    }//GEN-LAST:event_ListaMousePressed
+
     private void AceptarSemental() {
 //        txtid = Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
-        
+
 //        String sql = "select  *from maestro where id = " +  Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
 //            System.out.println(sql);
 //            conn.traeDatos(sql);
@@ -180,21 +183,23 @@ Conexion conn = new Conexion ();
 //    
     }
 
-    private void BuscarSementales() {
-        String sql = "select * from proveedorvacunas where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
-            System.out.println(sql);
-            conn.traeDatos(sql);
+    private void Buscar() {
+        String sql = "select * from empleados where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        System.out.println(sql);
+        conn.traeDatos(sql);
         try {
-            if(conn.resultado.next()){
-                RegistrosVacunas.txtProveedor.setText(conn.resultado.getString("id"));
-               
-        
-                
-                
-            }} catch (SQLException ex) {
-            Logger.getLogger(BuscarProveedorV.class.getName()).log(Level.SEVERE, null, ex);
+            if (conn.resultado.next()) {
+                SolictudTrabajo.txtid.setText(conn.resultado.getString("id"));
+                SolictudTrabajo.txtNombre.setText(conn.resultado.getString("Nombre"));
+                SolictudTrabajo.txtApellido.setText(conn.resultado.getString("Apellido"));
+                SolictudTrabajo.txtCI.setText(conn.resultado.getString("CI"));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscarEm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -212,14 +217,30 @@ Conexion conn = new Conexion ();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarProveedorV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarProveedorV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarProveedorV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarProveedorV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -240,7 +261,7 @@ Conexion conn = new Conexion ();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BuscarProveedorV().setVisible(true);
+                new BuscarEm().setVisible(true);
             }
         });
     }
