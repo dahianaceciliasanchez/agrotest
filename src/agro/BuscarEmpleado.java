@@ -5,11 +5,11 @@ import static agro.RegistroFiscalizacion.txtCI;
 import static agro.RegistroFiscalizacion.txtNombre;
 import static agro.RegistroFiscalizacion.txtapellido;
 import static agro.RegistroFiscalizacion.txtgmail;
-import static agro.RegistroFiscalizacion.txtid;
 import static agro.RegistroFiscalizacion.txttelefono;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static agro.RegistroFiscalizacion.txtidempleado;
 
 /**
  *
@@ -170,7 +170,7 @@ public class BuscarEmpleado extends javax.swing.JFrame {
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-               txtid.setText(conn.resultado.getString("id"));
+               txtidempleado.setText(conn.resultado.getString("id"));
                txtNombre.setText(conn.resultado.getString("Nombre"));
                 txtapellido.setText(conn.resultado.getString("Apellido"));
                txtCI.setText(conn.resultado.getString("CI"));

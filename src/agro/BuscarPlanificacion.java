@@ -5,13 +5,13 @@
  */
 package agro;
 
-import static agro.RegistroFiscalizacion.txtEtapas;
 import static agro.RegistroFiscalizacion.txtidanimal;
 import static agro.RegistroFiscalizacion.txtidplanificacio;
 import static agro.RegistroFiscalizacion.txtidvacunas;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static agro.RegistroFiscalizacion.txtplani;
 
 /**
  *
@@ -189,7 +189,7 @@ public class BuscarPlanificacion extends javax.swing.JFrame {
         try {
             if (conn.resultado.next()) {
                 txtidplanificacio.setText(conn.resultado.getString("id"));
-                txtEtapas.setText(conn.resultado.getString("etapasid"));
+                txtplani.setText(conn.resultado.getString("etapasid"));
                 txtidvacunas.setText(conn.resultado.getString("vacunasid"));
                 txtidanimal.setText(conn.resultado.getString("animalid"));
 

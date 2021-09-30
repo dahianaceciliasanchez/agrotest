@@ -7,14 +7,18 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Suplementos extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();
+    javax.swing.table.DefaultTableModel m;
     int nuid = 0;
 
     public Suplementos() {
         initComponents();
+        m = (javax.swing.table.DefaultTableModel) ficha.getModel();
+        m.setRowCount(0);
         setLocationRelativeTo(null);
         cargaCombo(cboproveedor, "SELECT Nombre from proveedores");
         combodieta dieta = new combodieta();
@@ -38,6 +42,7 @@ public class Suplementos extends javax.swing.JFrame {
         }
 
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -63,6 +68,7 @@ public class Suplementos extends javax.swing.JFrame {
         cboproveedor = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         txtcantidad = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         cbodieta = new javax.swing.JComboBox<>();
@@ -74,7 +80,7 @@ public class Suplementos extends javax.swing.JFrame {
         btnanular = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        ficha = new javax.swing.JTable();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -148,6 +154,13 @@ public class Suplementos extends javax.swing.JFrame {
 
         jLabel5.setText("Cantidad");
 
+        jButton2.setText("Cargar");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton2MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -167,6 +180,8 @@ public class Suplementos extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -204,7 +219,8 @@ public class Suplementos extends javax.swing.JFrame {
                             .addComponent(jLabel12)
                             .addComponent(txtdetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
-                            .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2)))
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -241,7 +257,7 @@ public class Suplementos extends javax.swing.JFrame {
                 .addComponent(j, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cboFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,18 +283,18 @@ public class Suplementos extends javax.swing.JFrame {
 
         jButton1.setText("IMPRIMIR");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        ficha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Porducto", "Cantidad"
+                "Cod_Producto", "Descripcion", "Stock", "Cantidad"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(ficha);
 
         javax.swing.GroupLayout aaaLayout = new javax.swing.GroupLayout(aaa);
         aaa.setLayout(aaaLayout);
@@ -294,17 +310,17 @@ public class Suplementos extends javax.swing.JFrame {
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1)))
                     .addGroup(aaaLayout.createSequentialGroup()
-                        .addGap(59, 59, 59)
+                        .addGap(32, 32, 32)
                         .addComponent(agregar)
-                        .addGap(47, 47, 47)
+                        .addGap(45, 45, 45)
                         .addComponent(btnanular)
-                        .addGap(36, 36, 36)
+                        .addGap(52, 52, 52)
                         .addComponent(guardar)
-                        .addGap(50, 50, 50)
+                        .addGap(31, 31, 31)
                         .addComponent(jButton1)
-                        .addGap(35, 35, 35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         aaaLayout.setVerticalGroup(
             aaaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,14 +333,14 @@ public class Suplementos extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addGap(41, 41, 41)
                 .addGroup(aaaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(agregar)
                     .addComponent(btnanular)
                     .addComponent(guardar)
                     .addComponent(jButton1)
                     .addComponent(salir))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -337,7 +353,7 @@ public class Suplementos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(aaa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -362,32 +378,50 @@ public class Suplementos extends javax.swing.JFrame {
     private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnombreActionPerformed
-
+    private void cargaFila() {
+        DefaultTableModel tabla = (DefaultTableModel) ficha.getModel();
+        m.addRow(new Object[]{idproducto.getText(),
+            txtnombre.getText(),
+            txtstock.getText(),
+            txtcantidad.getText(),});
+    }
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         String dieta;
         dieta = cbodieta.getItemAt(cbodieta.getSelectedIndex()).getId();
-        String sql = "INSERT INTO suplementos (id, fecha, tipoengordeid, productosid, cantidad) VALUES ("
-                + nuid + ",DATE(NOW())," + dieta + ", " + idproducto.getText() + ", " + txtcantidad.getText()
-                 + ")";
+        String sql = "INSERT INTO suplementos (id, fecha, tipoengordeid) VALUES ("
+                + nuid+ ",DATE(NOW())," + dieta + ")";
+        guardarMovi();
         conn.actualizaDatos(sql);
         System.out.print(sql);
         JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");
 
     }//GEN-LAST:event_guardarActionPerformed
-
+    public void guardarMovi() {
+        String sql;
+        Integer cantidadItem = ficha.getRowCount();
+        for (int i = 0; i < cantidadItem; i++) {
+            sql = "INSERT INTO detalle_suplementos(id, suplementosid, productosid, Cantidad) VALUES ("
+                    + nuid + "," + m.getValueAt(i, 0).toString()+ "," + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i, 3).toString() + ")";
+            conn.actualizaDatos(sql);
+            sql = "update productos Set Stock = Stock - " + m.getValueAt(i, 3).toString()
+                + " where id =" + m.getValueAt(i, 0).toString();
+              conn.actualizaTabla(sql);
+            System.out.print(sql);
+        }
+    }
+    
     private void btnanularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnanularActionPerformed
 
     }//GEN-LAST:event_btnanularActionPerformed
 
     private void idproductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_idproductoMousePressed
-        Buscarsuplementos objeto = new Buscarsuplementos
-        ();
+        Buscarsuplementos objeto = new Buscarsuplementos();
         objeto.setLocationRelativeTo(null);
         objeto.setVisible(true);
     }//GEN-LAST:event_idproductoMousePressed
 
     private void idproductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idproductoKeyPressed
-          String sql = "SELECT id, Descripcion, stock, detalle FROM productos WHERE id = '"
+        String sql = "SELECT id, Descripcion, stock, detalle FROM productos WHERE id = '"
                 + idproducto.getText() + "'";
         try {
             conn.traeDatos(sql);
@@ -402,6 +436,11 @@ public class Suplementos extends javax.swing.JFrame {
             Logger.getLogger(PedidosCompra.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_idproductoKeyPressed
+
+    private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
+        cargaFila();
+        LimpiarCampos();
+    }//GEN-LAST:event_jButton2MousePressed
 
     /**
      * @param args the command line arguments
@@ -467,10 +506,12 @@ public class Suplementos extends javax.swing.JFrame {
     private javax.swing.JComboBox<combodieta> cbodieta;
     private javax.swing.JComboBox<String> cboproveedor;
     private javax.swing.JLabel fecha;
+    private javax.swing.JTable ficha;
     private javax.swing.JButton guardar;
     public static javax.swing.JTextField idproducto;
     private javax.swing.JLabel j;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -485,7 +526,6 @@ public class Suplementos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JButton salir;
     private javax.swing.JTextField txtBuscar;

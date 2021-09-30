@@ -9,8 +9,6 @@ package agro;
 import static agro.PLandeEngorde.txtcantidad;
 import static agro.PLandeEngorde.txtidsu;
 import static agro.PLandeEngorde.txtsuplementos;
-import static agro.PLandeEngorde.txttipo;
-import static agro.Suplementos.txtstock;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,14 +32,12 @@ public class BuscarSu extends javax.swing.JFrame {
 
     private void cargaTabla() {
         m.setRowCount(0);
-        String sql = "SELECT s.id, s.fecha, s.tipoengordeid, t.Descripcion Descri_Engorde, s.productosid, p.Descripcion Descri_Producto, s.cantidad\n"
-                + "FROM suplementos AS s\n"
-                + "INNER JOIN tipoengorde AS t\n"
-                + "ON s.tipoengordeid = t.id\n"
+        String sql = "SELECT s.id, s.suplementosid, s.productosid, p.descripcion, s.cantidad \n"
+                + "FROM detalle_suplementos AS s\n"
                 + "INNER JOIN productos AS p\n"
                 + "ON s.productosid = p.id\n"
-                + "\n"
-                + "";
+                + "INNER JOIN suplementos m\n"
+                + "ON s.suplementosid = m.id";
         String columna = "id";
 
         try {
@@ -55,11 +51,8 @@ public class BuscarSu extends javax.swing.JFrame {
             conn.resultado = conn.sentencia.executeQuery(sql);
             while (conn.resultado.next()) {
                 m.addRow(new Object[]{conn.resultado.getInt("id"),
-                    conn.resultado.getString("fecha"),
-                    conn.resultado.getString("tipoengordeid"),
-                    conn.resultado.getString("Descri_Engorde"),
                     conn.resultado.getString("productosid"),
-                    conn.resultado.getString("Descri_Producto"),
+                    conn.resultado.getString("Descripcion"),
                     conn.resultado.getString("cantidad")});
             }
         } catch (SQLException ex) {
@@ -90,17 +83,17 @@ public class BuscarSu extends javax.swing.JFrame {
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
         Lista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "id", "Fecha", "Cod_Tipo", "Descripcion_Tipo", "Cog_Producto", "Descrpcion_Producto", "Cantidad"
+                "id", "Cog_Producto", "Descrpcion_Producto", "Cantidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, true, false, true, true
+                true, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -114,12 +107,9 @@ public class BuscarSu extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(Lista);
         if (Lista.getColumnModel().getColumnCount() > 0) {
-            Lista.getColumnModel().getColumn(0).setMinWidth(2);
-            Lista.getColumnModel().getColumn(0).setPreferredWidth(1);
-            Lista.getColumnModel().getColumn(0).setMaxWidth(1);
-            Lista.getColumnModel().getColumn(1).setPreferredWidth(6);
-            Lista.getColumnModel().getColumn(2).setPreferredWidth(4);
-            Lista.getColumnModel().getColumn(4).setPreferredWidth(4);
+            Lista.getColumnModel().getColumn(0).setResizable(false);
+            Lista.getColumnModel().getColumn(0).setPreferredWidth(4);
+            Lista.getColumnModel().getColumn(1).setPreferredWidth(4);
         }
 
         jLabel6.setText("Buscar");
@@ -144,8 +134,8 @@ public class BuscarSu extends javax.swing.JFrame {
                 .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,15 +178,15 @@ public class BuscarSu extends javax.swing.JFrame {
     }//GEN-LAST:event_cbobuscarActionPerformed
 
     private void BuscarSementales() {
-        String sql = "select * from suplementos where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        String sql = "select * from detalle_suplementos where id = " + 
+                Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
         System.out.println(sql);
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
                 txtidsu.setText(conn.resultado.getString("id"));
-                txttipo.setText(conn.resultado.getString("tipoengordeid"));
-               txtsuplementos.setText(conn.resultado.getString("productosid"));
-               txtcantidad.setText(conn.resultado.getString("cantidad"));
+                txtsuplementos.setText(conn.resultado.getString("productosid"));
+                txtcantidad.setText(conn.resultado.getString("cantidad"));
 
             }
         } catch (SQLException ex) {

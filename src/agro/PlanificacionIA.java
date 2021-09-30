@@ -464,7 +464,8 @@ public class PlanificacionIA extends javax.swing.JFrame {
         String metodo;
         metodo = cbometodo.getItemAt(cbometodo.getSelectedIndex()).getId();
         String sql = "INSERT INTO planificacionia (id,FechaAplicacion, metodoIA, Animalid, vacunasid, cantidad) VALUES ("
-                + nuid + ",DATE(NOW())," + metodo + ", " + txtidanimal.getText() + ", " + txtidvacunas.getText() + "," + txtCantidad.getText()+")";
+                + nuid + ",DATE(NOW())," + metodo + ", " + txtidanimal.getText() + ", " + 
+                txtidvacunas.getText() + "," + txtCantidad.getText()+")";
         conn.actualizaDatos(sql);
         System.out.print(sql);
         JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");

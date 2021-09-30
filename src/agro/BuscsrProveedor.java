@@ -5,23 +5,27 @@
  */
 package agro;
 
-import static agro.RegistroFiscalizacion.txtidplanificacio;
-import static agro.RegistroFiscalizacion.txtidvacunas;
-import static agro.RegistroFiscalizacion.txtplani;
+import static agro.PresupuestoProveedor.txtDireccion;
+import static agro.PresupuestoProveedor.txtGmail;
+import static agro.PresupuestoProveedor.txtNombre;
+import static agro.PresupuestoProveedor.txtRUC;
+import static agro.PresupuestoProveedor.txtTelefono;
+import static agro.PresupuestoProveedor.txtidproveedor;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /**
  *
  * @author Dahiana Sanchez G
  */
-public class BuscarPlanificacionva extends javax.swing.JFrame {
+public class BuscsrProveedor extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();
     javax.swing.table.DefaultTableModel m;
 
-    public BuscarPlanificacionva() {
+    public BuscsrProveedor() {
         initComponents();
         m = (javax.swing.table.DefaultTableModel) Lista.getModel();
         cargaTabla();
@@ -29,10 +33,7 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
 
     private void cargaTabla() {
         m.setRowCount(0);
-        String sql = "SELECT d.id, d.planvacunacionid, d.vacunasid, v.Nombre, d.cantidaddosis\n"
-                + "FROM detalle_planvacunacion AS d\n"
-                + "INNER JOIN vacunas AS v\n"
-                + "ON d.vacunasid = v.id";
+        String sql = "SELECT id, Nombre, RUC, Direccion, Telefono, CorreoE from proveedores";
         String columna = "id";
 
         try {
@@ -46,13 +47,16 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
             conn.resultado = conn.sentencia.executeQuery(sql);
             while (conn.resultado.next()) {
                 m.addRow(new Object[]{conn.resultado.getInt("id"),
-                    conn.resultado.getString("planvacunacionid"),
-                    conn.resultado.getString("vacunasid"),
-                    conn.resultado.getString("Nombre")
+                    conn.resultado.getString("Nombre"),
+                    conn.resultado.getString("RUC"),
+                    conn.resultado.getString("Direccion"),
+                    conn.resultado.getString("Telefono"),
+                    conn.resultado.getString("CorreoE")
+                    
                 });
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarPlanificacionva.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscsrProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -79,17 +83,17 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
         Lista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Cod_Planificacion", "Cod_Vacuna", "Nombre"
+                "id", "Nombre", "RUC", "Direccion", "Telefono", "Gmail"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, true, false, true
+                true, false, true, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -106,7 +110,9 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
             Lista.getColumnModel().getColumn(0).setMinWidth(2);
             Lista.getColumnModel().getColumn(0).setPreferredWidth(1);
             Lista.getColumnModel().getColumn(0).setMaxWidth(1);
-            Lista.getColumnModel().getColumn(2).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(1).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(3).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(5).setPreferredWidth(3);
         }
 
         jLabel6.setText("Buscar");
@@ -122,6 +128,7 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(jLabel6)
@@ -130,9 +137,6 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,7 +147,8 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
                     .addComponent(txtfiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -174,18 +179,21 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
     }//GEN-LAST:event_cbobuscarActionPerformed
 
     private void BuscarSementales() {
-        String sql = "select * from detalle_planvacunacion where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        String sql = "select * from proveedores where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
         System.out.println(sql);
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-                txtidplanificacio.setText(conn.resultado.getString("id"));
-                txtplani.setText(conn.resultado.getString("planvacunacionid"));
-                txtidvacunas.setText(conn.resultado.getString("vacunasid"));
+                txtidproveedor.setText(conn.resultado.getString("id"));
+                txtNombre.setText(conn.resultado.getString("Nombre"));
+                txtRUC.setText(conn.resultado.getString("RUC"));
+                txtDireccion.setText(conn.resultado.getString("Direccion"));
+                txtTelefono.setText(conn.resultado.getString("Telefono"));
+                txtGmail.setText(conn.resultado.getString("CorreoE"));
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarPlanificacionva.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscsrProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -206,13 +214,13 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarPlanificacionva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscsrProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarPlanificacionva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscsrProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarPlanificacionva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscsrProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarPlanificacionva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscsrProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -282,7 +290,7 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BuscarPlanificacionva().setVisible(true);
+                new BuscsrProveedor().setVisible(true);
             }
         });
     }
