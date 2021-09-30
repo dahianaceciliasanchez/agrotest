@@ -479,7 +479,8 @@ public class PresupuestoProveedor extends javax.swing.JFrame {
         Integer cantidadItem = table.getRowCount();
         for (int i = 0; i < cantidadItem; i++) {
          sql = "INSERT INTO detalle_presupuesto(id, productosid, precio, cantidad, totalunitario) VALUES ("
-                 +fac +","+ m.getValueAt(i, 0).toString()+","+ m.getValueAt(i, 2).toString()+ "," + m.getValueAt(i,3).toString()
+                 +fac +","+ m.getValueAt(i, 0).toString()+","+ m.getValueAt(i, 2).toString()+
+                 "," + m.getValueAt(i,3).toString()
                 +","+ m.getValueAt(i, 4).toString()+")";
           conn.actualizaTabla(sql); 
           System.out.print(sql);
@@ -546,8 +547,8 @@ public class PresupuestoProveedor extends javax.swing.JFrame {
         int total = Integer.parseInt(txtPrecio.getText().trim()) * Integer.parseInt(txtcantidad.getText().trim());
         m.addRow(new Object[]{txtidproducto.getText(),
             txtDescripcion.getText(),
-            txtcantidad.getText(),
-            txtPrecio.getText(),
+             txtPrecio.getText(),
+            txtcantidad.getText(),         
             txttotalunitario.getText(),});
     }
 

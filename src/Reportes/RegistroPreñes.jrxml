@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RegistroPreñes" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f8486f59-65f9-4fb4-8160-8e463e58b0f9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ResultadoPreñesid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     registropre.`ResultadoPreñesid` AS registropre_ResultadoPreñesid,
+     registropre.`Empleadoid` AS registropre_Empleadoid,
+     registropre.`servicioiaid` AS registropre_servicioiaid,
+     registropre.`id` AS registropre_id,
+     resultadopre.`Descripcion` AS resultadopre_Descripcion,
+     empleados.`Nombre` AS empleados_Nombre,
+     empleados.`CI` AS empleados_CI,
+     animal.`Nombre` AS animal_Nombre,
+     animal.`RP` AS animal_RP,
+     servicioia.`fechaia` AS servicioia_fechaia,
+     servicioia.`metodoid` AS servicioia_metodoid,
+     semental.`Nombre` AS semental_Nombre,
+     semental.`RP` AS semental_RP,
+     metodoia.`Descripcion` AS metodoia_Descripcion
+FROM
+     `resultadopre` resultadopre INNER JOIN `registropre` registropre ON resultadopre.`id` = registropre.`ResultadoPreñesid`
+     INNER JOIN `empleados` empleados ON registropre.`Empleadoid` = empleados.`id`
+     INNER JOIN `servicioia` servicioia ON registropre.`servicioiaid` = servicioia.`id`
+     INNER JOIN `animal` animal ON servicioia.`animalid` = animal.`id`
+     INNER JOIN `semental` semental ON servicioia.`sementalid` = semental.`id`
+     INNER JOIN `metodoia` metodoia ON servicioia.`metodoid` = metodoia.`id`
+WHERE registropre.Empleadoid =$P!{ResultadoPreñesid}]]>
+	</queryString>
+	<field name="registropre_ResultadoPreñesid" class="java.lang.Integer"/>
+	<field name="registropre_Empleadoid" class="java.lang.Integer"/>
+	<field name="registropre_servicioiaid" class="java.lang.Integer"/>
+	<field name="registropre_id" class="java.lang.Integer"/>
+	<field name="resultadopre_Descripcion" class="java.lang.String"/>
+	<field name="empleados_Nombre" class="java.lang.String"/>
+	<field name="empleados_CI" class="java.lang.String"/>
+	<field name="animal_Nombre" class="java.lang.String"/>
+	<field name="animal_RP" class="java.lang.Integer"/>
+	<field name="servicioia_fechaia" class="java.sql.Date"/>
+	<field name="servicioia_metodoid" class="java.lang.Integer"/>
+	<field name="semental_Nombre" class="java.lang.String"/>
+	<field name="semental_RP" class="java.lang.Integer"/>
+	<field name="metodoia_Descripcion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="271" y="24" width="216" height="38" uuid="e7cc910b-3442-4df3-acc8-df70052c4964"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[REGISTRO PREÑES]]></text>
+			</staticText>
+			<image>
+				<reportElement x="40" y="7" width="66" height="55" uuid="e3860be6-e65d-407c-b037-5bba866ac024"/>
+				<imageExpression><![CDATA["C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\image.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="627" y="42" width="100" height="20" uuid="51c21bec-9995-473e-8d6b-eafcea281cb5"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="552" y="7" width="100" height="20" uuid="c38bbe8c-4253-48cd-b6ea-30c62307e4bc"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="8" y="2" width="32" height="20" uuid="4f98ee56-c0b4-4a02-aadb-b83ab9363940"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="2" width="79" height="20" uuid="f7d0defe-8556-425a-9cf9-53988ca77266"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RESULTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="193" y="2" width="111" height="20" uuid="c0be164a-f5a7-4d55-afab-0d8094f27f83"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[EMPLEADO_NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="314" y="2" width="35" height="20" uuid="7de6a5f9-2220-403d-aa06-47b73c3a102b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="357" y="3" width="100" height="20" uuid="71bba200-b5b4-4d08-bdf0-80d6fd0ec509"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ANIMAL_NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="2" width="37" height="20" uuid="d7dd3be1-e895-4bf4-8e4c-83ffb1cae1c0"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="693" y="2" width="54" height="20" uuid="ad843151-7173-472c-aa4f-a469081ff6e3"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FECHA_IA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="512" y="2" width="66" height="20" uuid="6bcfc945-f5ad-423a-8699-ff66c97e13f6"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SEMENTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="584" y="1" width="34" height="20" uuid="0abad943-6395-4681-8acc-b6a74338da11"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="618" y="2" width="63" height="20" uuid="d23d545c-82d1-4704-9889-70de8fb34b5d"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[METODO IA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="2" width="49" height="20" uuid="58c0b12c-e58c-465c-8620-c9d88aab3438"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ID_RES]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="43" splitType="Stretch">
+			<textField>
+				<reportElement x="8" y="0" width="32" height="20" uuid="7bffe722-7bc5-4a46-96c3-b30985f8c3a2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{registropre_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="106" y="0" width="79" height="20" uuid="7706d0c4-6479-4230-aed5-048ecedd96e5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{resultadopre_Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="196" y="2" width="100" height="20" uuid="37fa3015-bc54-4aee-8863-3060089f6ba0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{empleados_Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="0" width="35" height="20" uuid="2a281f3a-6339-4a69-9552-97dba07ad8e7"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{empleados_CI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="359" y="1" width="100" height="20" uuid="801e1be7-a303-44fe-9900-617f9af22ce0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{animal_Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="466" y="1" width="37" height="20" uuid="1980aa91-6f51-4e5a-839b-7ffef979e2d9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{animal_RP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="514" y="0" width="66" height="20" uuid="983e889d-ff8c-455a-949c-363a32eff3fc"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{semental_Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="583" y="0" width="34" height="20" uuid="0cbe2e7f-8033-4cfc-8003-08eb72a43c2a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{semental_RP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="627" y="1" width="66" height="20" uuid="e8eb94e3-af98-4834-a39d-bca6b124930f"/>
+				<textFieldExpression><![CDATA[$F{metodoia_Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="703" y="4" width="44" height="20" uuid="ff204175-b622-447e-b197-059f97141a49"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{servicioia_fechaia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="1" width="49" height="20" uuid="58b0326d-8dd8-4d59-83b1-146fc622b416"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{registropre_ResultadoPreñesid}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="14" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
