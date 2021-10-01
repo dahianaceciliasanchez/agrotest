@@ -404,7 +404,6 @@ public class Proveedor extends javax.swing.JFrame {
     private void limpiar(){
          txtNombre.setText("");  
           txtRUC.setText("");
-          txtRepresentante.setText("");
           txtGmail.setText("");
           txtTelefono.setText("");
           txtDireccion.setText("");

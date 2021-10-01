@@ -97,7 +97,7 @@
                   <Table columnCount="5" rowCount="4">
                     <Column editable="true" title="id" type="java.lang.Object"/>
                     <Column editable="true" title="Nombre" type="java.lang.Object"/>
-                    <Column editable="true" title="Representate" type="java.lang.Object"/>
+                    <Column editable="true" title="Apellido" type="java.lang.Object"/>
                     <Column editable="true" title="RUC" type="java.lang.Object"/>
                     <Column editable="true" title="Direccion" type="java.lang.Object"/>
                   </Table>

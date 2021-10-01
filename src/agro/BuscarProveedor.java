@@ -5,6 +5,12 @@
  */
 package agro;
 
+import static agro.FacturaProveedor.txtDireccion;
+import static agro.FacturaProveedor.txtGmail;
+import static agro.FacturaProveedor.txtNombre;
+import static agro.FacturaProveedor.txtRUC;
+import static agro.FacturaProveedor.txtTelefono;
+import static agro.FacturaProveedor.txtidproveedor;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,12 +19,12 @@ import java.util.logging.Logger;
  *
  * @author Dahiana Sanchez G
  */
-public class BuscarEm extends javax.swing.JFrame {
+public class BuscarProveedor extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();
     javax.swing.table.DefaultTableModel m;
 
-    public BuscarEm() {
+    public BuscarProveedor() {
         initComponents();
         m = (javax.swing.table.DefaultTableModel) Lista.getModel();
         cargaTabla();
@@ -26,7 +32,7 @@ public class BuscarEm extends javax.swing.JFrame {
 
     private void cargaTabla() {
         m.setRowCount(0);
-        String sql = "SELECT id, Nombre, apellido, CI, Direccion FROM empleados";
+        String sql = "SELECT id, Nombre, RUC, Direccion, Telefono, Direccion, CorreoE FROM proveedores";
         String columna = "Nombre";
 
         try {
@@ -40,12 +46,14 @@ public class BuscarEm extends javax.swing.JFrame {
             conn.resultado = conn.sentencia.executeQuery(sql);
             while (conn.resultado.next()) {
                 m.addRow(new Object[]{conn.resultado.getInt("id"),
-                    conn.resultado.getString("Nombre"), conn.resultado.getString("Apellido"),
-                    conn.resultado.getString("CI"),
-                    conn.resultado.getString("Direccion")});
+                    conn.resultado.getString("Nombre"),
+                    conn.resultado.getString("RUC"),
+                    conn.resultado.getString("Direccion"),
+                    conn.resultado.getString("Telefono"),
+                    conn.resultado.getString("CorreoE"),});
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarEm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscarProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -72,13 +80,13 @@ public class BuscarEm extends javax.swing.JFrame {
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
         Lista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Nombre", "Apellido", "RUC", "Direccion"
+                "id", "Nombre", "RUC", "Direccion", "Telefono", "Correo E"
             }
         ));
         Lista.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -118,8 +126,10 @@ public class BuscarEm extends javax.swing.JFrame {
                 .addComponent(txtfiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 231, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,42 +171,26 @@ public class BuscarEm extends javax.swing.JFrame {
     }//GEN-LAST:event_cbobuscarActionPerformed
 
     private void ListaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaMousePressed
-       Buscar();
+        Buscar();
         dispose();
     }//GEN-LAST:event_ListaMousePressed
 
-    private void AceptarSemental() {
-//        txtid = Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
-
-//        String sql = "select  *from maestro where id = " +  Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
-//            System.out.println(sql);
-//            conn.traeDatos(sql);
-//        try {
-//            if(conn.resultado.next()){
-//                Tabla1.getValuAt.(conn.resultado.getString("id"));
-//                txtHBP.setText(conn.resultado.getString("Nombre"));
-//            }} catch (SQLException ex) {
-//            Logger.getLogger(Sementales.class.getName()).log(Level.SEVERE, null, ex);
-//        
-//    
-//    }
-//    
-    }
-
     private void Buscar() {
-        String sql = "select * from empleados where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        String sql = "select * from proveedores where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
         System.out.println(sql);
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-                SolictudTrabajo.txtid.setText(conn.resultado.getString("id"));
-                SolictudTrabajo.txtNombre.setText(conn.resultado.getString("Nombre"));
-                SolictudTrabajo.txtApellido.setText(conn.resultado.getString("Apellido"));
-                SolictudTrabajo.txtCI.setText(conn.resultado.getString("CI"));
+                txtidproveedor.setText(conn.resultado.getString("id"));
+                txtNombre.setText(conn.resultado.getString("Nombre"));
+                txtRUC.setText(conn.resultado.getString("RUC"));
+                txtDireccion.setText(conn.resultado.getString("Direccion"));
+                txtTelefono.setText(conn.resultado.getString("Telefono"));
+                txtGmail.setText(conn.resultado.getString("CorreoE"));
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarEm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscarProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -217,14 +211,46 @@ public class BuscarEm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -261,7 +287,7 @@ public class BuscarEm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BuscarEm().setVisible(true);
+                new BuscarProveedor().setVisible(true);
             }
         });
     }

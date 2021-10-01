@@ -78,7 +78,7 @@ public class BuscarEmIA extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "id", "Nombre", "Representate", "RUC", "Direccion"
+                "id", "Nombre", "Apellido", "RUC", "Direccion"
             }
         ));
         Lista.addMouseListener(new java.awt.event.MouseAdapter() {

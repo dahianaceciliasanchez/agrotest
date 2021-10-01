@@ -5,7 +5,6 @@
  */
 package agro;
 
-import static agro.RegistroFiscalizacion.txtidanimal;
 import static agro.RegistroFiscalizacion.txtidplanificacio;
 import static agro.RegistroFiscalizacion.txtidvacunas;
 import java.sql.SQLException;
@@ -191,7 +190,6 @@ public class BuscarPlanificacion extends javax.swing.JFrame {
                 txtidplanificacio.setText(conn.resultado.getString("id"));
                 txtplani.setText(conn.resultado.getString("etapasid"));
                 txtidvacunas.setText(conn.resultado.getString("vacunasid"));
-                txtidanimal.setText(conn.resultado.getString("animalid"));
 
             }
         } catch (SQLException ex) {

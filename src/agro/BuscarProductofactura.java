@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package agro;
-
+import static agro.FacturaProveedor.txtdetalle;
+import static agro.FacturaProveedor.txtnombrep;
+import static agro.FacturaProveedor.txtproductoid;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,12 +15,12 @@ import java.util.logging.Logger;
  *
  * @author Dahiana Sanchez G
  */
-public class BuscarEm extends javax.swing.JFrame {
+public class BuscarProductofactura extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();
     javax.swing.table.DefaultTableModel m;
 
-    public BuscarEm() {
+    public BuscarProductofactura() {
         initComponents();
         m = (javax.swing.table.DefaultTableModel) Lista.getModel();
         cargaTabla();
@@ -26,13 +28,13 @@ public class BuscarEm extends javax.swing.JFrame {
 
     private void cargaTabla() {
         m.setRowCount(0);
-        String sql = "SELECT id, Nombre, apellido, CI, Direccion FROM empleados";
-        String columna = "Nombre";
+        String sql = "SELECT id, Descripcion, Stock, Detalle FROM productos";
+        String columna = "Descripcion";
 
         try {
             if (!txtfiltro.getText().trim().isEmpty()) {
                 if (cbobuscar.getSelectedIndex() == 1) {
-                    columna = "Nombre";
+                    columna = "Descripcion";
                 }
                 sql = sql + " where " + columna + " like '%" + txtfiltro.getText().trim() + "%' ";
             }
@@ -40,12 +42,11 @@ public class BuscarEm extends javax.swing.JFrame {
             conn.resultado = conn.sentencia.executeQuery(sql);
             while (conn.resultado.next()) {
                 m.addRow(new Object[]{conn.resultado.getInt("id"),
-                    conn.resultado.getString("Nombre"), conn.resultado.getString("Apellido"),
-                    conn.resultado.getString("CI"),
-                    conn.resultado.getString("Direccion")});
+                    conn.resultado.getString("Descripcion"), conn.resultado.getString("Stock"),
+                    conn.resultado.getString("Detalle")});
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarEm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscarProductofactura.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -72,13 +73,13 @@ public class BuscarEm extends javax.swing.JFrame {
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
         Lista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Nombre", "Apellido", "RUC", "Direccion"
+                "id", "Nombre", "Apellido", "CI", "Telefono", "Correo E"
             }
         ));
         Lista.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -165,38 +166,22 @@ public class BuscarEm extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_ListaMousePressed
 
-    private void AceptarSemental() {
-//        txtid = Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
-
-//        String sql = "select  *from maestro where id = " +  Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
-//            System.out.println(sql);
-//            conn.traeDatos(sql);
-//        try {
-//            if(conn.resultado.next()){
-//                Tabla1.getValuAt.(conn.resultado.getString("id"));
-//                txtHBP.setText(conn.resultado.getString("Nombre"));
-//            }} catch (SQLException ex) {
-//            Logger.getLogger(Sementales.class.getName()).log(Level.SEVERE, null, ex);
-//        
-//    
-//    }
-//    
-    }
+  
 
     private void Buscar() {
-        String sql = "select * from empleados where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        String sql = "select * from productos where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
         System.out.println(sql);
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-                SolictudTrabajo.txtid.setText(conn.resultado.getString("id"));
-                SolictudTrabajo.txtNombre.setText(conn.resultado.getString("Nombre"));
-                SolictudTrabajo.txtApellido.setText(conn.resultado.getString("Apellido"));
-                SolictudTrabajo.txtCI.setText(conn.resultado.getString("CI"));
+                txtproductoid.setText(conn.resultado.getString("id"));
+                txtnombrep.setText(conn.resultado.getString("Descripcion"));
+                txtdetalle.setText(conn.resultado.getString("Detalle"));
+               
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarEm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscarProductofactura.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -217,14 +202,238 @@ public class BuscarEm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarProductofactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarProductofactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarProductofactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarEm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarProductofactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -261,7 +470,7 @@ public class BuscarEm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BuscarEm().setVisible(true);
+                new BuscarProductofactura().setVisible(true);
             }
         });
     }
