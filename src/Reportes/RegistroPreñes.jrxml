@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="ResultadoPreñesid" class="java.lang.Integer">
+	<parameter name="p_NroDoc" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -21,7 +21,8 @@
      servicioia.`metodoid` AS servicioia_metodoid,
      semental.`Nombre` AS semental_Nombre,
      semental.`RP` AS semental_RP,
-     metodoia.`Descripcion` AS metodoia_Descripcion
+     metodoia.`Descripcion` AS metodoia_Descripcion,
+     registropre.`NroDoc` AS registropre_NroDoc
 FROM
      `resultadopre` resultadopre INNER JOIN `registropre` registropre ON resultadopre.`id` = registropre.`ResultadoPreñesid`
      INNER JOIN `empleados` empleados ON registropre.`Empleadoid` = empleados.`id`
@@ -29,7 +30,7 @@ FROM
      INNER JOIN `animal` animal ON servicioia.`animalid` = animal.`id`
      INNER JOIN `semental` semental ON servicioia.`sementalid` = semental.`id`
      INNER JOIN `metodoia` metodoia ON servicioia.`metodoid` = metodoia.`id`
-WHERE registropre.Empleadoid =$P!{ResultadoPreñesid}]]>
+WHERE registropre.NroDoc =$P!{p_NroDoc}]]>
 	</queryString>
 	<field name="registropre_ResultadoPreñesid" class="java.lang.Integer"/>
 	<field name="registropre_Empleadoid" class="java.lang.Integer"/>
@@ -45,6 +46,7 @@ WHERE registropre.Empleadoid =$P!{ResultadoPreñesid}]]>
 	<field name="semental_Nombre" class="java.lang.String"/>
 	<field name="semental_RP" class="java.lang.Integer"/>
 	<field name="metodoia_Descripcion" class="java.lang.String"/>
+	<field name="registropre_NroDoc" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -77,25 +79,25 @@ WHERE registropre.Empleadoid =$P!{ResultadoPreñesid}]]>
 	<columnHeader>
 		<band height="44" splitType="Stretch">
 			<staticText>
-				<reportElement x="8" y="2" width="32" height="20" uuid="4f98ee56-c0b4-4a02-aadb-b83ab9363940"/>
+				<reportElement x="0" y="2" width="32" height="20" uuid="4f98ee56-c0b4-4a02-aadb-b83ab9363940"/>
 				<textElement textAlignment="Center">
 					<font isBold="true" isItalic="false" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="106" y="2" width="79" height="20" uuid="f7d0defe-8556-425a-9cf9-53988ca77266"/>
+				<reportElement x="138" y="3" width="79" height="20" uuid="f7d0defe-8556-425a-9cf9-53988ca77266"/>
 				<textElement textAlignment="Center">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[RESULTADO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="193" y="2" width="111" height="20" uuid="c0be164a-f5a7-4d55-afab-0d8094f27f83"/>
+				<reportElement x="230" y="2" width="74" height="20" uuid="c0be164a-f5a7-4d55-afab-0d8094f27f83"/>
 				<textElement textAlignment="Center">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[EMPLEADO_NOMBRE]]></text>
+				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="314" y="2" width="35" height="20" uuid="7de6a5f9-2220-403d-aa06-47b73c3a102b"/>
@@ -147,28 +149,35 @@ WHERE registropre.Empleadoid =$P!{ResultadoPreñesid}]]>
 				<text><![CDATA[METODO IA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="50" y="2" width="49" height="20" uuid="58c0b12c-e58c-465c-8620-c9d88aab3438"/>
+				<reportElement x="89" y="3" width="49" height="20" uuid="58c0b12c-e58c-465c-8620-c9d88aab3438"/>
 				<textElement textAlignment="Center">
 					<font isBold="true" isItalic="false" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[ID_RES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="2" width="42" height="20" uuid="9dd009c1-f7cf-4143-af68-ac6bdf9201df"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NRODOC]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="43" splitType="Stretch">
 			<textField>
-				<reportElement x="8" y="0" width="32" height="20" uuid="7bffe722-7bc5-4a46-96c3-b30985f8c3a2"/>
+				<reportElement x="0" y="0" width="32" height="20" uuid="7bffe722-7bc5-4a46-96c3-b30985f8c3a2"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{registropre_id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="106" y="0" width="79" height="20" uuid="7706d0c4-6479-4230-aed5-048ecedd96e5"/>
+				<reportElement x="138" y="0" width="79" height="20" uuid="7706d0c4-6479-4230-aed5-048ecedd96e5"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{resultadopre_Descripcion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="196" y="2" width="100" height="20" uuid="37fa3015-bc54-4aee-8863-3060089f6ba0"/>
+				<reportElement x="230" y="2" width="66" height="20" uuid="37fa3015-bc54-4aee-8863-3060089f6ba0"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{empleados_Nombre}]]></textFieldExpression>
 			</textField>
@@ -207,9 +216,14 @@ WHERE registropre.Empleadoid =$P!{ResultadoPreñesid}]]>
 				<textFieldExpression><![CDATA[$F{servicioia_fechaia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="51" y="1" width="49" height="20" uuid="58b0326d-8dd8-4d59-83b1-146fc622b416"/>
+				<reportElement x="89" y="4" width="49" height="20" uuid="58b0326d-8dd8-4d59-83b1-146fc622b416"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{registropre_ResultadoPreñesid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="0" width="35" height="20" uuid="0b1f1000-352f-4b68-8297-d748583af775"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{registropre_NroDoc}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

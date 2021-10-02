@@ -382,10 +382,10 @@ public class Proveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(ban ==1) InsertaDato(); 
-        if(ban ==2) ModificaDato();
-        ban=0;
-        cargaGrilla();
+//        if(ban ==1) InsertaDato(); 
+//        if(ban ==2) ModificaDato();
+//        ban=0;
+//        cargaGrilla();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -409,27 +409,27 @@ public class Proveedor extends javax.swing.JFrame {
           txtDireccion.setText("");
   }
     
-    private void InsertaDato(){
-       String sql ="Insert into proveedorvacunas(Nombre, RepresentanteLegal, RUC, Direccion, Telefono, Gmail) "
-               + "values('"+ txtNombre.getText() + "', '"+ txtRepresentante.getText() + "', '" + txtRUC.getText() + "' , "
-               + "'" + txtDireccion.getText() +"','"+ txtTelefono.getText()+"' , '"+ txtGmail.getText()+"')";
-       System.out.println(sql);
-        cargaGrilla();
-       conn.actualizaTabla(sql); 
-    } 
-    
-     private void ModificaDato(){
-            String sql = "update proveedorvacunas set Nombre = "
-              + "'"+ txtNombre.getText() + "', RepresentanteLegal =',"+ 
-              txtRepresentante.getText() +"',Direccion ='"+  txtDireccion.getText() 
-                    +"',Telefono ='"+ txtTelefono.getText() 
-                     +"',Gmail ='"+ txtGmail.getText()
-              + "' where RUC = '" + txtRUC.getText()+"'";
-      System.out.println(sql);
-      conn.actualizaTabla(sql);
-      
-        }
+//    private void InsertaDato(){
+//       String sql ="Insert into proveedorvacunas(Nombre, RepresentanteLegal, RUC, Direccion, Telefono, Gmail) "
+//               + "values('"+ txtNombre.getText() + "', '"+ txtRepresentante.getText() + "', '" + txtRUC.getText() + "' , "
+//               + "'" + txtDireccion.getText() +"','"+ txtTelefono.getText()+"' , '"+ txtGmail.getText()+"')";
+//       System.out.println(sql);
+//        cargaGrilla();
+//       conn.actualizaTabla(sql); 
    
+    
+//     private void ModificaDato(){
+//            String sql = "update proveedorvacunas set Nombre = "
+//              + "'"+ txtNombre.getText() + "', RepresentanteLegal =',"+ 
+////              txtRepresentante.getText() +"',Direccion ='"+  txtDireccion.getText() 
+//                    +"',Telefono ='"+ txtTelefono.getText() 
+//                     +"',Gmail ='"+ txtGmail.getText()
+//              + "' where RUC = '" + txtRUC.getText()+"'";
+//      System.out.println(sql);
+//      conn.actualizaTabla(sql);
+//      
+//        }
+//   
         private void BuscarRegistro(){
 
                 String sql = "select * from proveedorvacunas where RUC = '" + fichas.getValueAt(fichas.getSelectedRow(), 0).toString()+"'";
@@ -439,7 +439,7 @@ public class Proveedor extends javax.swing.JFrame {
                     if(conn.resultado.next()){
                         txtRUC.setText(conn.resultado.getString("RUC"));
                         txtNombre.setText(conn.resultado.getString("Nombre"));
-                        txtRepresentante.setText(conn.resultado.getString("RepresentanteLegal"));
+                       // txtRepresentante.setText(conn.resultado.getString("RepresentanteLegal"));
                         txtDireccion.setText(conn.resultado.getString("Direccion"));
                         txtTelefono.setText(conn.resultado.getString("Telefono"));
                         txtGmail.setText(conn.resultado.getString("Gmail"));

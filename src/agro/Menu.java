@@ -108,6 +108,9 @@ public class Menu extends javax.swing.JFrame {
         SaludVeterinario = new javax.swing.JMenu();
         Veterina = new javax.swing.JMenu();
         jMenu29 = new javax.swing.JMenu();
+        jMenu10 = new javax.swing.JMenu();
+        jMenu25 = new javax.swing.JMenu();
+        jMenu26 = new javax.swing.JMenu();
 
         jMenu1.setText("jMenu1");
 
@@ -513,6 +516,15 @@ public class Menu extends javax.swing.JFrame {
         jMenu29.setText("FACTURA");
         jMenu5.add(jMenu29);
 
+        jMenu10.setText("NOTA CREDITO");
+        jMenu5.add(jMenu10);
+
+        jMenu25.setText("NOTA DEBITO");
+        jMenu5.add(jMenu25);
+
+        jMenu26.setText("NOTA REMISION");
+        jMenu5.add(jMenu26);
+
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -759,6 +771,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu12;
     private javax.swing.JMenu jMenu13;
@@ -774,6 +787,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu22;
     private javax.swing.JMenu jMenu23;
     private javax.swing.JMenu jMenu24;
+    private javax.swing.JMenu jMenu25;
+    private javax.swing.JMenu jMenu26;
     private javax.swing.JMenu jMenu29;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;

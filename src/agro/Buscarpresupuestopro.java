@@ -1,6 +1,4 @@
-
 package agro;
-
 
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -11,8 +9,6 @@ import static agro.RegistroFiscalizacion.txtidempleado;
  *
  * @author Dahiana Sanchez G
  */
-
-
 public class Buscarpresupuestopro extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();
@@ -166,12 +162,12 @@ public class Buscarpresupuestopro extends javax.swing.JFrame {
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-               txtidempleado.setText(conn.resultado.getString("id"));
-               txtNombre.setText(conn.resultado.getString("Nombre"));
-                txtapellido.setText(conn.resultado.getString("Apellido"));
-               txtCI.setText(conn.resultado.getString("CI"));
-               txttelefono.setText(conn.resultado.getString("Telefono"));
-               txtgmail.setText(conn.resultado.getString("Gmail"));
+//                txtidempleado.setText(conn.resultado.getString("id"));
+//                txtNombre.setText(conn.resultado.getString("Nombre"));
+//                txtapellido.setText(conn.resultado.getString("Apellido"));
+//                txtCI.setText(conn.resultado.getString("CI"));
+//                txttelefono.setText(conn.resultado.getString("Telefono"));
+//                txtgmail.setText(conn.resultado.getString("Gmail"));
 
             }
         } catch (SQLException ex) {

@@ -3,8 +3,15 @@ package agro;
 
 import Modelo.combomotivoajuste;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 public class AjustedeStockdeSemen extends javax.swing.JFrame {
@@ -71,13 +78,14 @@ Conexion conn = new Conexion ();
         txtHBP = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtCaCantidad = new javax.swing.JTextField();
+        txtcantidad = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         cborazas = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         txtStock = new javax.swing.JTextField();
         cbomotivo = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -165,6 +173,13 @@ Conexion conn = new Conexion ();
 
         jLabel11.setText("Stock");
 
+        jButton1.setText("IMPRIMIR");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton1MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -185,6 +200,14 @@ Conexion conn = new Conexion ();
                         .addGap(25, 25, 25))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAgregar)
+                                .addGap(30, 30, 30)
+                                .addComponent(btnGuardar)
+                                .addGap(18, 18, 18)
+                                .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,20 +235,12 @@ Conexion conn = new Conexion ();
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCaCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
                                 .addComponent(jLabel9)
-                                .addGap(35, 35, 35)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cbomotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(39, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(btnAgregar)
-                .addGap(39, 39, 39)
-                .addComponent(btnGuardar)
-                .addGap(18, 18, 18)
-                .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +265,7 @@ Conexion conn = new Conexion ();
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(txtCaCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(cbomotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
@@ -264,7 +279,8 @@ Conexion conn = new Conexion ();
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
                     .addComponent(btnGuardar)
-                    .addComponent(salir))
+                    .addComponent(salir)
+                    .addComponent(jButton1))
                 .addGap(22, 22, 22))
         );
 
@@ -299,10 +315,10 @@ Conexion conn = new Conexion ();
         String motivo;
         motivo = cbomotivo.getItemAt(cbomotivo.getSelectedIndex()).getId();
        String sql ="Insert into ajustedestock (idToro, cantidadajuste, motivoid)"+
-                " values('"+ txtidtoro.getText() + "', '"+ txtCaCantidad.getText()
+                " values('"+ txtidtoro.getText() + "', '"+ txtcantidad.getText()
                + "', '"+ motivo+ "')";
        
-            sql = "update semental set Stock = Stock + " + txtCaCantidad.getText()
+            sql = "update semental set Stock = Stock + " + txtcantidad.getText()
                 + " where id =" + txtidtoro.getText();
        System.out.println(sql);
        conn.actualizaTabla(sql);
@@ -330,6 +346,20 @@ Conexion conn = new Conexion ();
     private void txtHBPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHBPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHBPActionPerformed
+
+    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+       Map parametro = new HashMap();
+            parametro.put("p_cantidad", txtidtoro.getText() );
+        try {
+            String fileName = "src\\agro\\ajustestock.jasper";
+            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
+            JasperViewer ventana = new JasperViewer(jasperPrint, false);
+             ventana.setVisible(true);
+           // JasperPrintManager.printReport(jasperPrint, true);
+        } catch (JRException ex) {
+            Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1MousePressed
          private void Buscar(){
          String sql = "select * from semental where id = " + tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
             System.out.println(sql);
@@ -393,6 +423,7 @@ Conexion conn = new Conexion ();
     private javax.swing.JComboBox cbobuscar;
     private javax.swing.JComboBox<combomotivoajuste> cbomotivo;
     private javax.swing.JComboBox<String> cborazas;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -408,10 +439,10 @@ Conexion conn = new Conexion ();
     private javax.swing.JButton salir;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtBsucar;
-    private javax.swing.JTextField txtCaCantidad;
     private javax.swing.JTextField txtHBP;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtStock;
+    private javax.swing.JTextField txtcantidad;
     private javax.swing.JTextField txtidtoro;
     // End of variables declaration//GEN-END:variables
 }

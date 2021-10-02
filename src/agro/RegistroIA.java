@@ -5,6 +5,7 @@
  */
 package agro;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -69,6 +71,8 @@ public class RegistroIA extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         txtids = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtnro = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -300,6 +304,8 @@ public class RegistroIA extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Nro Inseminacion");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -319,22 +325,26 @@ public class RegistroIA extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(231, 231, 231)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtnro, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel11)
+                                .addGap(10, 10, 10)
                                 .addComponent(txtids, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(257, 257, 257))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(127, 127, 127))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(19, 19, 19))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,7 +354,9 @@ public class RegistroIA extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtids, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtids, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtnro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -406,13 +418,27 @@ public class RegistroIA extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
+        try {
+            txtids.requestFocus();
+            LimpiarIA();
+            String sql = "SELECT max(NroIA) + 1 as total from servicioia";
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+                txtnro.setText(conn.resultado.getString("total"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PresupuestoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
         LimpiarIA();
     }//GEN-LAST:event_jButton2MousePressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String sql = "INSERT INTO servicioia (id,fechaia, solicitudia,animalid, sementalid, Cantidad)VALUES"
+        String sql = "INSERT INTO servicioia (id,fechaia, solicitudia,animalid, sementalid, Cantidad, NroIA)VALUES"
                 + "(" + nuid + ", DATE(NOW()) ," + txtids.getText()
-                + ", " + txtidhembra.getText() + ", " + txtidtoro.getText() + ", " + txtcantidad.getText() + ")";
+                + ", " + txtidhembra.getText() + ", " + txtidtoro.getText() + ", " + txtcantidad.getText()
+                + ", " + txtnro.getText()+ ")";
         System.out.println(sql);
         conn.actualizaDatos(sql);
         JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");
@@ -439,12 +465,13 @@ public class RegistroIA extends javax.swing.JFrame {
     }//GEN-LAST:event_txtrpHembraMousePressed
 
     private void jButton5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MousePressed
-        Map parametro = new HashMap();
-            parametro.put("p_animalid", txtidhembra.getText());
+        Map param = new HashMap();
+            param.put("p_Nro", txtnro.getText());
         try {
             String fileName = "src\\Reportes\\RegistroIA.jasper";
-            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
-            JasperPrintManager.printReport(jasperPrint, true);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, param, conn.conexion);
+            JasperViewer ventana = new JasperViewer(jasperPrint, false);
+             ventana.setVisible(true);
         } catch (JRException ex) {
             Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -516,6 +543,7 @@ public class RegistroIA extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -536,6 +564,7 @@ public class RegistroIA extends javax.swing.JFrame {
     public static javax.swing.JTextField txtidhembra;
     public static javax.swing.JTextField txtids;
     public static javax.swing.JTextField txtidtoro;
+    private javax.swing.JTextField txtnro;
     public static javax.swing.JTextField txtrpHembra;
     // End of variables declaration//GEN-END:variables
 }

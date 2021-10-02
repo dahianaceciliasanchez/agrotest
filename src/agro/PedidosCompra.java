@@ -36,7 +36,7 @@ public class PedidosCompra extends javax.swing.JFrame {
         m = (javax.swing.table.DefaultTableModel) ficha.getModel();
           m.setRowCount(0);
           lblfecha.setText(fecha());
-          txtNro.requestFocus();
+          txtNroD.requestFocus();
     }
       
     /**
@@ -52,7 +52,7 @@ public class PedidosCompra extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lblfecha = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtNro = new javax.swing.JTextField();
+        txtNroD = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -100,9 +100,9 @@ public class PedidosCompra extends javax.swing.JFrame {
 
         jLabel3.setText("Nro Pedido");
 
-        txtNro.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtNroD.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNroKeyPressed(evt);
+                txtNroDKeyPressed(evt);
             }
         });
 
@@ -122,7 +122,7 @@ public class PedidosCompra extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(txtNro, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNroD, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -135,7 +135,7 @@ public class PedidosCompra extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNroD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -409,6 +409,11 @@ public class PedidosCompra extends javax.swing.JFrame {
                 jButton2MousePressed(evt);
             }
         });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -547,7 +552,7 @@ public class PedidosCompra extends javax.swing.JFrame {
           String sql = "SELECT max(nropedido) + 1 as  sumar from pedidos"; // "where nroDepito = " + txtNDeposito.getText()
           conn.traeDatos(sql);
           if (conn.resultado.next())
-              txtNro.setText( conn.resultado.getString("sumar"));
+              txtNroD.setText( conn.resultado.getString("sumar"));
       } catch (SQLException ex) {
           Logger.getLogger(PedidosCompra.class.getName()).log(Level.SEVERE, null, ex);
             }  
@@ -564,7 +569,7 @@ public class PedidosCompra extends javax.swing.JFrame {
             if (conn.resultado.next()) {
                 fac = conn.resultado.getInt("nro");
               sql= "INSERT INTO pedidos (id, fechapedido, nropedido, empleadoid ) VALUES ("
-                + nuid +", DATE(NOW()) ," + txtNro.getText() +","+idempleado.getText() +") ";
+                + nuid +", DATE(NOW()) ," + txtNroD.getText() +","+idempleado.getText() +") ";
                guardaMovi();
                conn.actualizaTabla(sql);
               System.out.println(sql);
@@ -592,9 +597,9 @@ public class PedidosCompra extends javax.swing.JFrame {
        }
         return cod;
     }
-    private void txtNroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroKeyPressed
+    private void txtNroDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroDKeyPressed
   
-    }//GEN-LAST:event_txtNroKeyPressed
+    }//GEN-LAST:event_txtNroDKeyPressed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
       dispose();
@@ -621,16 +626,20 @@ public class PedidosCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_txtidproductosMousePressed
 
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
-            Map parametro = new HashMap();
-            parametro.put("p_nropedido", txtNro.getText());
+           
+    }//GEN-LAST:event_jButton2MousePressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       Map parametro = new HashMap();
+            parametro.put("p_nropedido", txtNroD.getText());
         try {
-            String fileName = "src\\Reportes\\Pedidos.jasper";
+            String fileName = "src\\Reportes\\PedidosCompra.jasper";
             JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
             JasperPrintManager.printReport(jasperPrint, true);
         } catch (JRException ex) {
             Logger.getLogger(PedidosCompra.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton2MousePressed
+    }//GEN-LAST:event_jButton2ActionPerformed
 
      private void guardaMovi(){
          String sql;
@@ -737,7 +746,7 @@ return formatofecha.format(fecha);
     public static javax.swing.JTextField txtDescripcion;
     public static javax.swing.JTextField txtGmail;
     public static javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNro;
+    private javax.swing.JTextField txtNroD;
     public static javax.swing.JTextField txtStock;
     public static javax.swing.JTextField txtTelefono;
     public static javax.swing.JTextField txtcantidad;

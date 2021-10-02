@@ -3,7 +3,10 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="p_animalid" class="java.lang.Integer">
+	<parameter name="p_nroIA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_Nro" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -17,12 +20,14 @@
      semental.`Nombre` AS semental_Nombre,
      semental.`RP` AS semental_RP,
      animal.`Nombre` AS animal_Nombre,
-     animal.`RP` AS animal_RP
+     animal.`RP` AS animal_RP,
+     servicioia.`NroIA` AS servicioia_NroIA
 FROM
      `metodoia` metodoia INNER JOIN `servicioia` servicioia ON metodoia.`id` = servicioia.`metodoid`
      INNER JOIN `semental` semental ON servicioia.`sementalid` = semental.`id`
      INNER JOIN `animal` animal ON servicioia.`animalid` = animal.`id`
-where servicioia.animalid = $P!{p_animalid}]]>
+
+WHERE servicioia.NroIA = $P!{p_Nro}]]>
 	</queryString>
 	<field name="servicioia_fechaia" class="java.sql.Date"/>
 	<field name="servicioia_animalid" class="java.lang.Integer"/>
@@ -34,6 +39,7 @@ where servicioia.animalid = $P!{p_animalid}]]>
 	<field name="semental_RP" class="java.lang.Integer"/>
 	<field name="animal_Nombre" class="java.lang.String"/>
 	<field name="animal_RP" class="java.lang.Integer"/>
+	<field name="servicioia_NroIA" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -56,45 +62,50 @@ where servicioia.animalid = $P!{p_animalid}]]>
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="46" splitType="Stretch">
 			<staticText>
 				<reportElement x="10" y="2" width="26" height="20" uuid="6f376b00-a862-47fe-beb6-8560a55d30f5"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="52" y="2" width="69" height="20" uuid="9c6dd039-8a1d-4254-a414-b36fc1838e2c"/>
+				<reportElement x="47" y="2" width="69" height="20" uuid="9c6dd039-8a1d-4254-a414-b36fc1838e2c"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[FECHA IA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="130" y="2" width="67" height="20" uuid="8ff4e56c-dcc3-4525-9502-fba72c382c32"/>
+				<reportElement x="179" y="0" width="67" height="20" uuid="8ff4e56c-dcc3-4525-9502-fba72c382c32"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[METODO_ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="214" y="2" width="83" height="20" uuid="ea8efaec-fc86-429b-8461-73810a4cd836"/>
+				<reportElement x="260" y="2" width="83" height="20" uuid="ea8efaec-fc86-429b-8461-73810a4cd836"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="312" y="2" width="114" height="20" uuid="332d70ff-954e-436e-bb4e-b52890f857bd"/>
+				<reportElement x="357" y="0" width="114" height="20" uuid="332d70ff-954e-436e-bb4e-b52890f857bd"/>
 				<text><![CDATA[SEMENTAL_NOMBRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="444" y="2" width="52" height="20" uuid="5817cfe2-0844-4246-a5cf-1c24522d1761"/>
+				<reportElement x="483" y="0" width="52" height="20" uuid="5817cfe2-0844-4246-a5cf-1c24522d1761"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[RP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="535" y="2" width="72" height="20" uuid="26e98e90-e015-4f44-96a0-5b8f1a670ec3"/>
+				<reportElement x="568" y="2" width="72" height="20" uuid="26e98e90-e015-4f44-96a0-5b8f1a670ec3"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="642" y="2" width="48" height="20" uuid="f508b2b2-cf32-466e-92e0-a0fadd3a7607"/>
+				<reportElement x="676" y="2" width="48" height="20" uuid="f508b2b2-cf32-466e-92e0-a0fadd3a7607"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="125" y="2" width="38" height="20" uuid="c1ab789a-b856-4dfd-8385-a1fcac292bac"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[NRO IA]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -106,39 +117,44 @@ where servicioia.animalid = $P!{p_animalid}]]>
 				<textFieldExpression><![CDATA[$F{servicioia_id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="52" y="2" width="69" height="20" uuid="a5c50014-c723-42c5-af80-6307b4f9e6d4"/>
+				<reportElement x="48" y="2" width="69" height="20" uuid="a5c50014-c723-42c5-af80-6307b4f9e6d4"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{servicioia_fechaia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="130" y="2" width="67" height="20" uuid="6bd40a4a-ceeb-4c9f-ac00-7c603b88e97b"/>
+				<reportElement x="179" y="2" width="67" height="20" uuid="6bd40a4a-ceeb-4c9f-ac00-7c603b88e97b"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{servicioia_metodoid}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="214" y="0" width="83" height="20" uuid="4ad9ba6b-4673-48fb-bcdc-3d1d124dd7ce"/>
+				<reportElement x="260" y="2" width="83" height="20" uuid="4ad9ba6b-4673-48fb-bcdc-3d1d124dd7ce"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{metodoia_Descripcion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="312" y="0" width="114" height="20" uuid="5eee2f80-ef86-48e1-a669-1e7ffad9fe50"/>
+				<reportElement x="357" y="0" width="114" height="20" uuid="5eee2f80-ef86-48e1-a669-1e7ffad9fe50"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{semental_Nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="444" y="2" width="52" height="20" uuid="4ac64cf0-8a3f-4c79-bf06-b0ad4ad8b8ba"/>
+				<reportElement x="483" y="2" width="52" height="20" uuid="4ac64cf0-8a3f-4c79-bf06-b0ad4ad8b8ba"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{semental_RP}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="518" y="2" width="100" height="20" uuid="41740c60-1a75-475a-a303-d28a97dce2de"/>
+				<reportElement x="550" y="0" width="100" height="20" uuid="41740c60-1a75-475a-a303-d28a97dce2de"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{animal_Nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="642" y="2" width="48" height="20" uuid="a0ffb99b-4b3b-4c83-9f43-edb612545f85"/>
+				<reportElement x="676" y="0" width="48" height="20" uuid="a0ffb99b-4b3b-4c83-9f43-edb612545f85"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{animal_RP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="0" width="36" height="20" uuid="5f1f48d3-9669-4b47-a6c0-6dadd515cb84"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{servicioia_NroIA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

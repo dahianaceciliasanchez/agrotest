@@ -110,7 +110,6 @@ public class ProtocolosIA extends javax.swing.JFrame {
         cboreactivo = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         fecha = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -357,13 +356,6 @@ public class ProtocolosIA extends javax.swing.JFrame {
         fecha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         fecha.setText("dd/MM/yyyy");
 
-        jButton2.setText("IMPRIMIR");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton2MousePressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -377,27 +369,24 @@ public class ProtocolosIA extends javax.swing.JFrame {
                             .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
+                        .addGap(105, 105, 105)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(agregar)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cboreactivo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel16)
                                 .addGap(18, 18, 18)
-                                .addComponent(fecha)
-                                .addGap(100, 100, 100))
+                                .addComponent(fecha))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(agregar)
-                                .addGap(36, 36, 36)
+                                .addGap(50, 50, 50)
                                 .addComponent(guardar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(salir)
-                                .addGap(132, 132, 132)))))
-                .addContainerGap(57, Short.MAX_VALUE))
+                                .addGap(62, 62, 62)
+                                .addComponent(salir)))))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,8 +410,7 @@ public class ProtocolosIA extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(agregar)
                             .addComponent(guardar)
-                            .addComponent(salir)
-                            .addComponent(jButton2))
+                            .addComponent(salir))
                         .addGap(32, 32, 32))))
         );
 
@@ -548,18 +536,6 @@ public class ProtocolosIA extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
-         Map parametro = new HashMap();
-            parametro.put("p_nrosolicitud", txtmetodo.getText());
-        try {
-            String fileName = "src\\Reportes\\solicitudia.jasper";
-            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
-            JasperPrintManager.printReport(jasperPrint, true);
-        } catch (JRException ex) {
-            Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton2MousePressed
     private void LimpiarIA() {
 //       
 //         txtStock.setText("");
@@ -624,7 +600,6 @@ public class ProtocolosIA extends javax.swing.JFrame {
     private javax.swing.JButton guardar;
     private javax.swing.JTextField idva;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;

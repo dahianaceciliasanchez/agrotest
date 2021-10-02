@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ajustestock" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="378fab5c-eb3c-4721-b9c5-468c732947f6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_cantidad" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     stockpajuelas.`id` AS stockpajuelas_id,
+     stockpajuelas.`idToro` AS stockpajuelas_idToro,
+     stockpajuelas.`CantidadAjuste` AS stockpajuelas_CantidadAjuste,
+     stockpajuelas.`motivoid` AS stockpajuelas_motivoid,
+     semental.`id` AS semental_id,
+     semental.`Nombre` AS semental_Nombre,
+     semental.`RP` AS semental_RP,
+     motivoajuste.`id` AS motivoajuste_id,
+     motivoajuste.`Descripcion` AS motivoajuste_Descripcion,
+     semental.`Stock` AS semental_Stock
+FROM
+     `semental` semental INNER JOIN `stockpajuelas` stockpajuelas ON semental.`id` = stockpajuelas.`idToro`
+     INNER JOIN `motivoajuste` motivoajuste ON stockpajuelas.`motivoid` = motivoajuste.`id`
+where stockpajuelas.idToro = $P!{p_cantidad}]]>
+	</queryString>
+	<field name="stockpajuelas_id" class="java.lang.Integer"/>
+	<field name="stockpajuelas_idToro" class="java.lang.Integer"/>
+	<field name="stockpajuelas_CantidadAjuste" class="java.lang.Integer"/>
+	<field name="stockpajuelas_motivoid" class="java.lang.Integer"/>
+	<field name="semental_id" class="java.lang.Integer"/>
+	<field name="semental_Nombre" class="java.lang.String"/>
+	<field name="semental_RP" class="java.lang.Integer"/>
+	<field name="motivoajuste_id" class="java.lang.Integer"/>
+	<field name="motivoajuste_Descripcion" class="java.lang.String"/>
+	<field name="semental_Stock" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="285" y="24" width="255" height="28" uuid="107a7c40-78ae-4fc9-b2ca-cc25a281af4d"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[AJUSTE DE STOCK DE SEMEN]]></text>
+			</staticText>
+			<image>
+				<reportElement x="20" y="4" width="165" height="75" uuid="bff221f6-e7e4-430c-b157-9f7fe885ed6c"/>
+				<imageExpression><![CDATA["C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\image.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="645" y="4" width="100" height="20" uuid="36439afa-f599-4b98-a616-42b9bb85f246"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="645" y="59" width="100" height="20" uuid="c2d31af2-65c2-4a97-a9a1-ff39bafed18b"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="2" width="61" height="20" uuid="d527f863-99d7-48f0-9bf3-267179766943"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="2" width="64" height="20" uuid="e8a21a02-05b3-43ce-8c84-3e32ae773962"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ID_TORO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="167" y="2" width="100" height="20" uuid="d4bccd6b-34a4-4c36-95c5-2ee4a6c87b20"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SEMENTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="2" width="35" height="20" uuid="d9de3dba-e1ef-4193-aa4c-1b82f1e1c60e"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="2" width="81" height="20" uuid="4372a3e6-8591-49bf-ac14-822cdb18a3db"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ID_MOTIVO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="459" y="2" width="100" height="20" uuid="c5168929-7f43-4715-b9e3-482e57c114d0"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="572" y="2" width="51" height="20" uuid="1a37be00-8c2f-4f4f-97d6-c115af73ef51"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[STOCK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="645" y="2" width="100" height="20" uuid="a37975b2-a202-4a67-95bb-d5c2bded0966"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD_AJUSTE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="58" splitType="Stretch">
+			<textField>
+				<reportElement x="11" y="2" width="61" height="20" uuid="e1bcd651-937e-4a27-bf66-e74f490f245a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{stockpajuelas_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="6" width="62" height="20" uuid="48dd3bd7-2f34-4d2a-ba07-216f990ae589"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{stockpajuelas_idToro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="167" y="6" width="100" height="20" uuid="b9a90b5e-002c-444f-b493-4e7dd27a627c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{semental_Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="6" width="35" height="20" uuid="f6fda3e4-d006-46f3-b172-22f9a330be8e"/>
+				<textFieldExpression><![CDATA[$F{semental_RP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="343" y="6" width="100" height="20" uuid="b8fb3a40-ae6b-45d3-8a22-3d2213d6c50a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{motivoajuste_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="459" y="6" width="100" height="20" uuid="ef144bb5-0e3c-4c65-a6b3-b5ed3d334a80"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{motivoajuste_Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="572" y="4" width="51" height="20" uuid="a06f18d3-de9d-4964-96e8-9cca3495ddb9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{semental_Stock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="645" y="5" width="100" height="20" uuid="287b90cf-a514-4fd6-86fe-9ea63efc095e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{stockpajuelas_CantidadAjuste}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="18" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="10" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="18" splitType="Stretch"/>
+	</summary>
+</jasperReport>

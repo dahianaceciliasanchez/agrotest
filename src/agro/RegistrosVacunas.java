@@ -23,7 +23,7 @@ Conexion conn = new Conexion ();
         initComponents();
          c = (javax.swing.table.DefaultTableModel) table.getModel();
               CargarTabla();
-                   fecha.setText(fecha());
+                   //fecha.setText(fecha());
     }
 
     /**
@@ -276,7 +276,7 @@ Conexion conn = new Conexion ();
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         ban = 2 ; 
-          InsertaDato();
+       //   InsertaDato();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -293,7 +293,7 @@ Conexion conn = new Conexion ();
           txtID.setText("");
           txtNombre.setText("");
           txtCantidad.setText("");
-          txtProveedor.setText("");
+         // txtProveedor.setText("");
           
   
           
@@ -370,7 +370,7 @@ Conexion conn = new Conexion ();
                 txtID.setText(conn.resultado.getString("id"));
                 txtNombre.setText(conn.resultado.getString("Nombre"));
                 txtCantidad.setText(conn.resultado.getString("Cantidad"));
-                txtProveedor.setText(conn.resultado.getString("ProveedorVid"));
+              //  txtProveedor.setText(conn.resultado.getString("ProveedorVid"));
                 
                 
             }} catch (SQLException ex) {
@@ -378,13 +378,13 @@ Conexion conn = new Conexion ();
         }
         }
     
-     private void InsertaDato(){
-       String sql ="Insert into vacunas (Nombre, Cantidad, proveedorVid) values('"+ txtNombre.getText()
-                + "', '" + txtCantidad.getText() + "', '" + txtProveedor.getText()+ "') ";
-       System.out.println(sql);
-       conn.actualizaTabla(sql);
-       CargarTabla();
-     }
+//     private void InsertaDato(){
+//       String sql ="Insert into vacunas (Nombre, Cantidad, proveedorVid) values('"+ txtNombre.getText()
+//                + "', '" + txtCantidad.getText() + "', '" + txtProveedor.getText()+ "') ";
+//       System.out.println(sql);
+//       conn.actualizaTabla(sql);
+//       CargarTabla();
+//     }
      
       
       public static String fecha(){

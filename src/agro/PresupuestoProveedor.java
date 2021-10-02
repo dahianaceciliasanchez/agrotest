@@ -8,9 +8,15 @@ package agro;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 /**
  *
@@ -170,16 +176,12 @@ public class PresupuestoProveedor extends javax.swing.JFrame {
                                 .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtpresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel8)
+                    .addComponent(txtpresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(lblfecha)
-                        .addContainerGap(20, Short.MAX_VALUE))))
+                        .addComponent(lblfecha)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,6 +245,11 @@ public class PresupuestoProveedor extends javax.swing.JFrame {
         });
 
         jButton5.setText("IMPRIMIR");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton5MousePressed(evt);
+            }
+        });
 
         jButton6.setText("MODIFICAR");
 
@@ -534,6 +541,18 @@ public class PresupuestoProveedor extends javax.swing.JFrame {
     private void txttotalunitarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txttotalunitarioMousePressed
        Total();
     }//GEN-LAST:event_txttotalunitarioMousePressed
+
+    private void jButton5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MousePressed
+     Map parametro = new HashMap();
+            parametro.put("p_nropresupuesto", txtpresupuesto.getText());
+        try {
+            String fileName = "src\\Reportes\\Presupuesto.jasper";
+            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
+            JasperPrintManager.printReport(jasperPrint, true);
+        } catch (JRException ex) {
+            Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton5MousePressed
 
     private void LimpiaProductos() {
         txtidproducto.setText("");

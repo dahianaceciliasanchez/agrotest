@@ -18,7 +18,6 @@ public class FacturaProveedor extends javax.swing.JFrame {
     Conexion conn = new Conexion();
     javax.swing.table.DefaultTableModel m;
     int nuid = 0;
-    int fac = 0;
 
     public FacturaProveedor() {
         initComponents();
@@ -578,22 +577,12 @@ public class FacturaProveedor extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String pagos;
         pagos = cbopagos.getItemAt(cbopagos.getSelectedIndex()).getId();
-        try {
-            String sql = "SELECT max(nrofactura) + 1 as fac from facturaproveedor";
-            conn.traeDatos(sql);
-            if (conn.resultado.next()) {
-                fac = conn.resultado.getInt("fac");
-                sql = "INSERT INTO facturaproveedor (id, fechaemision, nrofactura, proveedorid, pagodi) VALUES ("
-                        + fac + ", DATE(NOW()) ,'" + txtidproveedor.getText() + "','" + txtfactura.getText() + "','" + pagos
-                        + "')";
-                GuardaMovi();
-                JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");
-                conn.actualizaTabla(sql);
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String  sql = "INSERT INTO facturaproveedor (id,fechaemision, nrofactura, proveedorid, pagodi) VALUES ("
+                +nuid+ ", DATE(NOW()) ," + txtidproveedor.getText() + "," + txtfactura.getText() + "," + pagos
+                + ")";
+        GuardaMovi();
+        JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");
+        conn.actualizaTabla(sql);  
 
     }
 
@@ -610,8 +599,8 @@ public class FacturaProveedor extends javax.swing.JFrame {
             } else {
                 moe = 0;
             }
-            sql = "INSERT INTO detallefactura(id, productosid, precio, cantidad, iva) VALUES ("
-                    + nuid + "," + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i, 3).toString()
+            sql = "INSERT INTO detallefactura(productosid, precio, cantidad, iva) VALUES ("
+                      + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i, 3).toString()
                     + "," + m.getValueAt(i, 2).toString() + "," + iva +")";
             conn.actualizaTabla(sql);
              System.out.print(sql);

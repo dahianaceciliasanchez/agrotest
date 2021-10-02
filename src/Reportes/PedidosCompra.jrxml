@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PedidosCompra" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c60f9308-9aa9-4d4f-a9aa-3476b7ba5f23">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_nropedido" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     detalle_pedidos.`id` AS detalle_pedidos_id,
+     detalle_pedidos.`pedidosid` AS detalle_pedidos_pedidosid,
+     detalle_pedidos.`productosid` AS detalle_pedidos_productosid,
+     detalle_pedidos.`cantidad` AS detalle_pedidos_cantidad,
+     productos.`id` AS productos_id,
+     productos.`Descripcion` AS productos_Descripcion,
+     productos.`Stock` AS productos_Stock,
+     pedidos.`fechapedido` AS pedidos_fechapedido,
+     pedidos.`nropedido` AS pedidos_nropedido
+FROM
+     `productos` productos INNER JOIN `detalle_pedidos` detalle_pedidos ON productos.`id` = detalle_pedidos.`productosid`
+     INNER JOIN `pedidos` pedidos ON detalle_pedidos.`pedidosid` = pedidos.`id`
+
+where pedidos.nropedido =$P!{p_nropedido}]]>
+	</queryString>
+	<field name="detalle_pedidos_id" class="java.lang.Integer"/>
+	<field name="detalle_pedidos_pedidosid" class="java.lang.Integer"/>
+	<field name="detalle_pedidos_productosid" class="java.lang.Integer"/>
+	<field name="detalle_pedidos_cantidad" class="java.lang.Integer"/>
+	<field name="productos_id" class="java.lang.Integer"/>
+	<field name="productos_Descripcion" class="java.lang.String"/>
+	<field name="productos_Stock" class="java.lang.Integer"/>
+	<field name="pedidos_fechapedido" class="java.sql.Date"/>
+	<field name="pedidos_nropedido" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="234" y="26" width="237" height="42" uuid="191d5b19-00f0-448f-968e-72560dad6c20"/>
+				<textElement>
+					<font fontName="Bell MT" size="18" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PEDIDOS DE COMPRA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="41" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="2" width="100" height="20" uuid="13ff0141-a1af-4ca3-982c-5907187e55fa"/>
+				<text><![CDATA[detalle_pedidos_id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="2" width="100" height="20" uuid="903064f6-8cc5-454f-b67f-09e54244c254"/>
+				<text><![CDATA[detalle_pedidos_productosid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="525" y="2" width="100" height="20" uuid="10338684-7cd2-4c94-bfee-f781bf145e8c"/>
+				<text><![CDATA[productos_Descripcion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="2" width="100" height="20" uuid="2b522906-7a6c-4b01-b3f1-b8ce18caf815"/>
+				<text><![CDATA[detalle_pedidos_cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="2" width="100" height="20" uuid="49d02f58-6879-445b-8192-0ef305886a6c"/>
+				<text><![CDATA[pedidos_nropedido]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="12" y="1" width="100" height="20" uuid="9b98274e-6236-4db3-aea6-25890cf013f9"/>
+				<textFieldExpression><![CDATA[$F{detalle_pedidos_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="1" width="100" height="20" uuid="1ca82dc2-9ed0-4d93-ba99-e4cc09b6e785"/>
+				<textFieldExpression><![CDATA[$F{detalle_pedidos_productosid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="525" y="1" width="100" height="20" uuid="09a290ea-05e3-49d7-aa77-c953d227e0f7"/>
+				<textFieldExpression><![CDATA[$F{productos_Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="1" width="100" height="20" uuid="87870580-0988-4735-8675-8223c9d3a8ff"/>
+				<textFieldExpression><![CDATA[$F{detalle_pedidos_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="2" width="100" height="20" uuid="a29e8002-7be4-4ae9-bce6-a63bc7b12eae"/>
+				<textFieldExpression><![CDATA[$F{pedidos_nropedido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
