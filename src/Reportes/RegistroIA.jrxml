@@ -3,10 +3,10 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="p_nroIA" class="java.lang.Integer">
+	<parameter name="p_nroIA" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="p_Nro" class="java.lang.Integer">
+	<parameter name="p_Nro" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -15,26 +15,21 @@
      servicioia.`animalid` AS servicioia_animalid,
      servicioia.`sementalid` AS servicioia_sementalid,
      servicioia.`id` AS servicioia_id,
-     servicioia.`metodoid` AS servicioia_metodoid,
-     metodoia.`Descripcion` AS metodoia_Descripcion,
      semental.`Nombre` AS semental_Nombre,
      semental.`RP` AS semental_RP,
      animal.`Nombre` AS animal_Nombre,
      animal.`RP` AS animal_RP,
      servicioia.`NroIA` AS servicioia_NroIA
 FROM
-     `metodoia` metodoia INNER JOIN `servicioia` servicioia ON metodoia.`id` = servicioia.`metodoid`
-     INNER JOIN `semental` semental ON servicioia.`sementalid` = semental.`id`
+     `servicioia` servicioia INNER JOIN `semental` semental ON servicioia.`sementalid` = semental.`id`
      INNER JOIN `animal` animal ON servicioia.`animalid` = animal.`id`
-
-WHERE servicioia.NroIA = $P!{p_Nro}]]>
+WHERE
+     servicioia.NroIA = $P!{p_Nro}]]>
 	</queryString>
 	<field name="servicioia_fechaia" class="java.sql.Date"/>
 	<field name="servicioia_animalid" class="java.lang.Integer"/>
 	<field name="servicioia_sementalid" class="java.lang.Integer"/>
 	<field name="servicioia_id" class="java.lang.Integer"/>
-	<field name="servicioia_metodoid" class="java.lang.Integer"/>
-	<field name="metodoia_Descripcion" class="java.lang.String"/>
 	<field name="semental_Nombre" class="java.lang.String"/>
 	<field name="semental_RP" class="java.lang.Integer"/>
 	<field name="animal_Nombre" class="java.lang.String"/>
@@ -69,26 +64,16 @@ WHERE servicioia.NroIA = $P!{p_Nro}]]>
 				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="47" y="2" width="69" height="20" uuid="9c6dd039-8a1d-4254-a414-b36fc1838e2c"/>
+				<reportElement x="77" y="2" width="69" height="20" uuid="9c6dd039-8a1d-4254-a414-b36fc1838e2c"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[FECHA IA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="179" y="0" width="67" height="20" uuid="8ff4e56c-dcc3-4525-9502-fba72c382c32"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[METODO_ID]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="260" y="2" width="83" height="20" uuid="ea8efaec-fc86-429b-8461-73810a4cd836"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[DESCRIPCION]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="357" y="0" width="114" height="20" uuid="332d70ff-954e-436e-bb4e-b52890f857bd"/>
+				<reportElement x="265" y="2" width="114" height="20" uuid="332d70ff-954e-436e-bb4e-b52890f857bd"/>
 				<text><![CDATA[SEMENTAL_NOMBRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="483" y="0" width="52" height="20" uuid="5817cfe2-0844-4246-a5cf-1c24522d1761"/>
+				<reportElement x="441" y="2" width="52" height="20" uuid="5817cfe2-0844-4246-a5cf-1c24522d1761"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[RP]]></text>
 			</staticText>
@@ -103,41 +88,31 @@ WHERE servicioia.NroIA = $P!{p_Nro}]]>
 				<text><![CDATA[RP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="125" y="2" width="38" height="20" uuid="c1ab789a-b856-4dfd-8385-a1fcac292bac"/>
+				<reportElement x="175" y="2" width="38" height="20" uuid="c1ab789a-b856-4dfd-8385-a1fcac292bac"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[NRO IA]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="58" splitType="Stretch">
 			<textField>
 				<reportElement x="10" y="0" width="26" height="20" uuid="1a7baef0-6659-4de8-9da8-a279adb8f2e2"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{servicioia_id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="48" y="2" width="69" height="20" uuid="a5c50014-c723-42c5-af80-6307b4f9e6d4"/>
+				<reportElement x="77" y="2" width="69" height="20" uuid="a5c50014-c723-42c5-af80-6307b4f9e6d4"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{servicioia_fechaia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="179" y="2" width="67" height="20" uuid="6bd40a4a-ceeb-4c9f-ac00-7c603b88e97b"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{servicioia_metodoid}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="260" y="2" width="83" height="20" uuid="4ad9ba6b-4673-48fb-bcdc-3d1d124dd7ce"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{metodoia_Descripcion}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="357" y="0" width="114" height="20" uuid="5eee2f80-ef86-48e1-a669-1e7ffad9fe50"/>
+				<reportElement x="265" y="2" width="114" height="20" uuid="5eee2f80-ef86-48e1-a669-1e7ffad9fe50"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{semental_Nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="483" y="2" width="52" height="20" uuid="4ac64cf0-8a3f-4c79-bf06-b0ad4ad8b8ba"/>
+				<reportElement x="441" y="2" width="52" height="20" uuid="4ac64cf0-8a3f-4c79-bf06-b0ad4ad8b8ba"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{semental_RP}]]></textFieldExpression>
 			</textField>
@@ -152,7 +127,7 @@ WHERE servicioia.NroIA = $P!{p_Nro}]]>
 				<textFieldExpression><![CDATA[$F{animal_RP}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="127" y="0" width="36" height="20" uuid="5f1f48d3-9669-4b47-a6c0-6dadd515cb84"/>
+				<reportElement x="175" y="2" width="36" height="20" uuid="5f1f48d3-9669-4b47-a6c0-6dadd515cb84"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{servicioia_NroIA}]]></textFieldExpression>
 			</textField>

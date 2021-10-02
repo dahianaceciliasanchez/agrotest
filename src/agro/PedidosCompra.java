@@ -5,7 +5,6 @@
  */
 package agro;
 
-
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -20,25 +19,26 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 
-
 /**
  *
  * @author Dahiana Sanchez 6.083.677
  */
 public class PedidosCompra extends javax.swing.JFrame {
-  Conexion conn = new Conexion();
-   javax.swing.table.DefaultTableModel m;
-   int nuid =0;
-  int fac =0;
- 
+
+    Conexion conn = new Conexion();
+    javax.swing.table.DefaultTableModel m;
+    int nuid = 0;
+    int fac = 0;
+    int deid = 0;
+
     public PedidosCompra() {
         initComponents();
         m = (javax.swing.table.DefaultTableModel) ficha.getModel();
-          m.setRowCount(0);
-          lblfecha.setText(fecha());
-          txtNroD.requestFocus();
+        m.setRowCount(0);
+        lblfecha.setText(fecha());
+        txtNroD.requestFocus();
     }
-      
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -499,114 +499,132 @@ public class PedidosCompra extends javax.swing.JFrame {
     private void txtidproductosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtidproductosKeyPressed
 
     }//GEN-LAST:event_txtidproductosKeyPressed
-         private void cargaFila(){
-           m.addRow(new Object[]
-           {txtidproductos.getText(),
-               txtDescripcion.getText(),
-               txtcantidad.getText(),
-            
-              
-           });
-       }  
-         private void LimpiaArticulos(){
-             txtidproductos.setText("");
-             txtDescripcion.setText("");
-             txtcantidad.setText("");
-           
-             
-         }
+    private void cargaFila() {
+        m.addRow(new Object[]{txtidproductos.getText(),
+            txtDescripcion.getText(),
+            txtcantidad.getText(),});
+    }
+
+    private void LimpiaArticulos() {
+        txtidproductos.setText("");
+        txtDescripcion.setText("");
+        txtcantidad.setText("");
+
+    }
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
 //        DefaultTableModel m = (DefaultTableModel) Ficha.getModel();
 //        m.setRowCount(0);
-        Object [] fila=new Object[4];
-        fila[0]=txtidproductos.getText();
-        fila[1]=txtDescripcion.getText();
-        fila[3]=txtcantidad.getText();
+        Object[] fila = new Object[4];
+        fila[0] = txtidproductos.getText();
+        fila[1] = txtDescripcion.getText();
+        fila[3] = txtcantidad.getText();
         m.addRow(fila);
 //        Ficha.setModel(m);
 //          calcufila();
-          btnGrabar.requestFocus();
+        btnGrabar.requestFocus();
     }//GEN-LAST:event_aceptarActionPerformed
 
     private void aceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_aceptarKeyPressed
-        Object [] fila=new Object[4];
-        fila[0]=txtidproductos.getText();
-        fila[1]=txtDescripcion.getText();
-        fila[2]=txtStock.getText();
-        fila[3]=txtcantidad.getText();
+        Object[] fila = new Object[4];
+        fila[0] = txtidproductos.getText();
+        fila[1] = txtDescripcion.getText();
+        fila[2] = txtStock.getText();
+        fila[3] = txtcantidad.getText();
         m.addRow(fila);
-         btnGrabar.requestFocus();
-          
+        btnGrabar.requestFocus();
+
     }//GEN-LAST:event_aceptarKeyPressed
 
     private void fichaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fichaKeyPressed
-      if(evt.getKeyCode()==KeyEvent.VK_ENTER);
-            m.removeRow(ficha.getSelectedRow());
-             txtidproductos.requestFocus();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER);
+        m.removeRow(ficha.getSelectedRow());
+        txtidproductos.requestFocus();
     }//GEN-LAST:event_fichaKeyPressed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-       try {
-          idempleado.requestFocus();
-          limpiar();
-          String sql = "SELECT max(nropedido) + 1 as  sumar from pedidos"; // "where nroDepito = " + txtNDeposito.getText()
-          conn.traeDatos(sql);
-          if (conn.resultado.next())
-              txtNroD.setText( conn.resultado.getString("sumar"));
-      } catch (SQLException ex) {
-          Logger.getLogger(PedidosCompra.class.getName()).log(Level.SEVERE, null, ex);
-            }  
-            
+        try {
+            idempleado.requestFocus();
+            limpiar();
+            String sql = "SELECT max(nropedido) + 1 as  sumar from pedidos"; // "where nroDepito = " + txtNDeposito.getText()
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+                txtNroD.setText(conn.resultado.getString("sumar"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PedidosCompra.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btnNuevoActionPerformed
-    
-    
-    
-    
+
+
     private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
         try {
             String sql = "Select max(nropedido) + 1 as nro from pedidos";
             conn.traeDatos(sql);
             if (conn.resultado.next()) {
                 fac = conn.resultado.getInt("nro");
-              sql= "INSERT INTO pedidos (id, fechapedido, nropedido, empleadoid ) VALUES ("
-                + nuid +", DATE(NOW()) ," + txtNroD.getText() +","+idempleado.getText() +") ";
-               guardaMovi();
-               conn.actualizaTabla(sql);
-              System.out.println(sql);
-              JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente " );
-             
-              
-          } 
-      } catch (SQLException ex) {
-          Logger.getLogger(PedidosCompra.class.getName()).log(Level.SEVERE, null, ex);
-      }
+                sql = "INSERT INTO pedidos (id, fechapedido, nropedido, empleadoid ) VALUES ("
+                        + nuid + ", DATE(NOW()) ," + txtNroD.getText() + "," + idempleado.getText() + ") ";
+                conn.actualizaTabla(sql);
+                guardaMovi();
+                System.out.println(sql);
+                JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PedidosCompra.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGrabarActionPerformed
-     
-    
-    private int traeCod(String sql){
-       int cod = 0;
+    private void guardaMovi() {
         try {
-           
-           conn.traeDatos(sql);
-           if(conn.resultado.next())
-               cod = conn.resultado.getInt(1);
-           
-       } catch (SQLException ex) {
-           Logger.getLogger(PedidosCompra.class.getName()).log(Level.SEVERE, null, ex);
-           
-       }
+
+            String sql = "SELECT max(id) as total from pedidos";
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+                deid = conn.resultado.getInt("total");
+                System.err.println(deid);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PresupuestoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql;
+        Integer cantidadItem = ficha.getRowCount();
+        for (int i = 0; i < cantidadItem; i++) {
+            sql = "INSERT INTO detalle_pedidos(id, pedidosid, productosid, Cantidad) VALUES (" + nuid
+                    + "," + deid + "," + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i, 3).toString()
+                    + ")";
+            conn.actualizaTabla(sql);
+            System.out.print(sql);
+
+        }
+    }
+
+    private int traeCod(String sql) {
+        int cod = 0;
+        try {
+
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+                cod = conn.resultado.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PedidosCompra.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
         return cod;
     }
     private void txtNroDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNroDKeyPressed
-  
+
     }//GEN-LAST:event_txtNroDKeyPressed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-      dispose();
+        dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void txtcantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcantidadKeyPressed
-       
+
     }//GEN-LAST:event_txtcantidadKeyPressed
 
     private void txtDescripcionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDescripcionMousePressed
@@ -626,12 +644,12 @@ public class PedidosCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_txtidproductosMousePressed
 
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
-           
+
     }//GEN-LAST:event_jButton2MousePressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       Map parametro = new HashMap();
-            parametro.put("p_nropedido", txtNroD.getText());
+        Map parametro = new HashMap();
+        parametro.put("p_nropedido", txtNroD.getText());
         try {
             String fileName = "src\\Reportes\\PedidosCompra.jasper";
             JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
@@ -641,19 +659,7 @@ public class PedidosCompra extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-     private void guardaMovi(){
-         String sql;
-        Integer cantidadItem = ficha.getRowCount();
-        for (int i = 0; i < cantidadItem; i++) {
-         sql = "INSERT INTO detalle_pedidos(id, pedidosid, productosid, Cantidad) VALUES (" +nuid
-                 + "," +fac +","+ m.getValueAt(i, 0).toString()+ "," + m.getValueAt(i,3).toString()
-                +")";
-          conn.actualizaTabla(sql); 
-          System.out.print(sql);
-          
-          }  
-     }   
-    private void limpiar(){
+    private void limpiar() {
         idempleado.setText("");
         txtNombre.setText("");
         txtGmail.setText("");
@@ -663,15 +669,15 @@ public class PedidosCompra extends javax.swing.JFrame {
         txtidproductos.setText("");
         txtcantidad.setText("");
         m.setRowCount(0);
-  
-        
+
     }
 
-    public static String fecha(){
-Date fecha=new Date();
-SimpleDateFormat formatofecha = new SimpleDateFormat("yyyy/MM/dd");
-return formatofecha.format(fecha);
- } 
+    public static String fecha() {
+        Date fecha = new Date();
+        SimpleDateFormat formatofecha = new SimpleDateFormat("yyyy/MM/dd");
+        return formatofecha.format(fecha);
+    }
+
     /**
      * @param args the command line arguments
      */

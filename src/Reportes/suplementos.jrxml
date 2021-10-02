@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="suplementos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fd9d9218-ed42-49dd-a13a-346a978dbdf3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_suplemento" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     detalle_suplementos.`id` AS detalle_suplementos_id,
+     detalle_suplementos.`suplementosid` AS detalle_suplementos_suplementosid,
+     detalle_suplementos.`productosid` AS detalle_suplementos_productosid,
+     detalle_suplementos.`cantidad` AS detalle_suplementos_cantidad,
+     suplementos.`id` AS suplementos_id,
+     suplementos.`fecha` AS suplementos_fecha,
+     suplementos.`tipoengordeid` AS suplementos_tipoengordeid,
+     tipoengorde.`Descripcion` AS tipoengorde_Descripcion,
+     productos.`Descripcion` AS productos_Descripcion,
+     suplementos.`nrodoc` AS suplementos_nrodoc
+FROM
+     `suplementos` suplementos INNER JOIN `detalle_suplementos` detalle_suplementos ON suplementos.`id` = detalle_suplementos.`suplementosid`
+     INNER JOIN `productos` productos ON detalle_suplementos.`productosid` = productos.`id`,
+     `tipoengorde` tipoengorde
+WHERE
+     suplementos.nrodoc = $P!{p_suplemento}]]>
+	</queryString>
+	<field name="detalle_suplementos_id" class="java.lang.Integer"/>
+	<field name="detalle_suplementos_suplementosid" class="java.lang.Integer"/>
+	<field name="detalle_suplementos_productosid" class="java.lang.Integer"/>
+	<field name="detalle_suplementos_cantidad" class="java.lang.Integer"/>
+	<field name="suplementos_id" class="java.lang.Integer"/>
+	<field name="suplementos_fecha" class="java.sql.Date"/>
+	<field name="suplementos_tipoengordeid" class="java.lang.Integer"/>
+	<field name="tipoengorde_Descripcion" class="java.lang.String"/>
+	<field name="productos_Descripcion" class="java.lang.String"/>
+	<field name="suplementos_nrodoc" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="178" y="28" width="213" height="30" uuid="93ecb4f1-8810-4356-8d13-e0cf4d4512fe"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SUPLEMENTOS]]></text>
+			</staticText>
+			<image>
+				<reportElement x="16" y="16" width="113" height="63" uuid="8998780f-2b43-464c-a5c8-a47442e8b289"/>
+				<imageExpression><![CDATA["C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\Alimentacion.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="422" y="20" width="119" height="21" uuid="332cdb6b-1fd2-42df-ab85-fbef46dab364"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="61" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="2" width="25" height="20" uuid="325aabcd-9822-45b9-b89a-bc3e3990bdfe"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="2" width="100" height="20" uuid="8dc777e8-9ef0-48db-b9fb-30d846d07b81"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO_ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="2" width="73" height="20" uuid="429b5658-e777-4307-a083-e3b5742f41b5"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="2" width="72" height="20" uuid="a7e392e2-528a-4981-b87e-17a85f5a1ba0"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="2" width="56" height="20" uuid="2c195cfc-d6ea-4d39-856e-3edba57cb887"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[TIPO_ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="2" width="130" height="20" uuid="5103874c-3ccb-438c-9abd-af7ecabe6765"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION_ENGORDE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="2" width="40" height="20" uuid="94bab1b2-1731-480e-a451-780c69fb1950"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NRO_DOC]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="68" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="25" height="20" uuid="8d8e3741-9f18-456f-b9b5-b17c6661c051"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{detalle_suplementos_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="187" y="1" width="73" height="20" uuid="844b4465-fdda-414f-807b-78e91423ba00"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{productos_Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="1" width="72" height="20" uuid="7f2cf164-336e-410b-9fb5-35157b8864eb"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{detalle_suplementos_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="356" y="0" width="56" height="20" uuid="ab0376aa-dad9-48f5-93dc-3de8081fea97"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{suplementos_tipoengordeid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="441" y="1" width="100" height="20" uuid="ced6f1d5-43d1-4967-94ee-33714673a336"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tipoengorde_Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="36" y="1" width="40" height="20" uuid="a1c73309-1294-42a9-92fb-b38c85f79b34"/>
+				<textFieldExpression><![CDATA[$F{suplementos_nrodoc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="1" width="100" height="20" uuid="2ed7142f-2b44-4fbf-9455-a92bb9bb2dd1"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{detalle_suplementos_productosid}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

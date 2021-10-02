@@ -4,17 +4,23 @@ import Modelo.combodieta;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class Suplementos extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();
     javax.swing.table.DefaultTableModel m;
     int nuid = 0;
-
+    int deid= 0;
     public Suplementos() {
         initComponents();
         m = (javax.swing.table.DefaultTableModel) ficha.getModel();
@@ -74,9 +80,8 @@ public class Suplementos extends javax.swing.JFrame {
         cbodieta = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         fecha = new javax.swing.JLabel();
-        j = new javax.swing.JLabel();
-        txtBuscar = new javax.swing.JTextField();
-        cboFiltro = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        txtnro = new javax.swing.JTextField();
         btnanular = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -105,6 +110,11 @@ public class Suplementos extends javax.swing.JFrame {
         jLabel1.setText("REGISTRO SUPLEMENTOS");
 
         agregar.setText("AGREGAR");
+        agregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                agregarMousePressed(evt);
+            }
+        });
         agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregarActionPerformed(evt);
@@ -182,7 +192,7 @@ public class Suplementos extends javax.swing.JFrame {
                         .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -233,30 +243,25 @@ public class Suplementos extends javax.swing.JFrame {
 
         fecha.setText("dd/MM/yyyy");
 
-        j.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        j.setText("BUSCAR");
-
-        cboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
+        jLabel7.setText(" Nro Doc");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtnro, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
-                .addGap(27, 27, 27)
+                .addGap(28, 28, 28)
                 .addComponent(cbodieta, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(jLabel11)
-                .addGap(18, 18, 18)
-                .addComponent(fecha)
                 .addGap(27, 27, 27)
-                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(j, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cboFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fecha)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -268,9 +273,8 @@ public class Suplementos extends javax.swing.JFrame {
                     .addComponent(cbodieta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(fecha)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(j, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel7)
+                    .addComponent(txtnro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -282,6 +286,11 @@ public class Suplementos extends javax.swing.JFrame {
         });
 
         jButton1.setText("IMPRIMIR");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton1MousePressed(evt);
+            }
+        });
 
         ficha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -306,9 +315,11 @@ public class Suplementos extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addGroup(aaaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)))
+                            .addComponent(jScrollPane1)
+                            .addGroup(aaaLayout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(aaaLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(agregar)
@@ -325,9 +336,9 @@ public class Suplementos extends javax.swing.JFrame {
         aaaLayout.setVerticalGroup(
             aaaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, aaaLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(36, 36, 36)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addGap(45, 45, 45)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -380,29 +391,46 @@ public class Suplementos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtnombreActionPerformed
     private void cargaFila() {
         DefaultTableModel tabla = (DefaultTableModel) ficha.getModel();
-        m.addRow(new Object[]{idproducto.getText(),
+        m.addRow(new Object[]{
+            idproducto.getText(),
             txtnombre.getText(),
             txtstock.getText(),
             txtcantidad.getText(),});
     }
+    
+    
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         String dieta;
         dieta = cbodieta.getItemAt(cbodieta.getSelectedIndex()).getId();
-        String sql = "INSERT INTO suplementos (id, fecha, tipoengordeid) VALUES ("
-                + nuid+ ",DATE(NOW())," + dieta + ")";
-        guardarMovi();
+        String sql = "INSERT INTO suplementos (id, fecha, tipoengordeid, nrodoc) VALUES ("
+              +nuid+ ",DATE(NOW())," + dieta + "," +txtnro.getText() + ")";
         conn.actualizaDatos(sql);
+        guardarMovi();
         System.out.print(sql);
         JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");
 
     }//GEN-LAST:event_guardarActionPerformed
     public void guardarMovi() {
+        try {
+
+            String sql = "SELECT max(id) as total from suplementos";
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+             deid= conn.resultado.getInt("total");
+                System.err.println(deid);
+             
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PresupuestoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql;
         Integer cantidadItem = ficha.getRowCount();
         for (int i = 0; i < cantidadItem; i++) {
-            sql = "INSERT INTO detalle_suplementos(id, suplementosid, productosid, Cantidad) VALUES ("
-                    + nuid + "," + m.getValueAt(i, 0).toString()+ "," + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i, 3).toString() + ")";
+            sql = "INSERT INTO detalle_suplementos(suplementosid, productosid, Cantidad) VALUES ("
+                     +deid + "," + m.getValueAt(i, 0).toString() 
+                    + "," + m.getValueAt(i, 3).toString() + ")";
             conn.actualizaDatos(sql);
+            System.out.println(sql);
             sql = "update productos Set Stock = Stock - " + m.getValueAt(i, 3).toString()
                 + " where id =" + m.getValueAt(i, 0).toString();
               conn.actualizaTabla(sql);
@@ -438,9 +466,37 @@ public class Suplementos extends javax.swing.JFrame {
     }//GEN-LAST:event_idproductoKeyPressed
 
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
-        cargaFila();
-        LimpiarCampos();
+      cargaFila();
+      LimpiarCampos();
     }//GEN-LAST:event_jButton2MousePressed
+
+    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+        Map parametro = new HashMap();
+            parametro.put("p_suplemento", txtnro.getText());
+        try {
+            String fileName = "src\\Reportes\\suplementos.jasper";
+            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
+            JasperViewer ventana = new JasperViewer(jasperPrint, false);
+             ventana.setVisible(true);
+           // JasperPrintManager.printReport(jasperPrint, true);
+        } catch (JRException ex) {
+            Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1MousePressed
+
+    private void agregarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarMousePressed
+        try {
+            cbodieta.requestFocus();
+            LimpiarCampos();
+            String sql = "SELECT max(nrodoc) + 1 as total from suplementos";
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+                txtnro.setText(conn.resultado.getString("total"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PresupuestoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_agregarMousePressed
 
     /**
      * @param args the command line arguments
@@ -502,14 +558,12 @@ public class Suplementos extends javax.swing.JFrame {
     private javax.swing.JPanel aaa;
     private javax.swing.JButton agregar;
     private javax.swing.JButton btnanular;
-    private javax.swing.JComboBox<String> cboFiltro;
     private javax.swing.JComboBox<combodieta> cbodieta;
     private javax.swing.JComboBox<String> cboproveedor;
     private javax.swing.JLabel fecha;
     private javax.swing.JTable ficha;
     private javax.swing.JButton guardar;
     public static javax.swing.JTextField idproducto;
-    private javax.swing.JLabel j;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -520,6 +574,7 @@ public class Suplementos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
@@ -528,10 +583,10 @@ public class Suplementos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private javax.swing.JButton salir;
-    private javax.swing.JTextField txtBuscar;
     public static javax.swing.JTextField txtcantidad;
     public static javax.swing.JTextField txtdetalle;
     public static javax.swing.JTextField txtnombre;
+    private javax.swing.JTextField txtnro;
     public static javax.swing.JTextField txtstock;
     // End of variables declaration//GEN-END:variables
 

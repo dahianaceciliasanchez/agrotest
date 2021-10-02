@@ -6,11 +6,15 @@
 package agro;
 
 import static agro.FacturaProveedor.txtDireccion;
-import static agro.FacturaProveedor.txtGmail;
+import static agro.FacturaProveedor.txtFechaV;
 import static agro.FacturaProveedor.txtNombre;
 import static agro.FacturaProveedor.txtRUC;
-import static agro.FacturaProveedor.txtTelefono;
-import static agro.FacturaProveedor.txtidproveedor;
+import static agro.FacturaProveedor.txtfechaI;
+import static agro.FacturaProveedor.txtidt;
+import static agro.FacturaProveedor.txttimbrado;
+import static agro.PresupuestoProveedor.txtGmail;
+import static agro.PresupuestoProveedor.txtTelefono;
+import static agro.PresupuestoProveedor.txtidproveedor;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,13 +36,17 @@ public class BuscarProveedor extends javax.swing.JFrame {
 
     private void cargaTabla() {
         m.setRowCount(0);
-        String sql = "SELECT id, Nombre, RUC, Direccion, Telefono, Direccion, CorreoE FROM proveedores";
-        String columna = "Nombre";
+        String sql = "SELECT t.id, t.descripcion, t.fechai, t.fechaf, t.proveedorid, "
+                + "v.Nombre, v.RUC, v.Direccion, v.Telefono, v.CorreoE\n"
+                + "FROM timbrado AS t\n"
+                + "INNER JOIN proveedores AS v\n"
+                + "ON t.proveedorid = v.id";
+        String columna = "id";
 
         try {
             if (!txtfiltro.getText().trim().isEmpty()) {
                 if (cbobuscar.getSelectedIndex() == 1) {
-                    columna = "Nombre";
+                    columna = "id";
                 }
                 sql = sql + " where " + columna + " like '%" + txtfiltro.getText().trim() + "%' ";
             }
@@ -46,6 +54,10 @@ public class BuscarProveedor extends javax.swing.JFrame {
             conn.resultado = conn.sentencia.executeQuery(sql);
             while (conn.resultado.next()) {
                 m.addRow(new Object[]{conn.resultado.getInt("id"),
+                    conn.resultado.getString("Descripcion"),
+                    conn.resultado.getString("fechai"),
+                    conn.resultado.getString("fechaf"),
+                    conn.resultado.getString("proveedorid"),
                     conn.resultado.getString("Nombre"),
                     conn.resultado.getString("RUC"),
                     conn.resultado.getString("Direccion"),
@@ -80,13 +92,13 @@ public class BuscarProveedor extends javax.swing.JFrame {
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
         Lista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Nombre", "RUC", "Direccion", "Telefono", "Correo E"
+                "id_t", "Descripcion", "FechaI", "FechaV", "id", "Nombre", "RUC", "Direccion", "Telefono", "Correo E"
             }
         ));
         Lista.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -100,11 +112,6 @@ public class BuscarProveedor extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(Lista);
-        if (Lista.getColumnModel().getColumnCount() > 0) {
-            Lista.getColumnModel().getColumn(0).setMinWidth(2);
-            Lista.getColumnModel().getColumn(0).setPreferredWidth(1);
-            Lista.getColumnModel().getColumn(0).setMaxWidth(1);
-        }
 
         jLabel6.setText("Buscar");
 
@@ -127,9 +134,7 @@ public class BuscarProveedor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,17 +181,21 @@ public class BuscarProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_ListaMousePressed
 
     private void Buscar() {
-        String sql = "select * from proveedores where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        String sql = "SELECT t.id, t.descripcion, t.fechai, t.fechaf, t.proveedorid, v.Nombre\n"
+                + "FROM timbrado AS t\n"
+                + "INNER JOIN proveedores AS v\n"
+                + "ON t.proveedorid = v.id"
+                + "where t.id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
         System.out.println(sql);
-        conn.traeDatos(sql);
         try {
+            conn.traeDatos(sql);
             if (conn.resultado.next()) {
-                txtidproveedor.setText(conn.resultado.getString("id"));
+                txtidt.setText(conn.resultado.getString("id"));
+                txttimbrado.setText(conn.resultado.getString("descripcion"));
+                txtfechaI.setText(conn.resultado.getString("fechaI"));
+                txtFechaV.setText(conn.resultado.getString("fechaf"));
+                txtidproveedor.setText(conn.resultado.getString("proveedorid"));
                 txtNombre.setText(conn.resultado.getString("Nombre"));
-                txtRUC.setText(conn.resultado.getString("RUC"));
-                txtDireccion.setText(conn.resultado.getString("Direccion"));
-                txtTelefono.setText(conn.resultado.getString("Telefono"));
-                txtGmail.setText(conn.resultado.getString("CorreoE"));
 
             }
         } catch (SQLException ex) {

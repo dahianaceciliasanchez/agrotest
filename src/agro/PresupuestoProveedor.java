@@ -28,6 +28,7 @@ public class PresupuestoProveedor extends javax.swing.JFrame {
     javax.swing.table.DefaultTableModel m;
     int nuid = 0;
     int fac = 0;
+    int deid=0;
 
     public PresupuestoProveedor() {
         initComponents();
@@ -468,8 +469,8 @@ public class PresupuestoProveedor extends javax.swing.JFrame {
                 fac = conn.resultado.getInt("nro");
               sql= "INSERT INTO presupuesto (id, fechapresupuesto, nropresupuesto, proveedorid ) VALUES ("
                 + nuid +", DATE(NOW()) ," + txtpresupuesto.getText() +","+txtidproveedor.getText() +") ";
-               guardaMovi();
                conn.actualizaTabla(sql);
+                 guardaMovi();
               System.out.println(sql);
               JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente " );
              
@@ -482,13 +483,26 @@ public class PresupuestoProveedor extends javax.swing.JFrame {
     }
 
     private void guardaMovi(){
+        try {
+
+            String sql = "SELECT max(id) as total from presupuesto";
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+             deid= conn.resultado.getInt("total");
+                System.out.println(deid);             
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PresupuestoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
          String sql;
         Integer cantidadItem = table.getRowCount();
         for (int i = 0; i < cantidadItem; i++) {
-         sql = "INSERT INTO detalle_presupuesto(id, productosid, precio, cantidad, totalunitario) VALUES ("
-                 +fac +","+ m.getValueAt(i, 0).toString()+","+ m.getValueAt(i, 2).toString()+
-                 "," + m.getValueAt(i,3).toString()
-                +","+ m.getValueAt(i, 4).toString()+")";
+         sql = "INSERT INTO detalle_presupuesto(presupuestoid, productosid, precio, cantidad, totalunitario) VALUES ("
+                  +deid+","+ m.getValueAt(i, 0).toString()+
+                 "," + m.getValueAt(i,2).toString()
+                +","+ m.getValueAt(i, 3).toString()
+                 +","+ m.getValueAt(i, 4).toString()
+                 +")";
           conn.actualizaTabla(sql); 
           System.out.print(sql);
           
