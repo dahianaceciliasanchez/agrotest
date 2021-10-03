@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package agro;
 
 import java.awt.event.KeyEvent;
@@ -19,10 +15,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 
-/**
- *
- * @author Dahiana Sanchez 6.083.677
- */
 public class PedidosCompra extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();

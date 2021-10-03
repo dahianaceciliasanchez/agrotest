@@ -491,9 +491,9 @@ public class PLandeEngorde extends javax.swing.JFrame {
     }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String sql = "INSERT INTO planengorde(id, fecha, PesoActual, suplementos)"
-                + "values(" + nuid + ",DATE(NOW())," + txtpesoanimal.getText()+","+ txtidsu.getText()+")";          
-        //guardarMovi(); 
+                + "values("+ nuid + ",DATE(NOW())," + txtpesoanimal.getText()+","+ txtidsu.getText()+")";          
         conn.actualizaDatos(sql);
+         guardarMovi(); 
         JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");
     }//GEN-LAST:event_jButton3ActionPerformed
 

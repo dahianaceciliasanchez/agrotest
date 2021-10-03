@@ -14,6 +14,7 @@ public class PlanVacunacion extends javax.swing.JFrame {
     Conexion conn = new Conexion();
     javax.swing.table.DefaultTableModel m;
     int nuid = 0;
+    int deid=0;
 
     public PlanVacunacion() {
         initComponents();
@@ -102,7 +103,7 @@ public class PlanVacunacion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -474,8 +475,8 @@ public class PlanVacunacion extends javax.swing.JFrame {
         etapas = cboetapas.getItemAt(cboetapas.getSelectedIndex()).getId();
         String sql = "Insert into planificacionvacunacion (etapasid, FechaDosis, animalid) "
                 + "values(" + etapas + ",DATE(NOW())," + txtidanimal.getText() + ")";
-        guardarMovi();
         conn.actualizaDatos(sql);
+         guardarMovi();
         System.out.print(sql);
         JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -489,11 +490,23 @@ public class PlanVacunacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MousePressed
 
     public void guardarMovi() {
+         try {
+
+            String sql = "SELECT max(id) as total from planificacionvacunacion";
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+             deid= conn.resultado.getInt("total");
+                System.err.println(deid);
+             
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PresupuestoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql;
         Integer cantidadItem = tabla.getRowCount();
         for (int i = 0; i < cantidadItem; i++) {
-            sql = "INSERT INTO detalle_planvacunacion(id, vacunasid, cantidaddosis) VALUES ("
-                    + nuid + "," + m.getValueAt(i, 0).toString()
+            sql = "INSERT INTO detalle_planvacunacion(planvacunacionid, vacunasid, cantidaddosis) VALUES ("
+                    + deid + "," + m.getValueAt(i, 0).toString()
                     + "," + m.getValueAt(i, 3).toString() + ")";
             conn.actualizaDatos(sql);
             sql = "update vacunas Set Stock = Stock - " + m.getValueAt(i, 3).toString()

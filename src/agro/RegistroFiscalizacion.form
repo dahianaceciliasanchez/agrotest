@@ -197,9 +197,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Plan de Vacunaci&#xf3;n">
-                  <Border PropertyName="innerBorder" info="null"/>
-                </TitledBorder>
+                <TitledBorder title="Plan de Vacunaci&#xf3;n"/>
               </Border>
             </Property>
           </Properties>
@@ -294,9 +292,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Empleado">
-                  <Border PropertyName="innerBorder" info="null"/>
-                </TitledBorder>
+                <TitledBorder title="Empleado"/>
               </Border>
             </Property>
           </Properties>

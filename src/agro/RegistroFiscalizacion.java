@@ -5,8 +5,11 @@
  */
 package agro;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,6 +22,7 @@ public class RegistroFiscalizacion extends javax.swing.JFrame {
     Conexion conn = new Conexion();
     javax.swing.table.DefaultTableModel m;
     int nuid = 0;
+    int deid = 0;
 
     /**
      * Creates new form Alimentacionn
@@ -422,8 +426,8 @@ public class RegistroFiscalizacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6MousePressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String sql = "Insert into fiscalizacion(cadenafrio, fecha, detalleplanificacionid) "
-                + "values('" + txtcadena.getText() + "',DATE(NOW()),'" + txtidplanificacio.getText()
+        String sql = "Insert into fiscalizacion(id, cadenafrio, fecha, detalleplanificacionid) "
+                + "values('" + nuid +","+txtcadena.getText()+ "',DATE(NOW()),'" + txtidplanificacio.getText()
                  + "')";
         guardarMovi();
         conn.actualizaDatos(sql);
@@ -452,11 +456,23 @@ public class RegistroFiscalizacion extends javax.swing.JFrame {
         });
     }
     public void guardarMovi() {
+         try {
+
+            String sql = "SELECT max(id) as total from suplementos";
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+             deid= conn.resultado.getInt("total");
+                System.out.println(deid);
+             
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PresupuestoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql;
         Integer cantidadItem = ficha.getRowCount();
         for (int i = 0; i < cantidadItem; i++) {
-            sql = "INSERT INTO detalle_fiscalizacion(id, fiscalizacionid, observacion, empleadoid) VALUES ("
-                    + nuid + "," + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i, 1).toString()+")";
+            sql = "INSERT INTO detalle_fiscalizacion(fiscalizacionid, observacion, empleadoid) VALUES ("
+                    + deid + "," + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i, 1).toString()+")";
               conn.actualizaTabla(sql);
             System.out.print(sql);
         }
