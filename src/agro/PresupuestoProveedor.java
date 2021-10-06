@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -562,7 +562,8 @@ public class PresupuestoProveedor extends javax.swing.JFrame {
         try {
             String fileName = "src\\Reportes\\Presupuesto.jasper";
             JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
-            JasperPrintManager.printReport(jasperPrint, true);
+            JasperViewer ventana = new JasperViewer(jasperPrint, false);
+             ventana.setVisible(true);
         } catch (JRException ex) {
             Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
         }

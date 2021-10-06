@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pedidosnroped" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a386d01e-b3fa-43d0-9060-8ce357357608">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_nro" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select dp.pedidosid, p2.fechapedido, p2.nropedido, p2.empleadoid, dp.productosid, p.Descripcion , dp.cantidad 
+from detalle_pedidos dp 
+inner join productos p 
+on dp.productosid = p.id 
+inner join pedidos p2 
+on dp.pedidosid = p2.id 
+where p2.nropedido = $P!{p_nro}]]>
+	</queryString>
+	<field name="pedidosid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechapedido" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nropedido" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empleadoid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="productosid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="187" y="17" width="186" height="62" uuid="fbfe3910-5350-41db-a69b-9c4d1afebc6d"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PEDIDOS DE COMPRAS]]></text>
+			</staticText>
+			<image>
+				<reportElement x="446" y="17" width="109" height="46" uuid="be29a346-79dd-4584-aff5-032dddf0c401"/>
+				<imageExpression><![CDATA["C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\4.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="24" y="22" width="100" height="20" uuid="8e52d50a-3cab-4f18-8ef3-d2c4c3b25014"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="8" y="2" width="100" height="20" uuid="a691af5a-586e-4e29-9bab-7a02f9972bf0"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ID_PEDIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="113" y="2" width="100" height="20" uuid="67bc17e9-116b-46e0-afe3-3b495035b94e"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NRO_PEDIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="2" width="100" height="20" uuid="a7f6afaa-4afa-4359-a9f6-77348155a1b4"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[COD_ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="2" width="100" height="20" uuid="f07843c7-a882-43f2-a4e0-779fb05a2138"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIP_PROD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="2" width="95" height="20" uuid="0722338d-4ad8-4199-88fd-a551a49368f1"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="108" y="0" width="100" height="20" uuid="9fd9c1d1-4649-46de-885f-a0a8b857c3eb"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nropedido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="229" y="2" width="100" height="20" uuid="42ba2131-8f25-4974-a1d7-a41706a3f209"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{productosid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="5" width="100" height="20" uuid="f1e408d2-3c4e-437e-bc92-c84f7844fd9c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="474" y="4" width="100" height="20" uuid="47db5ba0-7352-4b21-818f-2e670f78e30b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="4" width="100" height="20" uuid="8c4d6bcc-7014-4dc1-bcb8-25052041a6db"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pedidosid}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="249" y="0" width="80" height="20" uuid="d6f673c2-4fda-417b-8d6d-ed4eb535e684"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="334" y="22" width="40" height="20" uuid="d1ec58f0-e123-4f55-94aa-24d5b02830dc"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

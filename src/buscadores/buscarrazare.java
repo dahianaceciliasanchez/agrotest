@@ -3,18 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package agro;
+package buscadores;
 
-import static agro.FacturaProveedor.txtDireccion;
-import static agro.FacturaProveedor.txtFechaV;
-import static agro.FacturaProveedor.txtNombre;
-import static agro.FacturaProveedor.txtRUC;
-import static agro.FacturaProveedor.txtfechaI;
-import static agro.FacturaProveedor.txtidt;
-import static agro.FacturaProveedor.txttimbrado;
-import static agro.PresupuestoProveedor.txtGmail;
-import static agro.PresupuestoProveedor.txtTelefono;
-import static agro.PresupuestoProveedor.txtidproveedor;
+import agro.*;
+import static Reportes.ReporteAnimal.txtidraza;
+import static Reportes.ReporteAnimal.txtraza;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,12 +16,12 @@ import java.util.logging.Logger;
  *
  * @author Dahiana Sanchez G
  */
-public class BuscarProveedor extends javax.swing.JFrame {
+public class buscarrazare extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();
     javax.swing.table.DefaultTableModel m;
 
-    public BuscarProveedor() {
+    public buscarrazare() {
         initComponents();
         m = (javax.swing.table.DefaultTableModel) Lista.getModel();
         cargaTabla();
@@ -36,11 +29,7 @@ public class BuscarProveedor extends javax.swing.JFrame {
 
     private void cargaTabla() {
         m.setRowCount(0);
-        String sql = "SELECT t.id, t.descripcion, t.fechai, t.fechaf, t.proveedorid, "
-                + "v.Nombre, v.RUC, v.Direccion, v.Telefono, v.CorreoE\n"
-                + "FROM timbrado AS t\n"
-                + "INNER JOIN proveedores AS v\n"
-                + "ON t.proveedorid = v.id";
+        String sql = "SELECT id, descripcion, siglas  FROM razas";
         String columna = "id";
 
         try {
@@ -54,18 +43,11 @@ public class BuscarProveedor extends javax.swing.JFrame {
             conn.resultado = conn.sentencia.executeQuery(sql);
             while (conn.resultado.next()) {
                 m.addRow(new Object[]{conn.resultado.getInt("id"),
-                    conn.resultado.getString("Descripcion"),
-                    conn.resultado.getString("fechai"),
-                    conn.resultado.getString("fechaf"),
-                    conn.resultado.getString("proveedorid"),
-                    conn.resultado.getString("Nombre"),
-                    conn.resultado.getString("RUC"),
-                    conn.resultado.getString("Direccion"),
-                    conn.resultado.getString("Telefono"),
-                    conn.resultado.getString("CorreoE"),});
+                    conn.resultado.getString("descripcion"), conn.resultado.getString("siglas"),
+                   });
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(buscarrazare.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -92,13 +74,13 @@ public class BuscarProveedor extends javax.swing.JFrame {
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
         Lista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "id_t", "Descripcion", "FechaI", "FechaV", "id", "Nombre", "RUC", "Direccion", "Telefono", "Correo E"
+                "id", "Nombre", "Apellido", "RUC", "Direccion"
             }
         ));
         Lista.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -112,6 +94,11 @@ public class BuscarProveedor extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(Lista);
+        if (Lista.getColumnModel().getColumnCount() > 0) {
+            Lista.getColumnModel().getColumn(0).setMinWidth(2);
+            Lista.getColumnModel().getColumn(0).setPreferredWidth(1);
+            Lista.getColumnModel().getColumn(0).setMaxWidth(1);
+        }
 
         jLabel6.setText("Buscar");
 
@@ -133,8 +120,8 @@ public class BuscarProveedor extends javax.swing.JFrame {
                 .addComponent(txtfiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
+                .addGap(92, 231, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,30 +163,24 @@ public class BuscarProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_cbobuscarActionPerformed
 
     private void ListaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaMousePressed
-        Buscar();
+       Buscar();
         dispose();
     }//GEN-LAST:event_ListaMousePressed
 
+ 
     private void Buscar() {
-        String sql = "SELECT t.id, t.descripcion, t.fechai, t.fechaf, t.proveedorid, v.Nombre\n"
-                + "FROM timbrado AS t\n"
-                + "INNER JOIN proveedores AS v\n"
-                + "ON t.proveedorid = v.id"
-                + "where t.id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        String sql = "select * from razas where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
         System.out.println(sql);
+        conn.traeDatos(sql);
         try {
-            conn.traeDatos(sql);
             if (conn.resultado.next()) {
-                txtidt.setText(conn.resultado.getString("id"));
-                txttimbrado.setText(conn.resultado.getString("descripcion"));
-                txtfechaI.setText(conn.resultado.getString("fechaI"));
-                txtFechaV.setText(conn.resultado.getString("fechaf"));
-                txtidproveedor.setText(conn.resultado.getString("proveedorid"));
-                txtNombre.setText(conn.resultado.getString("Nombre"));
+                txtidraza.setText(conn.resultado.getString("id"));
+                txtraza.setText(conn.resultado.getString("descripcion"));
+               
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(buscarrazare.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -220,14 +201,206 @@ public class BuscarProveedor extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(buscarrazare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(buscarrazare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(buscarrazare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(buscarrazare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -296,7 +469,7 @@ public class BuscarProveedor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BuscarProveedor().setVisible(true);
+                new buscarrazare().setVisible(true);
             }
         });
     }

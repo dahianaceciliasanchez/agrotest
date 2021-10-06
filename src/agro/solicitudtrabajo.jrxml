@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="solicitudtrabajo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c7014f89-f526-4941-980f-6fcd587c3991">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select s.id, s.fechatrabajo, s.nrosolicitud, s.empleadoid, e.Nombre, s.estadosolicitud 
+from solicitudtrabajo s 
+inner join empleados e 
+on s.empleadoid = e.id 
+where s.nrosolicitud = $P!{p_empleado}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechatrabajo" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nrosolicitud" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empleadoid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estadosolicitud" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="184" y="26" width="192" height="41" uuid="966408f3-980f-4622-8d4d-b25246a0b6e1"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SOLCITUD DE TRABAJO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="11" y="0" width="112" height="66" uuid="570d4f0b-e4b9-45ef-b3e9-e88b0e95d2ee"/>
+				<imageExpression><![CDATA["C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\image.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="34" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="2" width="21" height="20" uuid="abb347ff-249d-4dc5-9d77-72bc730d3f11"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="53" y="2" width="100" height="20" uuid="c0799320-1cd4-4cf9-8476-bc72b8b292f4"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[fechatrabajo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="184" y="2" width="59" height="20" uuid="c96b0c35-d17d-4b12-b715-ad6c3910daa1"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[nrosolicitud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="2" width="100" height="20" uuid="c4e266bf-a5ab-44f8-bb28-283862da701f"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[empleadoid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="2" width="100" height="20" uuid="1dd873e9-d3cd-4e44-ab0c-0a07a0ecede6"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="2" width="63" height="20" uuid="2e36cb10-8115-42bc-a899-2acb5808d609"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[estadosolicitud]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="11" y="3" width="21" height="20" uuid="dc344677-4d21-4730-8624-f67218a68eae"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="6" width="100" height="20" uuid="7655dd86-ccb5-4c18-9eb2-b678aeb5edbc"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fechatrabajo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="8" width="59" height="20" uuid="6a74d02e-c126-4a11-92c9-049249c8fb20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nrosolicitud}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="262" y="8" width="100" height="20" uuid="0f5d776b-62cd-4283-ac78-24084bc43a3e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{empleadoid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="369" y="8" width="100" height="20" uuid="3c39ae70-788e-4faa-9e0c-a82ee7831390"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="8" width="63" height="20" uuid="113f62ff-9bdb-4122-9944-8687b21dd311"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{estadosolicitud}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

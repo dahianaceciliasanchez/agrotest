@@ -189,7 +189,7 @@ public class BuscarEmIA extends javax.swing.JFrame {
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-                SolictudIA.txtid.setText(conn.resultado.getString("id"));
+                SolictudIA.txtidempleado.setText(conn.resultado.getString("id"));
                 SolictudIA.txtNombre.setText(conn.resultado.getString("Nombre"));
                 SolictudIA.txtApellido.setText(conn.resultado.getString("Apellido"));
                 SolictudIA.txtCI.setText(conn.resultado.getString("CI"));

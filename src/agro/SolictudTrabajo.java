@@ -7,8 +7,15 @@ package agro;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 /**
@@ -76,18 +83,20 @@ public class SolictudTrabajo extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        NroSolicitud = new javax.swing.JTextField();
+        txtNro = new javax.swing.JTextField();
         fecha = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtid = new javax.swing.JTextField();
+        txtidempleado = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtCI = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        txtestado = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -167,18 +176,25 @@ public class SolictudTrabajo extends javax.swing.JFrame {
 
         jLabel6.setText("Apellido");
 
-        txtid.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtidempleado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtidMousePressed(evt);
+                txtidempleadoMousePressed(evt);
             }
         });
-        txtid.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtidempleado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtidKeyPressed(evt);
+                txtidempleadoKeyPressed(evt);
             }
         });
 
         jLabel7.setText("CI");
+
+        jButton4.setText("Empleado");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -187,23 +203,26 @@ public class SolictudTrabajo extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel7)))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtid, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtApellido)
-                    .addComponent(txtCI))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(jLabel3))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(jLabel4))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel6))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel7)))
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtidempleado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtApellido)
+                            .addComponent(txtCI)))
+                    .addComponent(jButton4))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -212,7 +231,7 @@ public class SolictudTrabajo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtidempleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -225,15 +244,12 @@ public class SolictudTrabajo extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(txtCI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton4.setText("Empleado");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
+        jLabel8.setText("Estado");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -244,20 +260,21 @@ public class SolictudTrabajo extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jLabel2))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel9)))
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NroSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fecha)))
+                        .addComponent(txtNro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtestado, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(fecha)))))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -266,13 +283,15 @@ public class SolictudTrabajo extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(NroSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txtNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(fecha))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -280,6 +299,11 @@ public class SolictudTrabajo extends javax.swing.JFrame {
         jButton5.setText("ANULAR");
 
         jButton6.setText("IMPRIMIR");
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton6MousePressed(evt);
+            }
+        });
 
         jLabel5.setText("Buscar");
 
@@ -362,7 +386,18 @@ public class SolictudTrabajo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
-        LimpiarIA();
+         try {
+            txtidempleado.requestFocus();
+              LimpiarIA();
+            String sql = "SELECT max(nrosolicitud) + 1 as solic from solicitudtrabajo";
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+                txtNro.setText(conn.resultado.getString("solic"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PresupuestoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
     }//GEN-LAST:event_jButton2MousePressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -371,11 +406,12 @@ public class SolictudTrabajo extends javax.swing.JFrame {
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         String sql = "INSERT INTO solicitudtrabajo (id,fechatrabajo, NroSolicitud, empleadoid) VALUES ("
-                + nuid + ", DATE(NOW()) ," + NroSolicitud.getText() + ", " + txtid.getText() + ")";
+                + nuid + ", DATE(NOW()) ," + txtNro.getText() + ", " + txtidempleado.getText()+ ")";
         System.out.print(sql);
-        conn.actualizaDatos(sql);
-        cargaTabla();
-        conn.actualizaTabla(sql);
+        conn.actualizaTabla(sql);   
+               cargaTabla();
+          JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");
+      
     }//GEN-LAST:event_jButton1MousePressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -386,39 +422,54 @@ public class SolictudTrabajo extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txtidKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtidKeyPressed
+    private void txtidempleadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtidempleadoKeyPressed
         String sql = "SELECT id, Nombre, Apellido, CI FROM empleados WHERE id = '"
-                + txtid.getText() + "'";
+                + txtidempleado.getText() + "'";
         try {
             conn.traeDatos(sql);
             if (conn.resultado.next()) {
-                txtid.setText(conn.resultado.getString("id"));
+                txtidempleado.setText(conn.resultado.getString("id"));
                 txtNombre.setText(conn.resultado.getString("Nombre"));
                 txtApellido.setText(conn.resultado.getString("Apellido"));
                 txtCI.setText(conn.resultado.getString("CI"));
-                NroSolicitud.requestFocus();
+                txtNro.requestFocus();
             }
         } catch (SQLException ex) {
             Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_txtidKeyPressed
+    }//GEN-LAST:event_txtidempleadoKeyPressed
 
-    private void txtidMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtidMousePressed
+    private void txtidempleadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtidempleadoMousePressed
         BuscarEm objeto = new BuscarEm();
         objeto.setLocationRelativeTo(null);
         objeto.setVisible(true);
-    }//GEN-LAST:event_txtidMousePressed
+    }//GEN-LAST:event_txtidempleadoMousePressed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MousePressed
+        Map parametro = new HashMap();
+            parametro.put("p_empleado", txtNro.getText());
+        try {
+            String fileName = "src\\agro\\solicitudtrabajo.jasper";
+            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
+            JasperViewer ventana = new JasperViewer(jasperPrint, false);
+             ventana.setVisible(true);
+        } catch (JRException ex) {
+            Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton6MousePressed
     private void LimpiarIA() {
 
         txtNombre.setText("");
         txtApellido.setText("");
-        txtid.setText("");
-        NroSolicitud.setText("");
+        txtidempleado.setText("");
+        txtNro.setText("");
     }
+        
+    
 
     /**
      * @param args the command line arguments
@@ -477,7 +528,6 @@ public class SolictudTrabajo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField NroSolicitud;
     private javax.swing.JComboBox<String> cboBuscar;
     private javax.swing.JLabel fecha;
     private javax.swing.JButton jButton1;
@@ -493,6 +543,7 @@ public class SolictudTrabajo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -503,6 +554,8 @@ public class SolictudTrabajo extends javax.swing.JFrame {
     private javax.swing.JTextField txtBuscar;
     public static javax.swing.JTextField txtCI;
     public static javax.swing.JTextField txtNombre;
-    public static javax.swing.JTextField txtid;
+    private javax.swing.JTextField txtNro;
+    private javax.swing.JTextField txtestado;
+    public static javax.swing.JTextField txtidempleado;
     // End of variables declaration//GEN-END:variables
 }

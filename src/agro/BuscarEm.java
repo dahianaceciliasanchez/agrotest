@@ -189,7 +189,7 @@ public class BuscarEm extends javax.swing.JFrame {
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-                SolictudTrabajo.txtid.setText(conn.resultado.getString("id"));
+                SolictudTrabajo.txtidempleado.setText(conn.resultado.getString("id"));
                 SolictudTrabajo.txtNombre.setText(conn.resultado.getString("Nombre"));
                 SolictudTrabajo.txtApellido.setText(conn.resultado.getString("Apellido"));
                 SolictudTrabajo.txtCI.setText(conn.resultado.getString("CI"));
