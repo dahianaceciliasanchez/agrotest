@@ -15,7 +15,7 @@ public class combotipousuario {
    Conexion conn = new Conexion();
 
     public combotipousuario(String id, String descripcion) {
-        this.id = id;
+        this.id= id;
         this.descripcion = descripcion;
     }
 

@@ -18,14 +18,16 @@ import javax.swing.JOptionPane;
  * @author Dahiana Sanchez Galeano 6.083.677
  */
 public class NotaRemision extends javax.swing.JFrame {
- Conexion conn = new Conexion();
-   javax.swing.table.DefaultTableModel m;
-   int nuid=0;
+
+    Conexion conn = new Conexion();
+    javax.swing.table.DefaultTableModel m;
+    int nuid = 0;
+
     public NotaRemision() {
         initComponents();
-         m = (javax.swing.table.DefaultTableModel) Ficha.getModel();
-          m.setRowCount(0);
-          lblFecha.setText(fecha());
+        m = (javax.swing.table.DefaultTableModel) Ficha.getModel();
+        m.setRowCount(0);
+        lblfecha.setText(fecha());
     }
 
     /**
@@ -60,7 +62,7 @@ public class NotaRemision extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtProveedorNombre = new javax.swing.JTextField();
-        fecha = new javax.swing.JLabel();
+        lblfecha = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtsucursal = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -71,6 +73,7 @@ public class NotaRemision extends javax.swing.JFrame {
         Ficha = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -196,8 +199,8 @@ public class NotaRemision extends javax.swing.JFrame {
 
         jLabel2.setText("Fecha");
 
-        fecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        fecha.setText("dd/MM/yyyy");
+        lblfecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblfecha.setText("dd/MM/yyyy");
 
         jLabel5.setText("Sucursal");
 
@@ -220,7 +223,7 @@ public class NotaRemision extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(25, 25, 25)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
@@ -256,7 +259,7 @@ public class NotaRemision extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(fecha))
+                    .addComponent(lblfecha))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -303,6 +306,8 @@ public class NotaRemision extends javax.swing.JFrame {
 
         jLabel7.setText("Total");
 
+        jButton5.setText("IMPRIMIR");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -314,11 +319,13 @@ public class NotaRemision extends javax.swing.JFrame {
                 .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(77, 77, 77))
             .addGroup(layout.createSequentialGroup()
-                .addGap(142, 142, 142)
+                .addGap(128, 128, 128)
                 .addComponent(jButton1)
-                .addGap(44, 44, 44)
+                .addGap(32, 32, 32)
                 .addComponent(jButton3)
-                .addGap(53, 53, 53)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -337,12 +344,13 @@ public class NotaRemision extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addContainerGap())
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -358,23 +366,21 @@ public class NotaRemision extends javax.swing.JFrame {
             int a = 0;
             String sql = "SELECT id, Descripcion, Precio, IVA, Stock FROM Articulo";
             conn.traeDatos(sql + " WHERE id = '" + txtArticuloid.getText() + "'");
-            if (!conn.resultado.next()){
-                conn.traeDatos(sql + "WHERE CodLocal = '" + txtArticuloid.getText() +"'");
-                if (!conn.resultado.next()){
-                    conn.traeDatos(sql + "WHERE Barra = '" + txtArticuloid.getText() +"'");
-                    if (!conn.resultado.next()){
+            if (!conn.resultado.next()) {
+                conn.traeDatos(sql + "WHERE CodLocal = '" + txtArticuloid.getText() + "'");
+                if (!conn.resultado.next()) {
+                    conn.traeDatos(sql + "WHERE Barra = '" + txtArticuloid.getText() + "'");
+                    if (!conn.resultado.next()) {
                         //Por buscar
                         a = 0;
 
                     }
                 }
             }
-            if (a ==0){
+            if (a == 0) {
                 txtArticuloid.setText(conn.resultado.getString("id"));
                 txtArticulo.setText(conn.resultado.getString("Descripcion"));
                 txtPrecio.setText(conn.resultado.getString("Precio"));
-                txtIVA.setText(conn.resultado.getString("IVA"));
-                txtStock.setText(conn.resultado.getString("Stock"));
                 txtCantidad.requestFocus();
             }
         } catch (SQLException ex) {
@@ -384,13 +390,15 @@ public class NotaRemision extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBusquedaARActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(txtCantidad.getText().trim().equals(""))txtCantidad.setText("1");
-        if(txtPrecio.getText().trim().equals(""))
-        txtPrecio.requestFocus();
-        else{
+        if (txtCantidad.getText().trim().equals("")) {
+            txtCantidad.setText("1");
+        }
+        if (txtPrecio.getText().trim().equals("")) {
+            txtPrecio.requestFocus();
+        } else {
             cargaFila();
             LimpiaProductos();
-            Calcular();
+
             txtArticuloid.requestFocus();
 
         }
@@ -398,41 +406,43 @@ public class NotaRemision extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
-          String sql = "SELECT max(id) + 1 as newReg from fcompra";
-          conn.traeDatos(sql);
-          if (conn.resultado.next()){
-              nuid = conn.resultado.getInt("NewReg");
-              sql= "INSERT INTO fCompra (id, Fecha, Proveedoresid, NroDoc) VALUES (" 
-                      +nuid  + ", DATE(NOW()) ,'"+txtProveedorid.getText() +"','"+ txtFactura.getText() +"')" ;
-                       JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente " );
-             conn.actualizaTabla(sql);
-             GuardaMovi();
-          }
-      } catch (SQLException ex) {
-          Logger.getLogger(NotaRemision.class.getName()).log(Level.SEVERE, null, ex);
-      }
-      
-    }                                          
-    private void GuardaMovi(){
+            String sql = "SELECT max(id) + 1 as newReg from fcompra";
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+                nuid = conn.resultado.getInt("NewReg");
+                sql = "INSERT INTO fCompra (id, Fecha, Proveedoresid, NroDoc) VALUES ("
+                        + nuid + ", DATE(NOW()) ,'" + txtProveedorid.getText() + "','" + txtFactura.getText() + "')";
+                JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");
+                conn.actualizaTabla(sql);
+                GuardaMovi();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NotaRemision.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void GuardaMovi() {
         int cf = m.getRowCount();
-        int TPro = 0, moe= 0, mo5= 0, mo10= 0;
-        String sql="";
-        int iva= 0;
-        for(int i = 0; i<cf; i++){
-            if ( !m.getValueAt(i,5).toString().equals(""))
-                iva = 5 ;
-            else if ( !m.getValueAt(i,6).toString().equals(""))
-              iva = 10;
-            else
-                moe =0;
-         sql = "INSERT INTO decompra(id, fCompraid, Articuloid, Precio, Cantidad, Iva) VALUES ("
-               +nuid  + ","+ m.getValueAt(i, 0).toString()  + ","+ m.getValueAt(i, 0).toString() +","+m.getValueAt(i,3).toString() +
-                    ","+m.getValueAt(i, 2).toString() + ","+iva +")";
-          conn.actualizaTabla(sql); //detalle compra
-          sql =  "update articulo Set Stock = Stock + "+m.getValueAt(i,2).toString() +
-                   " where id ="+ m.getValueAt(i,0).toString();
-          conn.actualizaTabla(sql);
-          System.out.print(sql);
+        int TPro = 0, moe = 0, mo5 = 0, mo10 = 0;
+        String sql = "";
+        int iva = 0;
+        for (int i = 0; i < cf; i++) {
+            if (!m.getValueAt(i, 5).toString().equals("")) {
+                iva = 5;
+            } else if (!m.getValueAt(i, 6).toString().equals("")) {
+                iva = 10;
+            } else {
+                moe = 0;
+            }
+            sql = "INSERT INTO decompra(id, fCompraid, Articuloid, Precio, Cantidad, Iva) VALUES ("
+                    + nuid + "," + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i, 3).toString()
+                    + "," + m.getValueAt(i, 2).toString() + "," + iva + ")";
+            conn.actualizaTabla(sql); //detalle compra
+            sql = "update articulo Set Stock = Stock + " + m.getValueAt(i, 2).toString()
+                    + " where id =" + m.getValueAt(i, 0).toString();
+            conn.actualizaTabla(sql);
+            System.out.print(sql);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -441,64 +451,31 @@ public class NotaRemision extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2KeyPressed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-    dispose();
+        dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
-    private void Calcular(){
-        int cf = m.getRowCount();
-        int TPro = 0, moe= 0, mo5= 0, mo10= 0;
-        double iva5=0.0, iva10=0.0, ivatot=0.0;
-        for(int i = 0; i<cf; i++){
-            moe += Integer.parseInt(m.getValueAt(i, 4).toString()); // es igual a lo que contiene mas el otro()
-            mo5 += Integer.parseInt(m.getValueAt(i, 5).toString()); 
-            mo10 += Integer.parseInt(m.getValueAt(i, 6).toString()); 
-    }
-    TPro = moe+ mo5+ mo10 ;
-    if(mo5 > 0.0) iva5 = mo5/21;
-    if(mo10 > 0.0) iva10 = mo5/11;
-    ivatot = iva5 +iva10;
-    txtTotalEx.setText(String.valueOf(moe));
-    txtTotal5.setText(String.valueOf(mo5));
-    txtTotal10.setText(String.valueOf(mo10));
-    txtTotal.setText(String.valueOf(TPro));
-    txtIVA5.setText(String.valueOf(iva5));
-    txtIVA10.setText(String.valueOf(iva10));
-    txtTotalIVA.setText(String.valueOf(ivatot));
-    
-    
-    
-    }
-    private void LimpiaProductos(){
+
+    private void LimpiaProductos() {
         txtArticuloid.setText("");
         txtArticulo.setText("");
-        txtStock.setText("");
         txtPrecio.setText("");
         txtCantidad.setText("");
-        txtIVA.setText("");
-        
-      }
-       private void cargaFila(){
-           int TPro = Integer.parseInt(txtPrecio.getText().trim())* Integer.parseInt(txtCantidad.getText().trim());
-           int moe= 0, mo5= 0, mo10= 0;
-           if(txtIVA.getText().equals("5"))
-               mo5 = TPro;
-           else if(txtIVA.getText().equals("10"))
-               mo10 = TPro;
-           else 
-               moe = TPro;
-           m.addRow(new Object[]
-           {txtArticuloid.getText(),
-               txtArticulo.getText(),
-               txtCantidad.getText(),
-               txtPrecio.getText(),
-               moe, mo5, mo10
-           });
-       }  
-       
-        public static String fecha(){
-        Date fecha=new Date();
+
+    }
+
+    private void cargaFila() {
+        int TPro = Integer.parseInt(txtPrecio.getText().trim()) * Integer.parseInt(txtCantidad.getText().trim());
+        m.addRow(new Object[]{txtArticuloid.getText(),
+            txtArticulo.getText(),
+            txtCantidad.getText(),
+            txtPrecio.getText(),});
+    }
+
+    public static String fecha() {
+        Date fecha = new Date();
         SimpleDateFormat formatofecha = new SimpleDateFormat("yyyy/mm/dd");
         return formatofecha.format(fecha);
- }  
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -544,11 +521,11 @@ public class NotaRemision extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Ficha;
     private javax.swing.JButton btnBusquedaAR;
-    private javax.swing.JLabel fecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -566,6 +543,7 @@ public class NotaRemision extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel lblfecha;
     private javax.swing.JTextField txtArticulo;
     private javax.swing.JTextField txtArticuloid;
     private javax.swing.JTextField txtCI;

@@ -31,7 +31,8 @@ public class SqlUsuarios extends Conexion{
         Conexion conn = new Conexion();
         String tipou;
         tipou = cbousuario.getItemAt(cbousuario.getSelectedIndex()).getId();
-        String sql = "INSERT INTO usuarios (usuario, apellido, clave, nombre, gmail, estado, idTipoU) VALUES (?, ?, ?,?,?,?,?)";
+        String sql = "INSERT INTO usuarios (usuario, apellido, clave, nombre, gmail, estado, idTipoU) VALUES "
+                + "(?, ?, ?,?,?,?,?)";
         
         try {
             PreparedStatement ps = conn.conexion.prepareStatement(sql);

@@ -226,6 +226,7 @@ public class registros extends javax.swing.JFrame {
                         mod.setNombre(txtnombre.getText().toUpperCase());
                         mod.setApellido(txtapellido.getText().toUpperCase());
                         mod.setCorreo(txtcorreo.getText());
+                        ;
                       //  mod.setIdtipo(1);
                         //if registra correctamente
                         if (modsql.registrar(mod)) {

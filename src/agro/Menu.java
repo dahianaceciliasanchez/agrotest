@@ -656,7 +656,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_planvacunacionMousePressed
 
     private void fiscalizacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fiscalizacionMousePressed
-        new RegistroFiscalizacion().setVisible(true);
+//        new RegistroFiscalizacion().setVisible(true);
     }//GEN-LAST:event_fiscalizacionMousePressed
 
     private void tarjetavacunacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tarjetavacunacionMousePressed

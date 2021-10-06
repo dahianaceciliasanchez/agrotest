@@ -570,7 +570,7 @@ public class FacturaProveedor extends javax.swing.JFrame {
         String pagos;
         pagos = cbopagos.getItemAt(cbopagos.getSelectedIndex()).getId();
         String  sql = "INSERT INTO facturaproveedor(id, fechaemision, nrofactura, proveedorid, pagodi) VALUES ("
-                + txtidproveedor.getText()+ ",DATE(NOW()),"+ txtfactura.getText() + "," + pagos
+                +nuid+ ",DATE(NOW()),"+ txtfactura.getText() + "," + txtidproveedor.getText()+ "," +pagos
                 + ")";
               
         conn.actualizaDatos(sql);
@@ -605,8 +605,8 @@ public class FacturaProveedor extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(PresupuestoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-            sql = "INSERT INTO detallefactura(productosid, precio, cantidad, iva) VALUES ("
-                      + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i, 3).toString()
+            sql = "INSERT INTO detallefactura(facturaid, productosid, precio, cantidad, iva) VALUES ("
+                     +deid +","+m.getValueAt(i, 0).toString() + "," + m.getValueAt(i, 3).toString()
                     + "," + m.getValueAt(i, 2).toString() + "," + iva +")";
             conn.actualizaTabla(sql);
              System.out.print(sql);
