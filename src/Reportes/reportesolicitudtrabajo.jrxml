@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportesolicitudtrabajo" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d2493a10-b357-499a-b39e-cb4672ad3994">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_empleado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_nros" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select s.fechatrabajo, s.nrosolicitud, s.empleadoid, e.Nombre, e.Apellido, e.CI 
+from solicitudtrabajo s 
+inner join empleados e 
+on s.empleadoid = e.id 
+where s.empleadoid =$P!{p_empleado}
+and s.nrosolicitud = $P!{p_nros}]]>
+	</queryString>
+	<field name="fechatrabajo" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nrosolicitud" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empleadoid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Apellido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CI" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="153" y="23" width="292" height="56" uuid="9770458f-98cc-45da-a31d-d43fe2d5e3f1"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SOLCITUD DE TRABAJO ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="19" y="11" width="93" height="66" uuid="2791be5c-19a3-45ca-a1ad-922d865e2463"/>
+				<imageExpression><![CDATA["C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\3.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="472" y="11" width="100" height="20" uuid="40125ce9-e608-4f1b-b4ae-a1bf124fdd2c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="2" width="100" height="20" uuid="57abe97b-46ac-43ca-a696-722989bf5dfc"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[FECHA_TRABAJO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="116" y="2" width="87" height="20" uuid="bc17e3f6-0eb3-42ef-a083-50c3e0e7f6ca"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[NRO_SOLICITUD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="216" y="2" width="73" height="20" uuid="26a417b4-acc7-4368-bd78-d6b809ecfe45"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[COD_EMPLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="2" width="92" height="20" uuid="9e4464b7-080e-485c-be2e-ff79a9e151b2"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[NOMBRE_EMPLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="2" width="90" height="20" uuid="57038e0c-bae2-4690-9a9b-07df4aca4b64"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[APELLIDO_EMPLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="516" y="2" width="70" height="20" uuid="623d9cca-49f0-44c7-a994-e4a99db1ad56"/>
+				<text><![CDATA[CI_EMPLE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="49" splitType="Stretch">
+			<textField>
+				<reportElement x="7" y="0" width="100" height="20" uuid="2fb92ad1-9706-4d08-8177-51852a98fc47"/>
+				<textFieldExpression><![CDATA[$F{fechatrabajo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="2" width="87" height="20" uuid="d2e4a4c7-ed07-49ab-9020-5a4bbd689e55"/>
+				<textFieldExpression><![CDATA[$F{nrosolicitud}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="0" width="73" height="20" uuid="1c1eb304-e04e-4d3e-9084-30d408ca5f94"/>
+				<textFieldExpression><![CDATA[$F{empleadoid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="314" y="0" width="85" height="20" uuid="9dd8d34a-c258-4609-b4b7-2bf7aa9e4ba2"/>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="416" y="0" width="88" height="20" uuid="87ddcc59-73da-4214-a56e-0a11c46175c9"/>
+				<textFieldExpression><![CDATA[$F{Apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="516" y="0" width="70" height="20" uuid="805e4736-0b8b-47cf-8f3e-e48ea76fc4b9"/>
+				<textFieldExpression><![CDATA[$F{CI}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="238" y="7" width="80" height="20" uuid="6b865fbe-9333-4682-9b6c-c99a93f75be3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="337" y="22" width="40" height="20" uuid="60adccf4-ea00-458d-b16c-438e387d0866"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

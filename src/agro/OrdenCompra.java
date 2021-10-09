@@ -24,6 +24,7 @@ public class OrdenCompra extends javax.swing.JFrame {
     javax.swing.table.DefaultTableModel m;
     int nuid = 0;
     int fac = 0;
+    int deid = 0;
 
     public OrdenCompra() {
         initComponents();
@@ -78,7 +79,6 @@ public class OrdenCompra extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        txtNombre = new javax.swing.JTextField();
         txtidproveedor = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
@@ -318,17 +318,6 @@ public class OrdenCompra extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0))));
 
-        txtNombre.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtNombreMousePressed(evt);
-            }
-        });
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
-
         txtidproveedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 txtidproveedorMousePressed(evt);
@@ -361,10 +350,10 @@ public class OrdenCompra extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtidproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3))
+                        .addComponent(txtidpresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(112, 112, 112)
                         .addComponent(jLabel23)))
@@ -375,9 +364,7 @@ public class OrdenCompra extends javax.swing.JFrame {
                         .addGap(321, 321, 321)
                         .addComponent(jLabel22))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(txtidpresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(31, 31, 31)
                         .addComponent(txtpresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -394,7 +381,6 @@ public class OrdenCompra extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(txtidproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
                             .addComponent(txtpresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtidpresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -422,7 +408,6 @@ public class OrdenCompra extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addComponent(btnNuevo)
@@ -440,6 +425,9 @@ public class OrdenCompra extends javax.swing.JFrame {
                     .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -468,31 +456,9 @@ public class OrdenCompra extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtpresupuestoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpresupuestoKeyPressed
-//
-//        try {
-//            m.setRowCount(0);
-//            String sql = "SELECT   p.id  ID , d.id ID, CONCAT(n.apellido, ', ' ,n.Nombre) Empleado, Empleadoid, e.Estado estado, estadopedidoid, NroFactura, d.Cantidad  Cantidades"
-//                    + "FROM Pedidos p, Empleados n, estadopedido e " + "WHERE p.empleadoid= n.id AND p.estadopedidoid= e.id ";
-//
-//            String sql2 = "Select  from pedidos where p.NroFactura = " + txtpresupuesto.getText();
-//
-//            conn.sentencia = conn.conexion.createStatement();
-//            conn.resultado = conn.sentencia.executeQuery(sql);
-//            while (conn.resultado.next()) {
-//                m.addRow(new Object[]{conn.resultado.getInt("id"), conn.resultado.getString("Empleado"),
-//                    conn.resultado.getString("Empleadoid"), conn.resultado.getString("Estado"),
-//                    conn.resultado.getString("estadopedidoid"), conn.resultado.getInt("NroFactura"),
-//                    conn.resultado.getInt("NroFactura")});
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(OrdenCompra.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
     }//GEN-LAST:event_txtpresupuestoKeyPressed
 
-
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
 
     private void txtidproveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtidproveedorMousePressed
         BuscarPresupuesto objeto = new BuscarPresupuesto();
@@ -509,9 +475,9 @@ public class OrdenCompra extends javax.swing.JFrame {
             if (conn.resultado.next()) {
                 fac = conn.resultado.getInt("nro");
                 sql = "INSERT INTO ordencompra (id, fechaorden, nrodoc, pagoid ) VALUES ("
-                        + nuid + ", DATE(NOW()) ," + NroDocumento.getText() + "," + pago + ") ";
-                guardaMovi();
+                        + nuid + ", DATE(NOW()) ," + NroDocumento.getText() + "," + pago + ") ";            
                 conn.actualizaTabla(sql);
+                guardaMovi();
                 System.out.println(sql);
                 JOptionPane.showMessageDialog(this, "Datos Guardados Correctamente ");
 
@@ -523,11 +489,22 @@ public class OrdenCompra extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnGrabarActionPerformed
     private void guardaMovi() {
+        try {
+
+           String sql = "SELECT max(id) as total from ordencompra";
+            conn.traeDatos(sql);
+            if (conn.resultado.next()) {
+             deid= conn.resultado.getInt("total");
+                System.out.println(deid);             
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PresupuestoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String sql;
         Integer cantidadItem = tabla.getRowCount();
         for (int i = 0; i < cantidadItem; i++) {
-            sql = "INSERT INTO detalle_ordencompra(id, detallepresupuesto,cantidad) VALUES ("
-                    + nuid + "," + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i,3).toString()
+            sql = "INSERT INTO detalle_ordencompra(ordenid, detallepresupuesto,cantidad) VALUES ("
+                    + deid + "," + m.getValueAt(i, 0).toString() + "," + m.getValueAt(i,3).toString()
                     + ")";
             conn.actualizaTabla(sql);
             System.out.print(sql);
@@ -571,10 +548,6 @@ public class OrdenCompra extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
 
-    private void txtNombreMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreMousePressed
-
-    }//GEN-LAST:event_txtNombreMousePressed
-
     private void DataChooserAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_DataChooserAncestorMoved
         // TODO add your handling code here:
     }//GEN-LAST:event_DataChooserAncestorMoved
@@ -609,12 +582,7 @@ public class OrdenCompra extends javax.swing.JFrame {
             txtcantidad.getText(),});
     }
     private void aceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_aceptarKeyPressed
-//        Object[] fila = new Object[3];
-//        fila[0] = txtidproducto.getText();
-//        fila[1] = txtNombreProducto.getText();
-//        fila[2] = txtcantidad.getText();
-//        m.addRow(fila);
-//        btnGrabar.requestFocus();
+//     ;
 
     }//GEN-LAST:event_aceptarKeyPressed
 
@@ -705,7 +673,6 @@ public class OrdenCompra extends javax.swing.JFrame {
     public static javax.swing.JTextField txtApellido;
     public static javax.swing.JTextField txtCI;
     public static javax.swing.JTextField txtCorreo;
-    public static javax.swing.JTextField txtNombre;
     public static javax.swing.JTextField txtNombreE;
     public static javax.swing.JTextField txtNombreProducto;
     public static javax.swing.JTextField txtcantidad;

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteplanificacionia" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c001c2e3-6466-40bf-8580-f2b575e02183">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_metodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.FechaAplicacion, p.MetodoIA, m.Descripcion, 
+p.Animalid, a.Nombre Nombre_Animal, p.Vacunasid, v.Nombre Nombre_Vacunas, p.Cantidad 
+from planificacionia p 
+inner join metodoia m 
+on p.MetodoIA = m.id 
+inner join animal a 
+on p.Animalid = a.id 
+inner join vacunas v 
+on p.Vacunasid = v.id
+and p.MetodoIA = $P!{p_metodo}]]>
+	</queryString>
+	<field name="FechaAplicacion" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MetodoIA" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Animalid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nombre_Animal" class="java.lang.String"/>
+	<field name="Vacunasid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nombre_Vacunas" class="java.lang.String"/>
+	<field name="Cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="161" y="12" width="194" height="53" uuid="59052760-f946-4402-9598-f4295172e693"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PLANIFICACION IA]]></text>
+			</staticText>
+			<image>
+				<reportElement x="444" y="12" width="81" height="56" uuid="51f5c0cd-8b27-4c0a-9fd8-a9392d314dcf"/>
+				<imageExpression><![CDATA["C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\5.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="23" y="16" width="100" height="20" uuid="d9d40e89-cd0c-430f-b6e6-7c97533a3b2a"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="-27" y="2" width="100" height="20" uuid="c9e70bb2-c453-4e6d-8a99-c3729d9c6de8"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FECHA_APLICACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="2" width="46" height="20" uuid="db5b29ac-03f8-4439-ad86-7a81d16134bd"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[METODO_IA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="2" width="68" height="20" uuid="8f7b4b74-c91b-47a9-ae21-ee74ff5821dd"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DESCRI_METODO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="2" width="51" height="20" uuid="66815123-cfd7-4007-9ea9-b56c1ebc11ba"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ANIMAL_ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="2" width="79" height="20" uuid="9dc48a42-61b0-41ff-b702-01410add1dba"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE_ANIM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="0" width="53" height="20" uuid="446b9704-09c6-4aaf-b6d2-abb1c3d22aba"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[COD_VAC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="0" width="59" height="20" uuid="12052aac-cea2-47d9-89a3-3847411ef0b6"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE_VAC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="515" y="2" width="57" height="20" uuid="c8e57fd5-e928-468a-a395-7b5efa201c41"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="39" height="20" uuid="8869fdb1-8b4a-4080-b1c3-ccc875453c32"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FechaAplicacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="73" y="0" width="46" height="20" uuid="cd0c6e7d-1d53-4f70-807e-335fca2c90b3"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MetodoIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="1" width="68" height="20" uuid="4f2da317-3b47-43b6-b937-8519c681adb3"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="224" y="0" width="51" height="20" uuid="c20eb339-c8d1-4b28-9cc2-42c77f2a7c75"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Animalid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="291" y="1" width="79" height="20" uuid="db72ac70-76a4-48e8-ad16-59b2a863a7f7"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre_Animal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="53" height="20" uuid="95dd42d6-1cc5-4a96-91e4-2a65d1b46597"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Vacunasid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="447" y="0" width="49" height="20" uuid="760a4aeb-f0e0-46ba-946d-1d1da81c1f10"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre_Vacunas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="515" y="3" width="57" height="20" uuid="91bd6851-fe85-4a00-9d1f-dd68ca0fbe3b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="16" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="230" y="0" width="80" height="20" uuid="f8ee033b-c113-4771-8068-2227ba0e349a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="330" y="20" width="40" height="20" uuid="4b915ed2-b466-4edd-b448-339937d23f63"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

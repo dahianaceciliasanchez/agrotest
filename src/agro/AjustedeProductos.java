@@ -69,7 +69,7 @@ Conexion conn = new Conexion ();
         tabla = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtCantidad = new javax.swing.JTextField();
+        txtcantidad = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtstock = new javax.swing.JTextField();
         txtid = new javax.swing.JTextField();
@@ -177,7 +177,7 @@ Conexion conn = new Conexion ();
                         .addGap(9, 9, 9)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -227,7 +227,7 @@ Conexion conn = new Conexion ();
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(cbomotivoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
@@ -293,7 +293,7 @@ Conexion conn = new Conexion ();
       }  
       private void limpiar(){
           txtid.setText("");
-          txtCantidad.setText("");
+          txtcantidad.setText("");
           txtdetalle.setText("");
   
           
@@ -304,26 +304,28 @@ Conexion conn = new Conexion ();
           
       }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if(ban ==1) InsertaDato(); 
-        ban=0;
+        String motivo;
+        motivo = cbomotivoa.getItemAt(cbomotivoa.getSelectedIndex()).getId();
+           try {
+               String sql ="Insert into ajusteproductos (productoid, motivoid, cantidad)"+
+                "values ('"+txtid.getText()+ "', '"+motivo
+              + ","+ txtcantidad+")";
+       conn.actualizaTabla(sql);
+            sql = "update productos set Stock = Stock + " + txtcantidad.getText()
+                + " where id =" + txtid.getText();
+       System.out.println(sql);
+       conn.actualizaTabla(sql);
+       cargaTabla();
+           } catch (Exception e) {
+           }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtidActionPerformed
-       private void InsertaDato(){
-        String motivo;
-        motivo = cbomotivoa.getItemAt(cbomotivoa.getSelectedIndex()).getId();
-       String sql ="Insert into ajusteproductos (productoid, motivoid, cantidad)"+
-                " values("+ txtid.getText()+ ","+ motivo
-               + ","+ txtCantidad+")";
-       conn.actualizaTabla(sql);
-            sql = "update productos set Stock = Stock + " + txtCantidad.getText()
-                + " where id =" + txtid.getText();
-       System.out.println(sql);
-       conn.actualizaTabla(sql);
-       cargaTabla();
-   }
+   
+        
+   
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
            ban = 1;
            habilitar();
@@ -426,8 +428,8 @@ Conexion conn = new Conexion ();
     private javax.swing.JButton salir;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtBsucar;
-    private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtcantidad;
     private javax.swing.JTextField txtdetalle;
     private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtstock;

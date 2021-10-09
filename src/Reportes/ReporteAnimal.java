@@ -164,7 +164,6 @@ public class ReporteAnimal extends javax.swing.JFrame {
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         Map parametro = new HashMap();
         parametro.put("p_raza", txtidraza.getText());
-        parametro.put("p_categoria", txtidcategoria.getText());
         try {
             String fileName = "src\\Reportes\\reporteanimal.jasper";
             JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);

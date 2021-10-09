@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="360b75a0-f920-4197-9755-354c1aece5f3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_animal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select dpe.id, dpe.planengordeid, p.PesoActual, dpe.animalid, a.Nombre Nombre_animal
+from detalle_plan_engorde dpe 
+inner join planengorde p 
+on dpe.planengordeid = p.id 
+inner join animal a 
+on  dpe.animalid = a.id 
+and dpe.animalid = $P!{p_animal}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="planengordeid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PesoActual" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="animalid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nombre_animal" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="179" y="26" width="197" height="39" uuid="2f60e39e-15db-4e84-ac42-e307b19e8b93"/>
+				<textElement>
+					<font size="16" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PLAN DE ENGORDE]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="430" y="16" width="100" height="20" uuid="7d7f7093-9339-4c42-9e92-375e7fb65d84"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="23" y="20" width="69" height="45" uuid="5bbcc4a4-ca72-4f10-852f-ae6388646dda"/>
+				<imageExpression><![CDATA["C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\vaca.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="2" width="74" height="20" uuid="94eedb5b-39d1-41c2-afc8-46bd1dd06a39"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ID_DET_E]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="2" width="138" height="20" uuid="ee195b48-7c3c-4a84-87ee-bae1358d27db"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PLAN_ENGORDE_ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="2" width="100" height="20" uuid="df400e03-efa6-4f8f-93a8-add499cc2376"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PESO_ACTUAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="2" width="86" height="20" uuid="5bca4aca-fdf9-451c-8257-80c6f7605a9d"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ANIMAL_ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="2" width="94" height="20" uuid="0792a838-ce24-4fa4-b955-c219da4e072f"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE_AN]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="7" y="0" width="74" height="20" uuid="0b8e0549-c4cc-4ef4-8306-39b284162e9f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="111" y="0" width="100" height="20" uuid="1e397a0c-676e-41fd-8fb2-588b7cc11f73"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{planengordeid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="244" y="0" width="100" height="20" uuid="c9914e24-24bb-4527-9231-d64544fe654d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{PesoActual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="361" y="0" width="86" height="20" uuid="00f549e8-67c2-4036-902f-e598e0f48be3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{animalid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="461" y="0" width="94" height="20" uuid="40a1b703-a275-4276-8af3-9cc6f91eec6b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Nombre_animal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="17" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

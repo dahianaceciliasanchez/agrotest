@@ -227,7 +227,7 @@ public class Timbrado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void limpiar() {
-        txtGentilicio.setText("");
+
         txtSiglas.setText("");
         txtDescripcion.setText("");
 
@@ -248,7 +248,7 @@ public class Timbrado extends javax.swing.JFrame {
 
             String sql = "Insert into ciudad (Descripcion, Sigla, Gentilicio)"
                     + " values('" + txtDescripcion.getText() + "', '" + txtSiglas.getText()
-                    + "', '" + txtGentilicio.getText() + "') ";
+                     +"') ";
             System.out.println(sql);
             conn.actualizaTabla(sql);
             cargaTabla();
@@ -308,7 +308,7 @@ public class Timbrado extends javax.swing.JFrame {
 
                 txtDescripcion.setText(conn.resultado.getString("Descripcion"));
                 txtSiglas.setText(conn.resultado.getString("Sigla"));
-                txtGentilicio.setText(conn.resultado.getString("Gentilicio"));
+                
 
             }
         } catch (SQLException ex) {

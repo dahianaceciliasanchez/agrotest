@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FiscalizacionForm" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0e34fe4a-26de-4357-8887-27738861a14c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_fiscalizacion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select df.id, df.fiscalizacionid, f.Fecha, f.nrofiscalizacion,df.empleadoid, e.Nombre, e.Apellido ,e.CI 
+from detalle_fiscalizacion df 
+inner join fiscalizacion f 
+on df.fiscalizacionid = f.id 
+inner join empleados e 
+on df.empleadoid = e.id
+and f.nrofiscalizacion = $P!{p_fiscalizacion}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fiscalizacionid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nrofiscalizacion" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empleadoid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Apellido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CI" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="98" splitType="Stretch">
+			<staticText>
+				<reportElement x="189" y="21" width="181" height="46" uuid="6ef53d6d-9ee0-434e-9431-948e3a59f164"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FISCALIZACION]]></text>
+			</staticText>
+			<image>
+				<reportElement x="13" y="4" width="114" height="63" uuid="9e58a258-8848-474e-bb25-14c59287897e"/>
+				<imageExpression><![CDATA["C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\32.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="430" y="4" width="100" height="20" uuid="657912ab-288f-43d4-b92e-abd0fa8e0555"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="16" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="2" width="100" height="20" uuid="d0fc5a8f-7a8a-4eab-bc25-7e0509cd237f"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FISCALIZACION_COD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="2" width="67" height="20" uuid="7ba5163f-d9bb-4792-8f41-2e7d76e84975"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="2" width="100" height="20" uuid="c7da5208-7d5e-4be3-81a0-a4594516133e"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NRO_FISCALIZACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="2" width="100" height="20" uuid="5499f369-485c-45c6-935f-eddbfeda1b91"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[COD_EMPLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="2" width="71" height="20" uuid="dc2068d7-9a64-455c-9de4-76b32e1aef5a"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="517" y="2" width="38" height="20" uuid="8f3dfc44-1231-410a-8ce8-903f5496d131"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CI]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="0" width="100" height="20" uuid="edb521eb-e8d5-4390-bb38-441dea429d62"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fiscalizacionid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="0" width="62" height="20" uuid="3077a54d-130a-408a-9f33-fd636ab33178"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="202" y="0" width="100" height="20" uuid="69f593de-7267-4d82-896d-5f226b604e3d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nrofiscalizacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="0" width="100" height="20" uuid="94ce8478-b248-41b7-ac47-1a4c5268bbec"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{empleadoid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="0" width="71" height="20" uuid="d746b023-c770-45e0-b8e3-2cbfdd00e3fa"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="517" y="0" width="38" height="20" uuid="7b5a6f51-25f8-4c47-8bc7-dd5dde971cd5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{CI}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="16" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="234" y="2" width="80" height="20" uuid="07155132-8a8a-4d78-8391-a9057902c361"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="330" y="22" width="40" height="20" uuid="51e48ae1-7a4b-4b0d-ae77-3b1d8ab19737"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

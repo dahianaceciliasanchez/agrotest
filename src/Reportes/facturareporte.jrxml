@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturareporte" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ec1cd132-a35e-42e1-9b0b-99ad18b8d417">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_fechaini" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fechafin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[
+select d.id, d.facturaid, f.fechaemision, f.nrofactura, f.proveedorid, p2.Nombre , d.productosid, p.Descripcion Descrip_Producto, d.precio, d.cantidad, d.iva 
+from detallefactura d 
+inner join productos p 
+on d.productosid = p.id 
+inner join facturaproveedor f 
+on d.facturaid = f.id 
+inner join proveedores p2 
+on f.proveedorid = p2.id
+and f.fechaemision between $P{p_fechaini} and $P{p_fechafin}
+]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="facturaid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaemision" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nrofactura" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proveedorid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="productosid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Descrip_Producto" class="java.lang.String"/>
+	<field name="precio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="iva" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="135" y="33" width="234" height="46" uuid="da4d223c-d005-4515-9ac4-818f6e4b5970"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FACTURA PROVEEDOR]]></text>
+			</staticText>
+			<image>
+				<reportElement x="432" y="22" width="95" height="57" uuid="8f9696be-4cba-48db-b962-5a13de8a2c9e"/>
+				<imageExpression><![CDATA["C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\4.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="9" y="0" width="100" height="20" uuid="9e334da5-4969-4edb-8b92-dd30104f7a5c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="34" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="-7" y="0" width="18" height="20" uuid="8a0d8f6b-6605-4c33-af37-c9bae1c4a292"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="2" width="40" height="20" uuid="e29ba99a-ad3b-4dfa-98c2-e9dd1a6df83e"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FACTUR_ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="2" width="79" height="20" uuid="31765645-36ad-4fb2-81f7-ec4fc10595e2"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FECHA_EMISION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="2" width="49" height="20" uuid="5902db65-5178-4afa-95ff-ade0ccac84c0"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NRO_FAC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="2" width="69" height="20" uuid="00ab9403-924f-4204-bed4-ba290c3191e8"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[COD_PROVE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="2" width="68" height="20" uuid="d85e1b59-c28f-43b2-89c4-32af5b5b3c90"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE_PROV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="357" y="2" width="54" height="20" uuid="9bec2a6d-8e7b-4a1a-8412-04a6dc32a27d"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[COD_PROD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="2" width="58" height="20" uuid="feddd8dd-573a-4d85-a939-7d153d3f19b2"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DESCRI_PROD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="2" width="45" height="20" uuid="6f544709-5e03-46a6-8c14-2be7e9a45380"/>
+				<textElement>
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="527" y="2" width="50" height="20" uuid="0a8bf59a-ccfc-4b78-a3f4-8e744f487c8f"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="38" splitType="Stretch">
+			<textField>
+				<reportElement x="-7" y="4" width="18" height="20" uuid="5aa766aa-b413-4a8a-ab13-19370a63413d"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="4" width="40" height="20" uuid="64375d8e-e782-4d9a-b2c0-7d9a888cafdb"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{facturaid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="71" y="4" width="79" height="20" uuid="85046036-b209-4b47-813a-dcdd6dce2115"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaemision}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="206" y="4" width="59" height="20" uuid="14ef8590-0771-4c0a-a3f2-eeb19e30fbd4"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedorid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="4" width="49" height="20" uuid="6ee97635-930a-46a8-9fbc-3b332eb2049c"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nrofactura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="275" y="4" width="68" height="20" uuid="0527b633-0538-4cc0-b709-7291c7805378"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="356" y="4" width="54" height="20" uuid="5a2b1a08-218b-4244-ba34-629008301db1"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{productosid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="418" y="4" width="58" height="20" uuid="37fcda50-e68c-4687-a66c-96ac2d8c5365"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Descrip_Producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="476" y="0" width="41" height="20" uuid="f82abd28-ef7e-4f0e-9eec-5fd11738ab17"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="528" y="0" width="50" height="20" uuid="34fe7601-4a7f-4baf-af61-65d28b2e9456"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="223" y="5" width="80" height="20" uuid="28faa251-9cff-48ea-992d-cb0552939130"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="317" y="22" width="40" height="20" uuid="332a5aa1-1e9a-4521-83f0-200472dbc7d6"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

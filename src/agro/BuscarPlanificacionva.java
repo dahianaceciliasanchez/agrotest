@@ -5,9 +5,10 @@
  */
 package agro;
 
-import static agro.RegistroFiscalizacion.txtidplanificacio;
-import static agro.RegistroFiscalizacion.txtidvacunas;
-import static agro.RegistroFiscalizacion.txtplani;
+import static agro.RegistroFiscalizacion.txtNombreanimal;
+import static agro.RegistroFiscalizacion.txtidanimal;
+import static agro.RegistroFiscalizacion.txtidplan;
+import static agro.RegistroFiscalizacion.txtplan;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,10 +30,17 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
 
     private void cargaTabla() {
         m.setRowCount(0);
-        String sql = "SELECT d.id, d.planvacunacionid, d.vacunasid, v.Nombre, d.cantidaddosis\n"
-                + "FROM detalle_planvacunacion AS d\n"
-                + "INNER JOIN vacunas AS v\n"
-                + "ON d.vacunasid = v.id";
+        String sql = "select dp.id id_detalle, dp.planvacunacionid, p.Etapasid,"
+                + " e.Descripcion Etapa_Descrip, p.animalid, a.Nombre, dp.vacunasid, v.Nombre Nombre_Vacunas\n"
+                + "from detalle_planvacunacion dp \n"
+                + "inner join planificacionvacunacion p \n"
+                + "on dp.planvacunacionid = p.id \n"
+                + "inner join animal a \n"
+                + "on p.animalid = a.id \n"
+                + "inner join etapasvacunacion e \n"
+                + "on p.Etapasid = e.id \n"
+                + "inner join vacunas v \n"
+                + "on dp.vacunasid = v.id ";
         String columna = "id";
 
         try {
@@ -45,10 +53,14 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
             conn.sentencia = conn.conexion.createStatement();
             conn.resultado = conn.sentencia.executeQuery(sql);
             while (conn.resultado.next()) {
-                m.addRow(new Object[]{conn.resultado.getInt("id"),
+                m.addRow(new Object[]{conn.resultado.getInt("id_detalle"),
                     conn.resultado.getString("planvacunacionid"),
+                    conn.resultado.getString("Etapasid"),
+                    conn.resultado.getString("Etapa_Descrip"),
+                    conn.resultado.getString("animalid"),
+                    conn.resultado.getString("nombre"),
                     conn.resultado.getString("vacunasid"),
-                    conn.resultado.getString("Nombre")
+                    conn.resultado.getString("Nombre_Vacunas")
                 });
             }
         } catch (SQLException ex) {
@@ -79,17 +91,17 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
         Lista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Cod_Planificacion", "Cod_Vacuna", "Nombre"
+                "ID", "COD_PLANV", "COD_ETAPAV", "ETAPA_DESCRI", "ANIMAL_ID", "NOMBRE_ANIMAL", "COD_VACUNA", "NOMBRE_VACUNA"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, true, false, true
+                true, false, false, true, false, true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -106,7 +118,10 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
             Lista.getColumnModel().getColumn(0).setMinWidth(2);
             Lista.getColumnModel().getColumn(0).setPreferredWidth(1);
             Lista.getColumnModel().getColumn(0).setMaxWidth(1);
+            Lista.getColumnModel().getColumn(1).setPreferredWidth(3);
             Lista.getColumnModel().getColumn(2).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(4).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(6).setPreferredWidth(3);
         }
 
         jLabel6.setText("Buscar");
@@ -130,9 +145,7 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,14 +187,24 @@ public class BuscarPlanificacionva extends javax.swing.JFrame {
     }//GEN-LAST:event_cbobuscarActionPerformed
 
     private void BuscarSementales() {
-        String sql = "select * from detalle_planvacunacion where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        String sql = "select dp.id id_detalle, dp.planvacunacionid, p.Etapasid, e.Descripcion Etapa_Descrip, p.animalid, "
+                + "a.Nombre\n"
+                + "from detalle_planvacunacion dp \n"
+                + "inner join planificacionvacunacion p \n"
+                + "on dp.planvacunacionid = p.id \n"
+                + "inner join animal a \n"
+                + "on p.animalid = a.id \n"
+                + "inner join etapasvacunacion e \n"
+                + "on p.Etapasid = e.id \n"
+                + "where dp.id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
         System.out.println(sql);
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-                txtidplanificacio.setText(conn.resultado.getString("id"));
-                txtplani.setText(conn.resultado.getString("planvacunacionid"));
-                txtidvacunas.setText(conn.resultado.getString("vacunasid"));
+                txtidplan.setText(conn.resultado.getString("id_detalle"));
+                txtidanimal.setText(conn.resultado.getString("animalid"));
+                txtNombreanimal.setText(conn.resultado.getString("Nombre"));
+                txtplan.setText(conn.resultado.getString("Etapa_Descrip"));
 
             }
         } catch (SQLException ex) {

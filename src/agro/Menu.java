@@ -5,6 +5,7 @@
  */
 package agro;
 
+import Modelo.usuarios;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -24,19 +25,114 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author Dahiana Sanchez G
  */
 public class Menu extends javax.swing.JFrame {
-    
+
     Conexion conn = new Conexion();
     Calendar fechaactual = new GregorianCalendar();
-    Acceso mod;
+    //  Acceso mod;
+    usuarios mod;
 
-    /**
-     * Creates new form Menu
-     */
     public Menu() {
         initComponents();
         fecha.setText(fecha());
 
-        //datefechahora.setCalendar(fechaactual);
+    }
+
+    public Menu(usuarios mod) {
+        initComponents();
+        setLocationRelativeTo(null);
+        this.mod = mod;
+
+        lblnombre.setText(mod.getNombre());
+        lblRol.setText(mod.getNombre_tipo());
+
+        if (mod.getIdtipo() == 1) {
+            menureferenciales.setVisible(true);
+            menucompra.setEnabled(true);
+            menuia.setEnabled(true);
+            menuservicios.setEnabled(true);
+            menureportes.setEnabled(true);
+            
+        } else if (mod.getIdtipo() == 2) {
+            subplanificacionia.setEnabled(false);
+            subregistroia.setEnabled(false);
+            subajustestockia.setEnabled(false);
+            subsolicitudia.setEnabled(false);
+            menureferenciales.setEnabled(false);
+            menucompra.setEnabled(true);
+            subajustep.setEnabled(false);
+            subcredito.setEnabled(false);
+            subdebito.setEnabled(false);
+            subfactura.setEnabled(false);
+            subpresupuesto.setEnabled(false);
+            subordencompra.setEnabled(false);
+            subfiscalizacion.setEnabled(false);
+            subpreñes.setEnabled(true);
+            subpedido.setEnabled(false);
+            subsuplementos.setEnabled(false);
+            reporteIA.setEnabled(false);
+            reporteC.setEnabled(false);
+            reporteSV.setEnabled(false);
+            subprotocoloia.setEnabled(true);
+            subregistroa.setEnabled(false);
+            subetapas.setEnabled(false);
+            subtarjeta.setEnabled(false);
+            subremision.setEnabled(false);
+            subengorde.setEnabled(false);
+
+        } else if (mod.getIdtipo() == 3) {
+
+            subplanificacionia.setEnabled(true);
+            subregistroia.setEnabled(true);
+            subajustestockia.setEnabled(true);
+            subsolicitudia.setEnabled(true);
+            menureferenciales.setEnabled(false);
+            menucompra.setEnabled(true);
+            subajustep.setEnabled(false);
+            subcredito.setEnabled(false);
+            subdebito.setEnabled(false);
+            subfactura.setEnabled(false);
+            subpresupuesto.setEnabled(false);
+            subordencompra.setEnabled(false);
+            subfiscalizacion.setEnabled(false);
+            subpreñes.setEnabled(false);
+            subpedido.setEnabled(false);
+            subsuplementos.setEnabled(false);
+            reporteIA.setEnabled(true);
+            reporteC.setEnabled(false);
+            reporteSV.setEnabled(false);
+            subprotocoloia.setEnabled(false);
+            subregistroa.setEnabled(false);
+            subetapas.setEnabled(false);
+            subtarjeta.setEnabled(false);
+            subremision.setEnabled(false);
+            subengorde.setEnabled(false);
+            
+        } else if (mod.getIdtipo() == 4) {
+            menuservicios.setEnabled(false);
+            subplanificacionia.setEnabled(false);
+            subregistroia.setEnabled(false);
+            subajustestockia.setEnabled(false);
+            subsolicitudia.setEnabled(false);
+            menureferenciales.setEnabled(false);
+            menucompra.setEnabled(false);
+        } else if (mod.getIdtipo() == 5) {
+            menuservicios.setEnabled(false);
+            subplanificacionia.setEnabled(false);
+            subregistroia.setEnabled(false);
+            subajustestockia.setEnabled(false);
+            subsolicitudia.setEnabled(false);
+            menureferenciales.setEnabled(false);
+            menucompra.setEnabled(false);
+        } else if (mod.getIdtipo() == 6) {
+            menuservicios.setEnabled(false);
+            subplanificacionia.setEnabled(false);
+            subregistroia.setEnabled(false);
+            subajustestockia.setEnabled(false);
+            subsolicitudia.setEnabled(false);
+            menureferenciales.setEnabled(false);
+            menucompra.setEnabled(false);
+        }
+
     }
 
     /**
@@ -53,15 +149,17 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lbl = new javax.swing.JLabel();
         fecha = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lblnombre = new javax.swing.JLabel();
+        lblRol = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        ProveedorVacunas = new javax.swing.JMenu();
-        Comprador = new javax.swing.JMenu();
+        menureferenciales = new javax.swing.JMenu();
+        subComprador = new javax.swing.JMenu();
         Personal = new javax.swing.JMenu();
         Cargo = new javax.swing.JMenu();
         Ciudad = new javax.swing.JMenu();
@@ -73,44 +171,64 @@ public class Menu extends javax.swing.JFrame {
         Frigorifico = new javax.swing.JMenu();
         Animal = new javax.swing.JMenu();
         Vacunas = new javax.swing.JMenu();
+        jMenu37 = new javax.swing.JMenu();
+        jMenu38 = new javax.swing.JMenu();
+        jMenu39 = new javax.swing.JMenu();
+        jMenu40 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        IA = new javax.swing.JMenu();
-        Nacimiento = new javax.swing.JMenu();
-        jMenu24 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu21 = new javax.swing.JMenu();
-        jMenu23 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
-        Venta = new javax.swing.JMenu();
-        Movizar = new javax.swing.JMenu();
-        planengorde = new javax.swing.JMenu();
-        planvacunacion = new javax.swing.JMenu();
-        fiscalizacion = new javax.swing.JMenu();
-        tarjetavacunacion = new javax.swing.JMenu();
-        jMenu7 = new javax.swing.JMenu();
-        jMenu11 = new javax.swing.JMenu();
+        menuia = new javax.swing.JMenu();
+        subplanificacionia = new javax.swing.JMenu();
+        subprotocoloia = new javax.swing.JMenu();
+        subsolicitudia = new javax.swing.JMenu();
+        subregistroia = new javax.swing.JMenu();
+        subajustestockia = new javax.swing.JMenu();
+        subpreñes = new javax.swing.JMenu();
+        menuservicios = new javax.swing.JMenu();
+        subregistroa = new javax.swing.JMenu();
+        subsuplementos = new javax.swing.JMenu();
+        subengorde = new javax.swing.JMenu();
+        subetapas = new javax.swing.JMenu();
+        subfiscalizacion = new javax.swing.JMenu();
+        subtarjeta = new javax.swing.JMenu();
+        menucompra = new javax.swing.JMenu();
+        subpedido = new javax.swing.JMenu();
+        subpresupuesto = new javax.swing.JMenu();
+        subordencompra = new javax.swing.JMenu();
+        subfactura = new javax.swing.JMenu();
+        subcredito = new javax.swing.JMenu();
+        subdebito = new javax.swing.JMenu();
+        subremision = new javax.swing.JMenu();
+        subajustep = new javax.swing.JMenu();
+        menureportes = new javax.swing.JMenu();
+        reporteIA = new javax.swing.JMenu();
         jMenu15 = new javax.swing.JMenu();
         jMenu16 = new javax.swing.JMenu();
-        jMenu13 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
+        reporteSV = new javax.swing.JMenu();
         jMenu17 = new javax.swing.JMenu();
+        jMenu23 = new javax.swing.JMenu();
         jMenu18 = new javax.swing.JMenu();
-        jMenu14 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
+        jMenu21 = new javax.swing.JMenu();
+        jMenu24 = new javax.swing.JMenu();
+        jMenu27 = new javax.swing.JMenu();
+        reporteC = new javax.swing.JMenu();
         jMenu19 = new javax.swing.JMenu();
+        jMenu28 = new javax.swing.JMenu();
+        jMenu30 = new javax.swing.JMenu();
         jMenu20 = new javax.swing.JMenu();
+        jMenu31 = new javax.swing.JMenu();
+        jMenu32 = new javax.swing.JMenu();
+        jMenu33 = new javax.swing.JMenu();
+        jMenu34 = new javax.swing.JMenu();
+        jMenu36 = new javax.swing.JMenu();
+        jMenu35 = new javax.swing.JMenu();
         jMenu9 = new javax.swing.JMenu();
         jMenu12 = new javax.swing.JMenu();
         jMenu8 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
-        Leche = new javax.swing.JMenu();
-        Carne = new javax.swing.JMenu();
-        Alimen = new javax.swing.JMenu();
-        SaludVeterinario = new javax.swing.JMenu();
-        Veterina = new javax.swing.JMenu();
-        jMenu29 = new javax.swing.JMenu();
-        jMenu10 = new javax.swing.JMenu();
-        jMenu25 = new javax.swing.JMenu();
-        jMenu26 = new javax.swing.JMenu();
 
         jMenu1.setText("jMenu1");
 
@@ -120,54 +238,61 @@ public class Menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 51));
+        jPanel1.setBackground(new java.awt.Color(235, 230, 231));
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl.setFont(new java.awt.Font("Bodoni MT Black", 0, 36)); // NOI18N
+        lbl.setForeground(new java.awt.Color(102, 102, 102));
+        lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl.setText("BIENVENIDO ");
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("BIENVENIDO ");
-
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("RANCHO SG");
-
-        fecha.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        fecha.setBackground(new java.awt.Color(255, 255, 255));
+        fecha.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
+        fecha.setForeground(new java.awt.Color(51, 51, 51));
+        fecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         fecha.setText("dd/MM/yyyy");
+
+        lblnombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblnombre.setText("Usuario");
+
+        lblRol.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblRol.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblRol.setText("Rol");
+
+        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\Imagenes\\image.jpg")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(204, 204, 204))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblnombre)
+                        .addGap(32, 32, 32)
+                        .addComponent(lblRol, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(jLabel1)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(136, 136, 136)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(46, 46, 46)
+                        .addComponent(lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(88, 88, 88))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(109, 109, 109))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(121, 121, 121))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,272 +302,405 @@ public class Menu extends javax.swing.JFrame {
                         .addGap(109, 109, 109)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(211, 211, 211)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(212, 212, 212)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
-                        .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19))
+                        .addGap(37, 37, 37)
+                        .addComponent(lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblnombre)
+                            .addComponent(lblRol)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(736, 736, 736)
+                        .addComponent(jLabel7)))
+                .addGap(794, 794, 794))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(204, 204, 204));
         jMenuBar1.setBorder(null);
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        ProveedorVacunas.setText("REFERENCIALES");
-        ProveedorVacunas.addMouseListener(new java.awt.event.MouseAdapter() {
+        menureferenciales.setText("REFERENCIALES");
+        menureferenciales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                ProveedorVacunasMousePressed(evt);
+                menureferencialesMousePressed(evt);
             }
         });
 
-        Comprador.setText("Comprador");
-        Comprador.addMouseListener(new java.awt.event.MouseAdapter() {
+        subComprador.setText("PROVEEDORES");
+        subComprador.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                CompradorMousePressed(evt);
+                subCompradorMousePressed(evt);
             }
         });
-        ProveedorVacunas.add(Comprador);
+        menureferenciales.add(subComprador);
 
-        Personal.setText("Personal");
+        Personal.setText("EMPLEADOS");
         Personal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 PersonalMousePressed(evt);
             }
         });
-        ProveedorVacunas.add(Personal);
+        menureferenciales.add(Personal);
 
-        Cargo.setText("Cargo");
+        Cargo.setText("PRODUCTOS");
         Cargo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 CargoMousePressed(evt);
             }
         });
-        ProveedorVacunas.add(Cargo);
+        menureferenciales.add(Cargo);
 
-        Ciudad.setText("Ciudad");
+        Ciudad.setText("CIUDAD");
         Ciudad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 CiudadMousePressed(evt);
             }
         });
-        ProveedorVacunas.add(Ciudad);
+        menureferenciales.add(Ciudad);
 
-        Vitaminas.setText("Vitaminas");
+        Vitaminas.setText("CATEGORIAS");
         Vitaminas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 VitaminasMousePressed(evt);
             }
         });
-        ProveedorVacunas.add(Vitaminas);
+        menureferenciales.add(Vitaminas);
 
-        Razas.setText("Categorias");
+        Razas.setText("VACUNAS");
         Razas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 RazasMousePressed(evt);
             }
         });
-        ProveedorVacunas.add(Razas);
+        menureferenciales.add(Razas);
 
-        jMenu22.setText("Porveedor Vacunas");
+        jMenu22.setText("RAZAS");
         jMenu22.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jMenu22MousePressed(evt);
             }
         });
-        ProveedorVacunas.add(jMenu22);
+        menureferenciales.add(jMenu22);
 
-        Alimentacion.setText("Alimentacion");
+        Alimentacion.setText("METODO IA");
         Alimentacion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 AlimentacionMousePressed(evt);
             }
         });
-        ProveedorVacunas.add(Alimentacion);
+        menureferenciales.add(Alimentacion);
 
-        Veterinario.setText("Veterinario");
+        Veterinario.setText("MOTIVO AJUSTE");
         Veterinario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 VeterinarioMousePressed(evt);
             }
         });
-        ProveedorVacunas.add(Veterinario);
+        menureferenciales.add(Veterinario);
 
-        Frigorifico.setText("Frigorifico");
-        ProveedorVacunas.add(Frigorifico);
+        Frigorifico.setText("CARGO");
+        menureferenciales.add(Frigorifico);
 
-        Animal.setText("Animal");
+        Animal.setText("TIMBRADO");
         Animal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 AnimalMousePressed(evt);
             }
         });
-        ProveedorVacunas.add(Animal);
+        menureferenciales.add(Animal);
 
-        Vacunas.setText("Vacunas");
+        Vacunas.setText("DIA_REACTIVO");
         Vacunas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 VacunasMousePressed(evt);
             }
         });
-        ProveedorVacunas.add(Vacunas);
+        menureferenciales.add(Vacunas);
 
-        jMenuBar1.add(ProveedorVacunas);
+        jMenu37.setText("MARCA");
+        menureferenciales.add(jMenu37);
+
+        jMenu38.setText("ETAPA_VACUNACION");
+        menureferenciales.add(jMenu38);
+
+        jMenu39.setText("RESULTADO_PREÑES");
+        menureferenciales.add(jMenu39);
+
+        jMenu40.setText("TIPO_VACUNA");
+        menureferenciales.add(jMenu40);
+
+        jMenuBar1.add(menureferenciales);
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("INSEMINACION ARTIFICIAL");
+        menuia.setText("INSEMINACION ARTIFICIAL");
 
-        IA.setText("PLANIFICACION IA");
-        IA.addMouseListener(new java.awt.event.MouseAdapter() {
+        subplanificacionia.setText("PLANIFICACION IA");
+        subplanificacionia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                IAMousePressed(evt);
+                subplanificacioniaMousePressed(evt);
             }
         });
-        jMenu4.add(IA);
+        menuia.add(subplanificacionia);
 
-        Nacimiento.setText("PROTOCOLOS IA");
-        Nacimiento.addMouseListener(new java.awt.event.MouseAdapter() {
+        subprotocoloia.setText("PROTOCOLOS IA");
+        subprotocoloia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                NacimientoMousePressed(evt);
+                subprotocoloiaMousePressed(evt);
             }
         });
-        jMenu4.add(Nacimiento);
+        menuia.add(subprotocoloia);
 
-        jMenu24.setText("SOLICITUD DE IA");
-        jMenu24.addMouseListener(new java.awt.event.MouseAdapter() {
+        subsolicitudia.setText("SOLICITUD DE IA");
+        subsolicitudia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenu24MousePressed(evt);
+                subsolicitudiaMousePressed(evt);
             }
         });
-        jMenu4.add(jMenu24);
+        menuia.add(subsolicitudia);
 
-        jMenu2.setText("REGISTRO IA");
-        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+        subregistroia.setText("REGISTRO IA");
+        subregistroia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenu2MousePressed(evt);
+                subregistroiaMousePressed(evt);
             }
         });
-        jMenu4.add(jMenu2);
+        menuia.add(subregistroia);
 
-        jMenu21.setText("AJUSTE DE STOCK");
-        jMenu21.addMouseListener(new java.awt.event.MouseAdapter() {
+        subajustestockia.setText("AJUSTE DE STOCK");
+        subajustestockia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenu21MousePressed(evt);
+                subajustestockiaMousePressed(evt);
             }
         });
-        jMenu4.add(jMenu21);
+        menuia.add(subajustestockia);
 
-        jMenu23.setText("PREÑES");
-        jMenu23.addMouseListener(new java.awt.event.MouseAdapter() {
+        subpreñes.setText("PREÑES");
+        subpreñes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenu23MousePressed(evt);
+                subpreñesMousePressed(evt);
             }
         });
-        jMenu4.add(jMenu23);
+        menuia.add(subpreñes);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(menuia);
 
-        jMenu6.setText("SERVICIOS VETERINARIOS");
+        menuservicios.setText("SERVICIOS VETERINARIOS");
 
-        Venta.setText("REGISTRO ANIMAL");
-        Venta.addMouseListener(new java.awt.event.MouseAdapter() {
+        subregistroa.setText("REGISTRO ANIMAL");
+        subregistroa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                VentaMousePressed(evt);
+                subregistroaMousePressed(evt);
             }
         });
-        jMenu6.add(Venta);
+        menuservicios.add(subregistroa);
 
-        Movizar.setText("SUPLEMENTOS");
-        Movizar.addMouseListener(new java.awt.event.MouseAdapter() {
+        subsuplementos.setText("SUPLEMENTOS");
+        subsuplementos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                MovizarMousePressed(evt);
+                subsuplementosMousePressed(evt);
             }
         });
-        jMenu6.add(Movizar);
+        menuservicios.add(subsuplementos);
 
-        planengorde.setText("PLAN DE ENGORDE");
-        planengorde.addMouseListener(new java.awt.event.MouseAdapter() {
+        subengorde.setText("PLAN DE ENGORDE");
+        subengorde.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                planengordeMousePressed(evt);
+                subengordeMousePressed(evt);
             }
         });
-        jMenu6.add(planengorde);
+        menuservicios.add(subengorde);
 
-        planvacunacion.setText("PLAN Y ETAPAS DE VACUNACION");
-        planvacunacion.addMouseListener(new java.awt.event.MouseAdapter() {
+        subetapas.setText("PLAN Y ETAPAS DE VACUNACION");
+        subetapas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                planvacunacionMousePressed(evt);
+                subetapasMousePressed(evt);
             }
         });
-        jMenu6.add(planvacunacion);
+        menuservicios.add(subetapas);
 
-        fiscalizacion.setText("FISCALIZACION");
-        fiscalizacion.addMouseListener(new java.awt.event.MouseAdapter() {
+        subfiscalizacion.setText("FISCALIZACION");
+        subfiscalizacion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                fiscalizacionMousePressed(evt);
+                subfiscalizacionMousePressed(evt);
             }
         });
-        jMenu6.add(fiscalizacion);
+        menuservicios.add(subfiscalizacion);
 
-        tarjetavacunacion.setText("TARJETA VACUNACION");
-        tarjetavacunacion.addMouseListener(new java.awt.event.MouseAdapter() {
+        subtarjeta.setText("TARJETA VACUNACION");
+        subtarjeta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tarjetavacunacionMousePressed(evt);
+                subtarjetaMousePressed(evt);
             }
         });
-        jMenu6.add(tarjetavacunacion);
+        menuservicios.add(subtarjeta);
 
-        jMenuBar1.add(jMenu6);
+        jMenuBar1.add(menuservicios);
 
-        jMenu7.setText("REPORTES");
+        menucompra.setText("COMPRAS");
 
-        jMenu11.setText("Inseminacion Artificial");
-        jMenu11.addMouseListener(new java.awt.event.MouseAdapter() {
+        subpedido.setText("PEDIDOS");
+        subpedido.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenu11MousePressed(evt);
+                subpedidoMousePressed(evt);
+            }
+        });
+        menucompra.add(subpedido);
+
+        subpresupuesto.setText("PRESUPUESTO");
+        subpresupuesto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                subpresupuestoMousePressed(evt);
+            }
+        });
+        menucompra.add(subpresupuesto);
+
+        subordencompra.setText("ORDEN DE COMPRA");
+        subordencompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                subordencompraMousePressed(evt);
+            }
+        });
+        menucompra.add(subordencompra);
+
+        subfactura.setText("FACTURA");
+        subfactura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                subfacturaMousePressed(evt);
+            }
+        });
+        menucompra.add(subfactura);
+
+        subcredito.setText("NOTA CREDITO");
+        subcredito.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                subcreditoMousePressed(evt);
+            }
+        });
+        menucompra.add(subcredito);
+
+        subdebito.setText("NOTA DEBITO");
+        subdebito.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                subdebitoMousePressed(evt);
+            }
+        });
+        menucompra.add(subdebito);
+
+        subremision.setText("NOTA REMISION");
+        subremision.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                subremisionMousePressed(evt);
+            }
+        });
+        menucompra.add(subremision);
+
+        subajustep.setText("AJUSTE DE PRODUCTOS");
+        subajustep.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                subajustepMousePressed(evt);
+            }
+        });
+        menucompra.add(subajustep);
+
+        jMenuBar1.add(menucompra);
+
+        menureportes.setText("REPORTES");
+
+        reporteIA.setText("INSEMINACION ARTIFICIAL");
+        reporteIA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                reporteIAMousePressed(evt);
             }
         });
 
-        jMenu15.setText("´Preñes");
-        jMenu11.add(jMenu15);
+        jMenu15.setText("PLANIFICACION IA");
+        reporteIA.add(jMenu15);
 
-        jMenu16.setText("Registros IA");
-        jMenu11.add(jMenu16);
+        jMenu16.setText("PROTOCOLO IA");
+        reporteIA.add(jMenu16);
 
-        jMenu7.add(jMenu11);
+        jMenu2.setText("SOLICITUD IA");
+        reporteIA.add(jMenu2);
 
-        jMenu13.setText("Servicios Veterinarios");
+        jMenu4.setText("REGISTRO IA");
+        reporteIA.add(jMenu4);
 
-        jMenu17.setText("Registro Animal");
-        jMenu13.add(jMenu17);
+        jMenu5.setText("AJUSTE DE STOCK SEMEN");
+        reporteIA.add(jMenu5);
 
-        jMenu18.setText("Engorde");
-        jMenu13.add(jMenu18);
+        jMenu6.setText("PREÑES");
+        reporteIA.add(jMenu6);
 
-        jMenu7.add(jMenu13);
+        menureportes.add(reporteIA);
 
-        jMenu14.setText("Compras");
+        reporteSV.setText("SERVICIOS VETERINARIOS");
 
-        jMenu19.setText("Pedidos");
-        jMenu14.add(jMenu19);
+        jMenu17.setText("REGISTRO ANIMAL");
+        reporteSV.add(jMenu17);
 
-        jMenu20.setText("Orden de Compra");
-        jMenu14.add(jMenu20);
+        jMenu23.setText("SOLICTUD DE TRABAJO");
+        reporteSV.add(jMenu23);
 
-        jMenu7.add(jMenu14);
+        jMenu18.setText("SUPLEMENTOS");
+        reporteSV.add(jMenu18);
 
-        jMenuBar1.add(jMenu7);
+        jMenu7.setText("PLAN DE ENGORDE");
+        reporteSV.add(jMenu7);
+
+        jMenu21.setText("PLAN DE VACUNACION");
+        reporteSV.add(jMenu21);
+
+        jMenu24.setText("REGISTRO FISCALIZACION");
+        reporteSV.add(jMenu24);
+
+        jMenu27.setText("TARJETA VACUNACION");
+        reporteSV.add(jMenu27);
+
+        menureportes.add(reporteSV);
+
+        reporteC.setText("COMPRAS");
+
+        jMenu19.setText("PEDIDOS");
+
+        jMenu28.setText("jMenu28");
+
+        jMenu30.setText("jMenu30");
+        jMenu28.add(jMenu30);
+
+        jMenu19.add(jMenu28);
+
+        reporteC.add(jMenu19);
+
+        jMenu20.setText("PRESUPUESTO PROVEEDOR");
+        reporteC.add(jMenu20);
+
+        jMenu31.setText("ORDEN DE COMPRA");
+        reporteC.add(jMenu31);
+
+        jMenu32.setText("FACTURA PROVEEDOR");
+        reporteC.add(jMenu32);
+
+        jMenu33.setText("NOTA CREDITO");
+        reporteC.add(jMenu33);
+
+        jMenu34.setText("NOTA DEBITO");
+        reporteC.add(jMenu34);
+
+        jMenu36.setText("NOTA REMISION");
+        reporteC.add(jMenu36);
+
+        jMenu35.setText("AJUSTE DE PRODUCTOS");
+        reporteC.add(jMenu35);
+
+        menureportes.add(reporteC);
+
+        jMenuBar1.add(menureportes);
 
         jMenu9.setText("AYUDA");
 
@@ -479,81 +737,33 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenuBar1.add(jMenu8);
 
-        jMenu5.setText("COMPRAS");
-
-        Leche.setText("PEDIDOS");
-        Leche.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                LecheMousePressed(evt);
-            }
-        });
-        jMenu5.add(Leche);
-
-        Carne.setText("PRESUPUESTO");
-        Carne.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                CarneMousePressed(evt);
-            }
-        });
-
-        Alimen.setText("Alimentacion");
-        Carne.add(Alimen);
-
-        jMenu5.add(Carne);
-
-        SaludVeterinario.setText("ORDEN DE COMPRA");
-        SaludVeterinario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                SaludVeterinarioMousePressed(evt);
-            }
-        });
-
-        Veterina.setText("CompraVacunas");
-        SaludVeterinario.add(Veterina);
-
-        jMenu5.add(SaludVeterinario);
-
-        jMenu29.setText("FACTURA");
-        jMenu5.add(jMenu29);
-
-        jMenu10.setText("NOTA CREDITO");
-        jMenu5.add(jMenu10);
-
-        jMenu25.setText("NOTA DEBITO");
-        jMenu5.add(jMenu25);
-
-        jMenu26.setText("NOTA REMISION");
-        jMenu5.add(jMenu26);
-
-        jMenuBar1.add(jMenu5);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ProveedorVacunasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedorVacunasMousePressed
+    private void menureferencialesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menureferencialesMousePressed
 
-    }//GEN-LAST:event_ProveedorVacunasMousePressed
+    }//GEN-LAST:event_menureferencialesMousePressed
 
     private void jMenu8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu8ActionPerformed
         dispose();
     }//GEN-LAST:event_jMenu8ActionPerformed
 
-    private void CompradorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CompradorMousePressed
+    private void subCompradorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subCompradorMousePressed
         new Proveedores().setVisible(true);
-    }//GEN-LAST:event_CompradorMousePressed
+    }//GEN-LAST:event_subCompradorMousePressed
 
     private void jMenu8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jMenu8KeyPressed
         dispose();
@@ -571,17 +781,17 @@ public class Menu extends javax.swing.JFrame {
         new Cargo().setVisible(true);
     }//GEN-LAST:event_CargoMousePressed
 
-    private void IAMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IAMousePressed
+    private void subplanificacioniaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subplanificacioniaMousePressed
         new PlanificacionIA().setVisible(true);
-    }//GEN-LAST:event_IAMousePressed
+    }//GEN-LAST:event_subplanificacioniaMousePressed
 
-    private void NacimientoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NacimientoMousePressed
+    private void subprotocoloiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subprotocoloiaMousePressed
         new ProtocolosIA().setVisible(true);
-    }//GEN-LAST:event_NacimientoMousePressed
+    }//GEN-LAST:event_subprotocoloiaMousePressed
 
-    private void jMenu11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu11MousePressed
+    private void reporteIAMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reporteIAMousePressed
 
-    }//GEN-LAST:event_jMenu11MousePressed
+    }//GEN-LAST:event_reporteIAMousePressed
 
     private void VitaminasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VitaminasMousePressed
         new Vitaminas().setVisible(true);
@@ -611,33 +821,33 @@ public class Menu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_VacunasMousePressed
 
-    private void jMenu2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MousePressed
+    private void subregistroiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subregistroiaMousePressed
         new RegistroIA().setVisible(true);
-    }//GEN-LAST:event_jMenu2MousePressed
+    }//GEN-LAST:event_subregistroiaMousePressed
 
-    private void LecheMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LecheMousePressed
-        new RegistroIA().setVisible(true);
-    }//GEN-LAST:event_LecheMousePressed
+    private void subpedidoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subpedidoMousePressed
+        new PedidosCompra().setVisible(true);
+    }//GEN-LAST:event_subpedidoMousePressed
 
-    private void CarneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CarneMousePressed
-        new ProduccionCarne().setVisible(true);
-    }//GEN-LAST:event_CarneMousePressed
+    private void subpresupuestoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subpresupuestoMousePressed
+        new PresupuestoProveedor().setVisible(true);
+    }//GEN-LAST:event_subpresupuestoMousePressed
 
-    private void SaludVeterinarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaludVeterinarioMousePressed
-        new PlanVacunacion().setVisible(true);
-    }//GEN-LAST:event_SaludVeterinarioMousePressed
+    private void subordencompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subordencompraMousePressed
+        new OrdenCompra().setVisible(true);
+    }//GEN-LAST:event_subordencompraMousePressed
 
-    private void VentaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentaMousePressed
+    private void subregistroaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subregistroaMousePressed
         new RegistroAnimal().setVisible(true);
-    }//GEN-LAST:event_VentaMousePressed
+    }//GEN-LAST:event_subregistroaMousePressed
 
-    private void MovizarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MovizarMousePressed
+    private void subsuplementosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subsuplementosMousePressed
         new Suplementos().setVisible(true);
-    }//GEN-LAST:event_MovizarMousePressed
+    }//GEN-LAST:event_subsuplementosMousePressed
 
-    private void planengordeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_planengordeMousePressed
+    private void subengordeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subengordeMousePressed
         new PLandeEngorde().setVisible(true);
-    }//GEN-LAST:event_planengordeMousePressed
+    }//GEN-LAST:event_subengordeMousePressed
 
     private void CiudadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CiudadMousePressed
         new Ciudades().setVisible(true);
@@ -651,42 +861,62 @@ public class Menu extends javax.swing.JFrame {
         abrirarchivo("C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\src\\usuario.pdf");
     }//GEN-LAST:event_jMenu12MousePressed
 
-    private void planvacunacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_planvacunacionMousePressed
+    private void subetapasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subetapasMousePressed
         new PlanVacunacion().setVisible(true);
-    }//GEN-LAST:event_planvacunacionMousePressed
+    }//GEN-LAST:event_subetapasMousePressed
 
-    private void fiscalizacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fiscalizacionMousePressed
+    private void subfiscalizacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subfiscalizacionMousePressed
 //        new RegistroFiscalizacion().setVisible(true);
-    }//GEN-LAST:event_fiscalizacionMousePressed
+    }//GEN-LAST:event_subfiscalizacionMousePressed
 
-    private void tarjetavacunacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tarjetavacunacionMousePressed
+    private void subtarjetaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subtarjetaMousePressed
         new TarjetadeVacunacion().setVisible(true);
-    }//GEN-LAST:event_tarjetavacunacionMousePressed
+    }//GEN-LAST:event_subtarjetaMousePressed
 
-    private void jMenu24MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu24MousePressed
+    private void subsolicitudiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subsolicitudiaMousePressed
         new SolictudIA().setVisible(true);
-    }//GEN-LAST:event_jMenu24MousePressed
+    }//GEN-LAST:event_subsolicitudiaMousePressed
 
-    private void jMenu21MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu21MousePressed
+    private void subajustestockiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subajustestockiaMousePressed
         new AjustedeStockdeSemen().setVisible(true);
-    }//GEN-LAST:event_jMenu21MousePressed
+    }//GEN-LAST:event_subajustestockiaMousePressed
 
-    private void jMenu23MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu23MousePressed
+    private void subpreñesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subpreñesMousePressed
         new Preñes().setVisible(true);
-    }//GEN-LAST:event_jMenu23MousePressed
+    }//GEN-LAST:event_subpreñesMousePressed
+
+    private void subfacturaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subfacturaMousePressed
+        new FacturaProveedor().setVisible(true);
+    }//GEN-LAST:event_subfacturaMousePressed
+
+    private void subcreditoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subcreditoMousePressed
+        new NotaCredito().setVisible(true);
+    }//GEN-LAST:event_subcreditoMousePressed
+
+    private void subdebitoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subdebitoMousePressed
+        new NotaDebito().setVisible(true);
+    }//GEN-LAST:event_subdebitoMousePressed
+
+    private void subremisionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subremisionMousePressed
+        new NotaRemision().setVisible(true);
+    }//GEN-LAST:event_subremisionMousePressed
+
+    private void subajustepMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subajustepMousePressed
+        new AjustedeProductos().setVisible(true);
+    }//GEN-LAST:event_subajustepMousePressed
     public void abrirarchivo(String archivo) {
-        
+
         try {
-            
+
             File objetofile = new File(archivo);
             Desktop.getDesktop().open(objetofile);
-            
+
         } catch (IOException ex) {
-            
+
             System.out.println(ex);
         }
     }
-    
+
     private void reportes() {
         try {
             String fileName = "C:\\Users\\dahia\\OneDrive\\Documents\\NetBeansProjects\\Agro\\src\\Reportes\\IA.jasper";
@@ -707,7 +937,7 @@ public class Menu extends javax.swing.JFrame {
         SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         return formatofecha.format(fecha);
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -741,41 +971,24 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu Alimen;
     private javax.swing.JMenu Alimentacion;
     private javax.swing.JMenu Animal;
     private javax.swing.JMenu Cargo;
-    private javax.swing.JMenu Carne;
     private javax.swing.JMenu Ciudad;
-    private javax.swing.JMenu Comprador;
     private javax.swing.JMenu Frigorifico;
-    private javax.swing.JMenu IA;
-    private javax.swing.JMenu Leche;
-    private javax.swing.JMenu Movizar;
-    private javax.swing.JMenu Nacimiento;
     private javax.swing.JMenu Personal;
-    private javax.swing.JMenu ProveedorVacunas;
     private javax.swing.JMenu Razas;
-    private javax.swing.JMenu SaludVeterinario;
     private javax.swing.JMenu Vacunas;
-    private javax.swing.JMenu Venta;
-    private javax.swing.JMenu Veterina;
     private javax.swing.JMenu Veterinario;
     private javax.swing.JMenu Vitaminas;
     private javax.swing.JLabel fecha;
-    private javax.swing.JMenu fiscalizacion;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu10;
-    private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu12;
-    private javax.swing.JMenu jMenu13;
-    private javax.swing.JMenu jMenu14;
     private javax.swing.JMenu jMenu15;
     private javax.swing.JMenu jMenu16;
     private javax.swing.JMenu jMenu17;
@@ -787,11 +1000,21 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu22;
     private javax.swing.JMenu jMenu23;
     private javax.swing.JMenu jMenu24;
-    private javax.swing.JMenu jMenu25;
-    private javax.swing.JMenu jMenu26;
-    private javax.swing.JMenu jMenu29;
+    private javax.swing.JMenu jMenu27;
+    private javax.swing.JMenu jMenu28;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu30;
+    private javax.swing.JMenu jMenu31;
+    private javax.swing.JMenu jMenu32;
+    private javax.swing.JMenu jMenu33;
+    private javax.swing.JMenu jMenu34;
+    private javax.swing.JMenu jMenu35;
+    private javax.swing.JMenu jMenu36;
+    private javax.swing.JMenu jMenu37;
+    private javax.swing.JMenu jMenu38;
+    private javax.swing.JMenu jMenu39;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu40;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
@@ -801,8 +1024,37 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JMenu planengorde;
-    private javax.swing.JMenu planvacunacion;
-    private javax.swing.JMenu tarjetavacunacion;
+    private javax.swing.JLabel lbl;
+    private javax.swing.JLabel lblRol;
+    private javax.swing.JLabel lblnombre;
+    private javax.swing.JMenu menucompra;
+    private javax.swing.JMenu menuia;
+    private javax.swing.JMenu menureferenciales;
+    private javax.swing.JMenu menureportes;
+    private javax.swing.JMenu menuservicios;
+    private javax.swing.JMenu reporteC;
+    private javax.swing.JMenu reporteIA;
+    private javax.swing.JMenu reporteSV;
+    private javax.swing.JMenu subComprador;
+    private javax.swing.JMenu subajustep;
+    private javax.swing.JMenu subajustestockia;
+    private javax.swing.JMenu subcredito;
+    private javax.swing.JMenu subdebito;
+    private javax.swing.JMenu subengorde;
+    private javax.swing.JMenu subetapas;
+    private javax.swing.JMenu subfactura;
+    private javax.swing.JMenu subfiscalizacion;
+    private javax.swing.JMenu subordencompra;
+    private javax.swing.JMenu subpedido;
+    private javax.swing.JMenu subplanificacionia;
+    private javax.swing.JMenu subpresupuesto;
+    private javax.swing.JMenu subpreñes;
+    private javax.swing.JMenu subprotocoloia;
+    private javax.swing.JMenu subregistroa;
+    private javax.swing.JMenu subregistroia;
+    private javax.swing.JMenu subremision;
+    private javax.swing.JMenu subsolicitudia;
+    private javax.swing.JMenu subsuplementos;
+    private javax.swing.JMenu subtarjeta;
     // End of variables declaration//GEN-END:variables
 }

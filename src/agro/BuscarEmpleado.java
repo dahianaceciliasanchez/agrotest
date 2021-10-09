@@ -1,11 +1,10 @@
-
 package agro;
 
 import static agro.RegistroFiscalizacion.txtCI;
+import static agro.RegistroFiscalizacion.txtDireccion;
 import static agro.RegistroFiscalizacion.txtNombre;
-import static agro.RegistroFiscalizacion.txtapellido;
-import static agro.RegistroFiscalizacion.txtgmail;
-import static agro.RegistroFiscalizacion.txttelefono;
+import static agro.RegistroFiscalizacion.txtTelefono;
+
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -170,12 +169,11 @@ public class BuscarEmpleado extends javax.swing.JFrame {
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-               txtidempleado.setText(conn.resultado.getString("id"));
-               txtNombre.setText(conn.resultado.getString("Nombre"));
-                txtapellido.setText(conn.resultado.getString("Apellido"));
-               txtCI.setText(conn.resultado.getString("CI"));
-               txttelefono.setText(conn.resultado.getString("Telefono"));
-               txtgmail.setText(conn.resultado.getString("Gmail"));
+                txtidempleado.setText(conn.resultado.getString("id"));
+                txtNombre.setText(conn.resultado.getString("Nombre"));
+                txtCI.setText(conn.resultado.getString("CI"));
+                txtDireccion.setText(conn.resultado.getString("Direccion"));
+                txtTelefono.setText(conn.resultado.getString("Telefono"));
 
             }
         } catch (SQLException ex) {

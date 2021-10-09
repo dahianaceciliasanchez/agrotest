@@ -16,6 +16,8 @@ public class usuarios {
     private String clave;
     private String nombre;
     private String correo;
+    private int idtipo;
+    private String nombre_tipo;
 
 
 
@@ -65,6 +67,24 @@ public class usuarios {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    public int getIdtipo() {
+        return idtipo;
+    }
+
+    public void setIdtipo(int idtipo) {
+        this.idtipo = idtipo;
+    }
+
+    public String getNombre_tipo() {
+        return nombre_tipo;
+    }
+
+    public void setNombre_tipo(String nombre_tipo) {
+        this.nombre_tipo = nombre_tipo;
+    }
+    
+    
 
    
     

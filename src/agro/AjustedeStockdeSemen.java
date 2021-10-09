@@ -315,7 +315,7 @@ Conexion conn = new Conexion ();
         motivo = cbomotivo.getItemAt(cbomotivo.getSelectedIndex()).getId();
        String sql ="Insert into ajustedestock (idToro, cantidadajuste, motivoid)"+
                 " values('"+ txtidtoro.getText() + "', '"+ txtcantidad.getText()
-               + "', '"+ motivo+ "')";
+               + "','"+ motivo+ "')";
        
             sql = "update semental set Stock = Stock + " + txtcantidad.getText()
                 + " where id =" + txtidtoro.getText();

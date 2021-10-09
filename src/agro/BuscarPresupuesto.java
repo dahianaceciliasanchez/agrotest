@@ -5,7 +5,6 @@
  */
 package agro;
 
-import static agro.OrdenCompra.txtNombre;
 import static agro.OrdenCompra.txtNombreProducto;
 import static agro.OrdenCompra.txtcantidad;
 import static agro.OrdenCompra.txtidpresupuesto;
@@ -187,7 +186,7 @@ public class BuscarPresupuesto extends javax.swing.JFrame {
     }//GEN-LAST:event_ListaMousePressed
 
     private void Buscar() {
-        String sql = "SELECT d.id, d.presupuestoid, d.productosid, p.Descripcion,  d.cantidad, d.precio, d.totalunitario\n"
+        String sql = "SELECT d.id, d.presupuestoid, d.productosid, p.Descripcion, d.cantidad, d.precio, d.totalunitario\n"
                 + "FROM detalle_presupuesto AS d\n"
                 + "INNER JOIN productos AS p\n"
                 + "ON d.productosid = p.id"

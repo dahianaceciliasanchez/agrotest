@@ -286,7 +286,7 @@ public class TarjetadeVacunacion extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Cod", "Cantidad", "Title 3", "Title 4"
+                "Cod", "Vacuna", "Tipovacuna", "Animal"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

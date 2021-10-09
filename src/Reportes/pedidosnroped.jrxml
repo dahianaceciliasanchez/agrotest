@@ -6,6 +6,9 @@
 	<parameter name="p_nro" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="p_productos" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select dp.pedidosid, p2.fechapedido, p2.nropedido, p2.empleadoid, dp.productosid, p.Descripcion , dp.cantidad 
 from detalle_pedidos dp 
@@ -13,7 +16,8 @@ inner join productos p
 on dp.productosid = p.id 
 inner join pedidos p2 
 on dp.pedidosid = p2.id 
-where p2.nropedido = $P!{p_nro}]]>
+where p2.nropedido like $P{p_nro}
+and dp.productosid like $P{p_productos}]]>
 	</queryString>
 	<field name="pedidosid" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
