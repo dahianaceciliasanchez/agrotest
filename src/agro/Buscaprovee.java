@@ -5,14 +5,9 @@
  */
 package agro;
 
-import static agro.FacturaProveedor.txtFechaV;
 import static agro.FacturaProveedor.txtNombre;
 import static agro.FacturaProveedor.txtRUC;
-import static agro.FacturaProveedor.txtTelefono;
-import static agro.FacturaProveedor.txtfechaI;
 import static agro.FacturaProveedor.txtidproveedor;
-import static agro.FacturaProveedor.txtidt;
-import static agro.FacturaProveedor.txttimbrado;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -188,14 +183,10 @@ public class Buscaprovee extends javax.swing.JFrame {
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-                txtidt.setText(conn.resultado.getString("id"));
-                txttimbrado.setText(conn.resultado.getString("Descripcion"));
-                txtfechaI.setText(conn.resultado.getString("FechaI"));
-                txtFechaV.setText(conn.resultado.getString("FechaF"));
                 txtidproveedor.setText(conn.resultado.getString("proveedorid"));
                 txtNombre.setText(conn.resultado.getString("Nombre"));
                 txtRUC.setText(conn.resultado.getString("RUC"));
-                txtTelefono.setText(conn.resultado.getString("telefono"));
+
 
             }
         } catch (SQLException ex) {

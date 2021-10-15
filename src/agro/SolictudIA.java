@@ -5,6 +5,7 @@
  */
 package agro;
 
+import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -269,6 +270,13 @@ public class SolictudIA extends javax.swing.JFrame {
 
         jLabel10.setText("Estado Solciitud");
 
+        txtestado.setToolTipText("");
+        txtestado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtestadoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -308,7 +316,12 @@ public class SolictudIA extends javax.swing.JFrame {
                 .addGap(34, 34, 34))
         );
 
-        jButton4.setText("CANCELAR");
+        jButton4.setText("ANULAR");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton4MousePressed(evt);
+            }
+        });
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -455,9 +468,8 @@ public class SolictudIA extends javax.swing.JFrame {
             conn.traeDatos(sql);
             if (conn.resultado.next()) {
                 nuid = conn.resultado.getInt("nro");
-
-                sql = "INSERT INTO solicitudia (NroSolicitud,FechaTrabajo, empleadoid) VALUES ("
-                        + nuid + ",DATE(NOW())," + txtidempleado.getText() + ")";
+                sql = "INSERT INTO solicitudia (NroSolicitud,Fe chaTrabajo, empleadoid, estado) VALUES ("
+                        + nuid + ",DATE(NOW())," + txtidempleado.getText() +","+ txtestado+")";
                 txtSolcitud.setText(Integer.toString(nuid));
                 System.out.print(sql);
                 conn.actualizaDatos(sql);
@@ -470,10 +482,16 @@ public class SolictudIA extends javax.swing.JFrame {
     }//GEN-LAST:event_guardarActionPerformed
     private void anular() {
         if (txtestado.getText().equals("A")) {
-            String sql = "udpate solicitudia set estado='A' where empleadoid='" + txtidempleado.getText() + "'";
+            try {
+                 String sql = "udpate solicitudia set estado='A' where empleadoid='" + txtidempleado.getText() + "'";
             txtestado.setText("I");
              JOptionPane.showMessageDialog(this, "Datos Anulados");
-
+                System.out.println(sql);
+                
+                  
+            } catch (HeadlessException e) {
+            }
+           
         }
     }
     
@@ -550,6 +568,14 @@ public class SolictudIA extends javax.swing.JFrame {
     private void tablaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaKeyPressed
         Buscar();
     }//GEN-LAST:event_tablaKeyPressed
+
+    private void txtestadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtestadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtestadoActionPerformed
+
+    private void jButton4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MousePressed
+        anular();
+    }//GEN-LAST:event_jButton4MousePressed
     private void Limpiar() {
 
         txtApellido.setText("");
@@ -600,10 +626,8 @@ public class SolictudIA extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SolictudIA().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new SolictudIA().setVisible(true);
         });
     }
 

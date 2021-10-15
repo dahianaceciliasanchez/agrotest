@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package buscadores;
+package agro;
 
-import static Reportes.ReporteAnimal.txtcategoria;
-import static Reportes.ReporteAnimal.txtidcategoria;
-import static Reportes.ReporteAnimal.txtraza;
-import agro.*;
-
+import static agro.OrdenCompra.txtNombreProducto;
+import static agro.OrdenCompra.txtcantidad;
+import static agro.OrdenCompra.txtidpresupuesto;
+import static agro.OrdenCompra.txtidproducto;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,12 +17,12 @@ import java.util.logging.Logger;
  *
  * @author Dahiana Sanchez G
  */
-public class buscarcatego extends javax.swing.JFrame {
+public class BuscarFactura extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();
     javax.swing.table.DefaultTableModel m;
 
-    public buscarcatego() {
+    public BuscarFactura() {
         initComponents();
         m = (javax.swing.table.DefaultTableModel) Lista.getModel();
         cargaTabla();
@@ -31,10 +30,10 @@ public class buscarcatego extends javax.swing.JFrame {
 
     private void cargaTabla() {
         m.setRowCount(0);
-        String sql = "select s.id, s.descripcion, s.direccion, s.ciudad, c.Descripcion Descri_Ciudad\n"
-                + "from sucursales s \n"
-                + "inner join ciudad c \n"
-                + "on s.ciudad = c.id ";
+        String sql = "select d.facturaid, f.nrofactura, f.fechaemision \n"
+                + "from  detallefactura d \n"
+                + "inner join facturaproveedor f \n"
+                + "on d.facturaid = f.id ";
         String columna = "id";
 
         try {
@@ -47,11 +46,15 @@ public class buscarcatego extends javax.swing.JFrame {
             conn.sentencia = conn.conexion.createStatement();
             conn.resultado = conn.sentencia.executeQuery(sql);
             while (conn.resultado.next()) {
-                m.addRow(new Object[]{conn.resultado.getInt("id"),
-                    conn.resultado.getString("descripcion"), conn.resultado.getString("siglas"),});
+                m.addRow(new Object[]{
+                    conn.resultado.getString("facturaid"),
+                    conn.resultado.getString("nrofactura"),
+                    conn.resultado.getString("fechaemision"),
+                    
+                });
             }
         } catch (SQLException ex) {
-            Logger.getLogger(buscarcatego.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscarFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -74,19 +77,28 @@ public class buscarcatego extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "FACTURA PROVEEDOR"));
 
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
         Lista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "id", "Nombre", "Apellido", "RUC", "Direccion"
+                "COD_FACTURA", "NRO_FACTURA", "FECHA_EMISION"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         Lista.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 ListaMousePressed(evt);
@@ -99,14 +111,14 @@ public class buscarcatego extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(Lista);
         if (Lista.getColumnModel().getColumnCount() > 0) {
-            Lista.getColumnModel().getColumn(0).setMinWidth(2);
-            Lista.getColumnModel().getColumn(0).setPreferredWidth(1);
-            Lista.getColumnModel().getColumn(0).setMaxWidth(1);
+            Lista.getColumnModel().getColumn(0).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(1).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(2).setPreferredWidth(5);
         }
 
         jLabel6.setText("Buscar");
 
-        cbobuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nombre", "RUC" }));
+        cbobuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "id" }));
         cbobuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbobuscarActionPerformed(evt);
@@ -118,24 +130,27 @@ public class buscarcatego extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel6)
-                .addGap(27, 27, 27)
+                .addContainerGap()
                 .addComponent(txtfiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 231, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtfiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -172,17 +187,30 @@ public class buscarcatego extends javax.swing.JFrame {
     }//GEN-LAST:event_ListaMousePressed
 
     private void Buscar() {
-        String sql = "select * from categorias where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        String sql = "select d.id, d.facturaid, f.nrofactura, f.proveedorid, p.Nombre, p.RUC, "
+                + "p.Direccion, p.Telefono, p.CorreoE, \n"
+                + "d.productosid,p2.id, p2.Descripcion Nombre_Prod, p2.Detalle, "
+                + "d.precio,d.cantidad, d.iva \n"
+                + "from detallefactura d \n"
+                + "inner join facturaproveedor f \n"
+                + "on d.facturaid = f.id \n"
+                + "inner join proveedores p \n"
+                + "on f.proveedorid = p.id \n"
+                + "inner join productos p2 \n"
+                + "on d.productosid = p2.id"
+                + " where d.id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
         System.out.println(sql);
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-                txtidcategoria.setText(conn.resultado.getString("id"));
-                txtcategoria.setText(conn.resultado.getString("descripcion"));
+                txtidpresupuesto.setText(conn.resultado.getString("id"));
+                txtNombreProducto.setText(conn.resultado.getString("Descripcion"));
+                txtidproducto.setText(conn.resultado.getString("productosid"));
+                txtcantidad.setText(conn.resultado.getString("Cantidad"));
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(buscarcatego.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscarFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -202,14 +230,8 @@ public class buscarcatego extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(buscarcatego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(buscarcatego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(buscarcatego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(buscarcatego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(BuscarFactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -467,6 +489,263 @@ public class buscarcatego extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -727,7 +1006,7 @@ public class buscarcatego extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new buscarcatego().setVisible(true);
+                new BuscarFactura().setVisible(true);
             }
         });
     }

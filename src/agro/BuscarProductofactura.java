@@ -73,13 +73,13 @@ public class BuscarProductofactura extends javax.swing.JFrame {
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
         Lista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "id", "Nombre", "Apellido", "CI", "Telefono", "Correo E"
+                "id", "Descripcion", "Stock", "Detalle"
             }
         ));
         Lista.addMouseListener(new java.awt.event.MouseAdapter() {

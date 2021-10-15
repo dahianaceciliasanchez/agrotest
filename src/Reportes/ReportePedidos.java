@@ -10,9 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -152,17 +156,17 @@ public class ReportePedidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-        Map parametro = new HashMap();
-        parametro.put("p_fechaini", txtfechai.getText());
-        parametro.put("p_fechafin", txtfechafin.getText());
-                    try {
-            String fileName = "src\\Reportes\\pedidosreportes.jasper";
-            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
-            JasperViewer ventana = new JasperViewer(jasperPrint, false);
-            ventana.setVisible(true);
-        } catch (JRException ex) {
-            Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        Map parametro = new HashMap();
+//        parametro.put("p_fechaini", txtfechai.getText());
+//        parametro.put("p_fechafin", txtfechafin.getText());
+//                    try {
+//            String fileName = "src\\Reportes\\pedidosreportes.jasper";
+//            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
+//            JasperViewer ventana = new JasperViewer(jasperPrint, false);
+//            ventana.setVisible(true);
+//        } catch (JRException ex) {
+//            Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_jButton1MousePressed
 
     private void txtnroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtnroMousePressed
@@ -170,17 +174,19 @@ public class ReportePedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtnroMousePressed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
-//        Map parametro = new HashMap();
-       HashMap<String, Object> parametro = new HashMap<String, Object>();
-        parametro.put("p_nro", txtnro.getText());
+       
         try {
+            Map parametro = new HashMap();
+            parametro.put("p_nro", txtnro.getText());
+            parametro.put("p_productos", txtproducto.getText());
             String fileName = "src\\Reportes\\pedidosnroped.jasper";
             JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
             JasperViewer ventana = new JasperViewer(jasperPrint, false);
             ventana.setVisible(true);
         } catch (JRException ex) {
-            Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReportePedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
     }//GEN-LAST:event_jButton1KeyPressed
 
     /**

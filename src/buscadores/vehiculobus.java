@@ -3,34 +3,60 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Reportes;
-
+package buscadores;
 
 import agro.*;
-import java.util.HashMap;
-import java.util.Map;
+import static agro.NotaRemision.txtidv;
+import static agro.NotaRemision.txtmarcav;
+import static agro.NotaRemision.txtnumeroregistro;
+
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
-
-
 
 /**
  *
  * @author Dahiana Sanchez G
  */
-public class reportefactura extends javax.swing.JFrame {
-Conexion conn = new Conexion ();
-    javax.swing.table.DefaultTableModel  m;
+public class vehiculobus extends javax.swing.JFrame {
 
-    public reportefactura() {
+    Conexion conn = new Conexion();
+    javax.swing.table.DefaultTableModel m;
+
+    public vehiculobus() {
         initComponents();
- 
-   
- }
+        m = (javax.swing.table.DefaultTableModel) Lista.getModel();
+        cargaTabla();
+    }
+
+    private void cargaTabla() {
+        m.setRowCount(0);
+        String sql = "select v.id, v.descripcion, v.numeroregistro, v.marcavid, m.Descripcion Descri_Marca \n"
+                + "from vehiculo v \n"
+                + "inner join marcavehiculo m \n"
+                + "on v.marcavid = m.id  ";
+        String columna = "id";
+
+        try {
+            if (!txtfiltro.getText().trim().isEmpty()) {
+                if (cbobuscar.getSelectedIndex() == 1) {
+                    columna = "id";
+                }
+                sql = sql + " where " + columna + " like '%" + txtfiltro.getText().trim() + "%' ";
+            }
+            conn.sentencia = conn.conexion.createStatement();
+            conn.resultado = conn.sentencia.executeQuery(sql);
+            while (conn.resultado.next()) {
+                m.addRow(new Object[]{conn.resultado.getInt("id"),
+                    conn.resultado.getString("descripcion"),
+                    conn.resultado.getString("numeroregistro"),
+                    conn.resultado.getString("marcavid"),
+                    conn.resultado.getString("Descri_Marca"),});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(vehiculobus.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,61 +68,51 @@ Conexion conn = new Conexion ();
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        verinforme = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        txtempleado = new javax.swing.JTextField();
-        fechaini = new javax.swing.JTextField();
-        fechafin = new javax.swing.JTextField();
-        txtidpro = new javax.swing.JTextField();
-        txtide = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Lista = new javax.swing.JTable();
+        txtfiltro = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        cbobuscar = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jPanel1.setBackground(new java.awt.Color(204, 209, 140));
+
+        Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
+        Lista.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "VEHICULO", "REGISTRO_VEHICULO", "COD_MARCA", "MARCA"
+            }
+        ));
+        Lista.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel1MousePressed(evt);
+                ListaMousePressed(evt);
             }
         });
-
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel1.setText("FACTURA PROVEEDOR");
-
-        jLabel2.setText("Nro factura");
-
-        jLabel3.setText("Desde");
-
-        jLabel4.setText("Hasta");
-
-        verinforme.setText("VER INFORME");
-        verinforme.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                verinformeMousePressed(evt);
+        Lista.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ListaKeyPressed(evt);
             }
         });
-        verinforme.addActionListener(new java.awt.event.ActionListener() {
+        jScrollPane1.setViewportView(Lista);
+        if (Lista.getColumnModel().getColumnCount() > 0) {
+            Lista.getColumnModel().getColumn(0).setMinWidth(2);
+            Lista.getColumnModel().getColumn(0).setPreferredWidth(1);
+            Lista.getColumnModel().getColumn(0).setMaxWidth(1);
+        }
+
+        jLabel6.setText("Buscar");
+
+        cbobuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nombre", "RUC" }));
+        cbobuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                verinformeActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("Proveedor");
-
-        fechafin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fechafinActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("CERRAR");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cbobuscarActionPerformed(evt);
             }
         });
 
@@ -105,68 +121,24 @@ Conexion conn = new Conexion ();
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(121, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(fechaini, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fechafin, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtidpro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtide, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtempleado, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(verinforme)
-                .addGap(52, 52, 52))
+                .addGap(28, 28, 28)
+                .addComponent(jLabel6)
+                .addGap(27, 27, 27)
+                .addComponent(txtfiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 231, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtempleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtidpro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(fechafin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(fechaini, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(2, 2, 2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(verinforme)
-                    .addComponent(jButton2))
+                    .addComponent(txtfiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(cbobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -188,38 +160,40 @@ Conexion conn = new Conexion ();
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fechafinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechafinActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fechafinActionPerformed
-
-    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
-       
-    }//GEN-LAST:event_jPanel1MousePressed
-
-    private void verinformeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verinformeMousePressed
-        Map parametro = new HashMap();
-        parametro.put("p_fechaini", fechaini.getText());
-        parametro.put("p_fechafin", fechafin.getText());
-        try {
-            String fileName = "src\\Reportes\\facturareporte.jasper";
-            JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametro, conn.conexion);
-            JasperViewer ventana = new JasperViewer(jasperPrint, false);
-            ventana.setVisible(true);
-        } catch (JRException ex) {
-            Logger.getLogger(SolictudIA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_verinformeMousePressed
-
-    private void verinformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verinformeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_verinformeActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void ListaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ListaKeyPressed
+        Buscar();
         dispose();
-        
+    }//GEN-LAST:event_ListaKeyPressed
 
-    }//GEN-LAST:event_jButton2ActionPerformed
-  
+    private void cbobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbobuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbobuscarActionPerformed
+
+    private void ListaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaMousePressed
+        Buscar();
+        dispose();
+    }//GEN-LAST:event_ListaMousePressed
+
+    private void Buscar() {
+        String sql = "select v.id, v.numeroregistro, v.marcavid, m.Descripcion Descri_Marca \n"
+                + "from vehiculo v \n"
+                + "inner join marcavehiculo m \n"
+                + "on v.marcavid = m.id "
+                + " where v.id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        System.out.println(sql);
+        conn.traeDatos(sql);
+        try {
+            if (conn.resultado.next()) {
+                txtidv.setText(conn.resultado.getString("id"));
+                txtnumeroregistro.setText(conn.resultado.getString("numeroregistro"));
+                txtmarcav.setText(conn.resultado.getString("Descri_Marca"));
+                
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(vehiculobus.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -238,13 +212,13 @@ Conexion conn = new Conexion ();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(reportefactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vehiculobus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(reportefactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vehiculobus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(reportefactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vehiculobus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(reportefactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vehiculobus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -2298,24 +2272,17 @@ Conexion conn = new Conexion ();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new reportefactura().setVisible(true);
+                new vehiculobus().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField fechafin;
-    private javax.swing.JTextField fechaini;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    public static javax.swing.JTable Lista;
+    private javax.swing.JComboBox cbobuscar;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    public static javax.swing.JTextField txtempleado;
-    public static javax.swing.JTextField txtide;
-    public static javax.swing.JTextField txtidpro;
-    private javax.swing.JButton verinforme;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtfiltro;
     // End of variables declaration//GEN-END:variables
 }

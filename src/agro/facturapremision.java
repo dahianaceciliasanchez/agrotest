@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package buscadores;
+package agro;
 
-import static Reportes.ReporteAnimal.txtcategoria;
-import static Reportes.ReporteAnimal.txtidcategoria;
-import static Reportes.ReporteAnimal.txtraza;
-import agro.*;
-
+import static agro.NotaRemision.txtcantidad;
+import static agro.NotaRemision.txtcomprobante;
+import static agro.NotaRemision.txtdescripcion;
+import static agro.NotaRemision.txtidfactura;
+import static agro.NotaRemision.txtproductoid;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,12 +18,12 @@ import java.util.logging.Logger;
  *
  * @author Dahiana Sanchez G
  */
-public class buscarcatego extends javax.swing.JFrame {
+public class facturapremision extends javax.swing.JFrame {
 
     Conexion conn = new Conexion();
     javax.swing.table.DefaultTableModel m;
 
-    public buscarcatego() {
+    public facturapremision() {
         initComponents();
         m = (javax.swing.table.DefaultTableModel) Lista.getModel();
         cargaTabla();
@@ -31,16 +31,18 @@ public class buscarcatego extends javax.swing.JFrame {
 
     private void cargaTabla() {
         m.setRowCount(0);
-        String sql = "select s.id, s.descripcion, s.direccion, s.ciudad, c.Descripcion Descri_Ciudad\n"
-                + "from sucursales s \n"
-                + "inner join ciudad c \n"
-                + "on s.ciudad = c.id ";
-        String columna = "id";
+        String sql = "select d.id, d.facturaid, f.nrofactura, d.productosid, p.Descripcion, d.cantidad \n"
+                + "from detallefactura d \n"
+                + "inner join productos p \n"
+                + "on d.productosid = p.id\n"
+                + "inner join facturaproveedor f \n"
+                + "on d.facturaid = f.id";
+        String columna = "Descripcion";
 
         try {
             if (!txtfiltro.getText().trim().isEmpty()) {
                 if (cbobuscar.getSelectedIndex() == 1) {
-                    columna = "id";
+                    columna = "Descripcion";
                 }
                 sql = sql + " where " + columna + " like '%" + txtfiltro.getText().trim() + "%' ";
             }
@@ -48,10 +50,14 @@ public class buscarcatego extends javax.swing.JFrame {
             conn.resultado = conn.sentencia.executeQuery(sql);
             while (conn.resultado.next()) {
                 m.addRow(new Object[]{conn.resultado.getInt("id"),
-                    conn.resultado.getString("descripcion"), conn.resultado.getString("siglas"),});
+                    conn.resultado.getString("facturaid"),
+                    conn.resultado.getString("nrofactura"),
+                    conn.resultado.getString("productosid"),
+                    conn.resultado.getString("descripcion"),
+                    conn.resultado.getString("cantidad")});
             }
         } catch (SQLException ex) {
-            Logger.getLogger(buscarcatego.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(facturapremision.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -78,15 +84,23 @@ public class buscarcatego extends javax.swing.JFrame {
         Lista.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 204, 255)));
         Lista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Nombre", "Apellido", "RUC", "Direccion"
+                "ID", "FACTURA_ID", "NRO_FACTURA", "COD_PRODUCTO", "DESCRIPCION", "CANTIDAD"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         Lista.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 ListaMousePressed(evt);
@@ -100,8 +114,12 @@ public class buscarcatego extends javax.swing.JFrame {
         jScrollPane1.setViewportView(Lista);
         if (Lista.getColumnModel().getColumnCount() > 0) {
             Lista.getColumnModel().getColumn(0).setMinWidth(2);
-            Lista.getColumnModel().getColumn(0).setPreferredWidth(1);
+            Lista.getColumnModel().getColumn(0).setPreferredWidth(3);
             Lista.getColumnModel().getColumn(0).setMaxWidth(1);
+            Lista.getColumnModel().getColumn(1).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(2).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(3).setPreferredWidth(3);
+            Lista.getColumnModel().getColumn(5).setPreferredWidth(3);
         }
 
         jLabel6.setText("Buscar");
@@ -172,17 +190,26 @@ public class buscarcatego extends javax.swing.JFrame {
     }//GEN-LAST:event_ListaMousePressed
 
     private void Buscar() {
-        String sql = "select * from categorias where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
+        String sql = "select d.id, d.facturaid, f.nrofactura, d.productosid, p.Descripcion, d.cantidad \n"
+                + "from detallefactura d \n"
+                + "inner join productos p \n"
+                + "on d.productosid = p.id\n"
+                + "inner join facturaproveedor f \n"
+                + "on d.facturaid = f.id "
+                + "where d.id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
         System.out.println(sql);
         conn.traeDatos(sql);
         try {
             if (conn.resultado.next()) {
-                txtidcategoria.setText(conn.resultado.getString("id"));
-                txtcategoria.setText(conn.resultado.getString("descripcion"));
+                txtidfactura.setText(conn.resultado.getString("facturaid"));
+                txtcomprobante.setText(conn.resultado.getString("nrofactura"));
+                txtproductoid.setText(conn.resultado.getString("productosid"));
+                txtdescripcion.setText(conn.resultado.getString("Descripcion"));
+                txtcantidad.setText(conn.resultado.getString("cantidad"));
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(buscarcatego.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(facturapremision.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -203,270 +230,14 @@ public class buscarcatego extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(buscarcatego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(facturapremision.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(buscarcatego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(facturapremision.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(buscarcatego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(facturapremision.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(buscarcatego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(facturapremision.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -727,7 +498,7 @@ public class buscarcatego extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new buscarcatego().setVisible(true);
+                new facturapremision().setVisible(true);
             }
         });
     }

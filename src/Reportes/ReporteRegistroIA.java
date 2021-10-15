@@ -28,32 +28,11 @@ Conexion conn = new Conexion ();
 
     public ReporteRegistroIA() {
         initComponents();
-                cargaTabla();
+               
     }
 
    
-   
-          private void cargaTabla() {
-           m.setRowCount(0);
-        String sql = "SELECT  id, Nombre, RP, HBP, FechaNacimiento FROM Animal";
-        String columna = "RP";
-            
-        try {
-             if (!txtfiltro.getText().trim().isEmpty()){
-                    if(cbobuscar.getSelectedIndex() == 1) columna = "RP";
-                    sql = sql + " where " + columna + " like '%"+ txtfiltro.getText().trim() +"%' " ;
-                }
-            conn.sentencia = conn.conexion.createStatement();
-            conn.resultado = conn.sentencia.executeQuery(sql);
-            while(conn.resultado.next()){
-                m.addRow(new Object[] { conn.resultado.getString("id"), conn.resultado.getString("Nombre"),
-                    conn.resultado.getString("RP"),
-                    conn.resultado.getString("HBP"), conn.resultado.getString("FechaNacimiento")});
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ReporteRegistroIA.class.getName()).log(Level.SEVERE, null, ex);
-        }
- }
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -173,22 +152,7 @@ Conexion conn = new Conexion ();
     }// </editor-fold>//GEN-END:initComponents
   
 
-    private void BuscarSementales() {
-        String sql = "select * from Animal where id = " + Lista.getValueAt(Lista.getSelectedRow(), 0).toString();
-            System.out.println(sql);
-            conn.traeDatos(sql);
-        try {
-            if(conn.resultado.next()){
-                txtid.setText(conn.resultado.getString("id"));
-                txtNombre.setText(conn.resultado.getString("Nombre"));
-                txtRP.setText(conn.resultado.getString("RP"));
-                txtHBP.setText(conn.resultado.getString("HBP"));
-                txtFecha.setText(conn.resultado.getString("FechaNacimiento"));
-        
-            }} catch (SQLException ex) {
-            Logger.getLogger(ReporteRegistroIA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+  
     /**
      * @param args the command line arguments
      */

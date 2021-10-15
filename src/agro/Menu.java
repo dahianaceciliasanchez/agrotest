@@ -890,7 +890,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_subfacturaMousePressed
 
     private void subcreditoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subcreditoMousePressed
-        new NotaCredito().setVisible(true);
+        
     }//GEN-LAST:event_subcreditoMousePressed
 
     private void subdebitoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subdebitoMousePressed
